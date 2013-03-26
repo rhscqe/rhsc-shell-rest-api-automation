@@ -1,0 +1,17 @@
+<com.redhat.com.ovirt.shell.config.Configuration>
+  <restApi>
+    <url>https://localhost:443/api</url>
+    <credentials>
+      <username>admin@internal</username>
+      <password>redhat</password>
+    </credentials>
+  </restApi>
+  <shellHost>
+    <hostname>localhost</hostname>
+    <credentials>
+      <username>root</username>
+      <password>redhat</password>
+    </credentials>
+    <port>22</port>
+  </shellHost>
+</com.redhat.com.ovirt.shell.config.Configuration>

@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>qe.redhat.com</groupId>
+	<artifactId>rhsc-cli</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>rhsc-cli</name>
+	<dependencies>
+		<!-- <dependency> <groupId>com.jcraft</groupId> <artifactId>jsch</artifactId> 
+			<version>0.1.49</version> </dependency> -->
+		<dependency>
+			<groupId>org.jvnet.hudson</groupId>
+			<artifactId>ganymed-ssh-2</artifactId>
+			<version>build260</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.schmizz</groupId>
+			<artifactId>sshj</artifactId>
+			<version>0.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jclouds.driver</groupId>
+			<artifactId>jclouds-jsch</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>dustin-utils</groupId>
+			<artifactId>dustin-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>dstywho-utils</id>
+			<url>https://raw.github.com/dstywho/dstywho-utils/mvn-repo/snapshots</url>
+		</repository>
+	</repositories>
+</project>
