@@ -3,9 +3,11 @@ import java.io.IOException;
 
 
 import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.redhat.qe.config.Configuration;
 import com.redhat.qe.exceptions.HostUnableToCloseChannel;
 import com.redhat.qe.exceptions.HostUnableToConnectException;
 import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
@@ -16,8 +18,12 @@ public class SshSession {
 	private Credentials credentials;
 	private String hostname;
 	private int port;
-	private Channel channel;
+	private ChannelShell channel;
 	private Session session;
+	
+	public static SshSession fromConfiguration(Configuration config){
+		return new SshSession(config.getShellHost().getCredentials(), config.getShellHost().getHostname(), config.getShellHost().getPort());
+	}
 
 	public SshSession(Credentials credentials, String hostname, int port) {
 		super();
@@ -46,8 +52,8 @@ public class SshSession {
 		stopSession();
 	}
 
-	public Shell getShell() {
 		Shell shell = null;
+		public Shell getShell() {
 		try{
 			shell = new Shell(channel.getInputStream(), channel.getOutputStream());
 		}catch(IOException e){
@@ -58,7 +64,8 @@ public class SshSession {
 	}
 	
 	private void openChannel() throws JSchException {
-		channel=session.openChannel("shell");
+		channel=(ChannelShell) session.openChannel("shell");
+		channel.setPtySize(200, 5000, 200, 5000);
 		channel.connect();
 	}
 	private void closeChannel() throws JSchException {

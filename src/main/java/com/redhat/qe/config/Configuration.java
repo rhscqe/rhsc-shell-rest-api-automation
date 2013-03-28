@@ -3,6 +3,7 @@ package com.redhat.qe.config;
 import java.io.File;
 import java.io.IOException;
 
+import com.redhat.qe.exceptions.UnableToOpenConfigurationFileException;
 import com.redhat.qe.ssh.Credentials;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -58,7 +59,11 @@ public class Configuration {
 	
 	public static Configuration INSTANCE;
 	public static synchronized Configuration getConfiguration(){
-		return INSTANCE == null ? fromXml("src/test/resources/config.xml") : INSTANCE;
+		try {
+			return INSTANCE == null ? fromXml(FileUtil.fileToString(new File("src/test/resources/config.xml"))) : INSTANCE;
+		} catch (IOException e) {
+			throw new UnableToOpenConfigurationFileException(e);
+		}
 	}
 	 
 	public static void main(String[] a){
