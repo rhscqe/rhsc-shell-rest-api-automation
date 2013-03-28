@@ -7,43 +7,76 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-public class ReadInput implements Callable<String> {
+import org.apache.log4j.Logger;
+
+
+import dstywho.regexp.RegexMatch;
+
+public class ReadInput implements Callable<Response> {
+	private static final Logger LOG = Logger.getLogger(ReadInput.class);
 	public static final Pattern RHSC_PROMPT = Pattern.compile("\\[RHSC\\sshell\\s\\(\\w+\\)\\]#\\s");
-	
+
 	StringBuffer buffer;
 	private InputStream inputStream;
-	private Duration timeout; 		
-	public ReadInput(InputStream inputStream,Duration timeout){
+	private Duration timeout;
+
+	public ReadInput(InputStream inputStream, Duration timeout) {
 		this.inputStream = inputStream;
 		this.buffer = new StringBuffer();
 		this.timeout = timeout;
 	}
-	public ReadInput(InputStream inputStream){
-		this(inputStream,new Duration(TimeUnit.SECONDS, 6));
+
+	public ReadInput(InputStream inputStream) {
+		this(inputStream, new Duration(TimeUnit.SECONDS, 6));
 	}
 
-	public String call() {
+	public Response call(String expectedpattern) {
 		long starttime = System.currentTimeMillis();
-		try{
+		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-			while(true && !bufferContainsShell() && !hasTimedOut(starttime))
-			if(reader.ready())			
-				buffer.append((char)reader.read());
-		}catch(Exception e){
+			while (!bufferContains(expectedpattern) && !bufferContainsShell() && !hasTimedOut(starttime))
+				if (reader.ready())
+					buffer.append((char) reader.read());
+			LOG.debug("[shell output] " + buffer.toString());
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return buffer.toString();
+		return expectWhenPatternGiven(expectedpattern);
+	}
+
+	/**
+	 * @param expectedpattern
+	 * @return
+	 */
+	private Response expectWhenPatternGiven(String expectedpattern) {
+		if(expectedpattern != null){
+			return new Response(buffer.toString()).expect(expectedpattern);
+		}else{
+			return new Response(buffer.toString());
+		}
+	}
+
+	private boolean bufferContains(String pattern) {
+			return new RegexMatch(buffer.toString()).find(pattern).size() > 0;
+	}
+
+	public Response call() {
+		return call(null);
 	}
 	
-	public String read(){
-		return call();
+	public Response read() {
+		return call(null);
 	}
-	
-	private boolean hasTimedOut(long startTime){
-		return (System.currentTimeMillis() - startTime) > TimeUnit.MILLISECONDS.convert(timeout.getInterval(),timeout.getUnits() );
+
+	private boolean hasTimedOut(long startTime) {
+		return (System.currentTimeMillis() - startTime) > TimeUnit.MILLISECONDS.convert(timeout.getInterval(), timeout.getUnits());
 	}
-	
-	private boolean bufferContainsShell(){
+
+	private boolean bufferContainsShell() {
 		return false && RHSC_PROMPT.matcher(buffer.toString()).find();
+	}
+
+	public Response read(String expectPattern) {
+		return call(expectPattern);
 	}
 }
