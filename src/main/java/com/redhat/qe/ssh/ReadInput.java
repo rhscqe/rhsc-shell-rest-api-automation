@@ -27,21 +27,37 @@ public class ReadInput implements Callable<Response> {
 	}
 
 	public ReadInput(InputStream inputStream) {
-		this(inputStream, new Duration(TimeUnit.SECONDS, 6));
+		this(inputStream, new Duration(TimeUnit.SECONDS, 10));
 	}
 
 	public Response call(String expectedpattern) {
 		long starttime = System.currentTimeMillis();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-			while (!bufferContains(expectedpattern) && !bufferContainsShell() && !hasTimedOut(starttime))
-				if (reader.ready())
-					buffer.append((char) reader.read());
-			LOG.debug("[shell output] " + buffer.toString());
+			while (!bufferContains(expectedpattern) && !bufferContainsShell() && !hasTimedOut(starttime)){
+				if (reader.ready()){
+//					char singleChar = (char) reader.read();
+//					if(new RegexMatch(String.valueOf(singleChar)).find("\\w|\\s|:|;|\\.|\\(|\\)|\\[|\\]|-|\\+").size() < 1)
+//						buffer.append("["+ (int)singleChar + "]");
+//					else
+//						buffer.append(singleChar);
+					buffer.append((char)reader.read());
+				}
+			}
+			LOG.debug("[shell output] " + getBuffer());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return expectWhenPatternGiven(expectedpattern);
+	}
+	
+	private String stripEscapes(String input){
+		return input.replaceAll("\\033.(\\w+|\\?\\w+){0,1}","");
+	}
+	
+	private String getBuffer(){
+		return stripEscapes(buffer.toString());
+		
 	}
 
 	/**
@@ -50,14 +66,14 @@ public class ReadInput implements Callable<Response> {
 	 */
 	private Response expectWhenPatternGiven(String expectedpattern) {
 		if(expectedpattern != null){
-			return new Response(buffer.toString()).expect(expectedpattern);
+			return new Response(getBuffer()).expect(expectedpattern);
 		}else{
-			return new Response(buffer.toString());
+			return new Response(getBuffer());
 		}
 	}
 
 	private boolean bufferContains(String pattern) {
-			return new RegexMatch(buffer.toString()).find(pattern).size() > 0;
+			return new RegexMatch(getBuffer()).find(pattern).size() > 0;
 	}
 
 	public Response call() {
@@ -73,7 +89,7 @@ public class ReadInput implements Callable<Response> {
 	}
 
 	private boolean bufferContainsShell() {
-		return false && RHSC_PROMPT.matcher(buffer.toString()).find();
+		return RHSC_PROMPT.matcher(buffer.toString()).find();
 	}
 
 	public Response read(String expectPattern) {
