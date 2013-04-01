@@ -1,19 +1,36 @@
 package com.redhat.qe.model;
-import com.redhat.qe.ovirt.shell.RhscShell;
+import java.util.HashMap;
+
 import com.redhat.qe.ssh.Response;
 
 
 public class Cluster {
 	
 	
-	private RhscShell shell;
+	private String id;
 	private String name;
-	
-
+	public static Cluster fromResponse(Response response){
+		HashMap<String, String> attributes = StringUtils.keyAttributeToHash(response.toString());
+		Cluster cluster = new Cluster();
+		cluster.setId(attributes.get("id"));
+		cluster.setName(attributes.get("name"));
+		return cluster;
+	}
 
 	/**
-	 * @return the name
+	 * @return the id
 	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -25,12 +42,5 @@ public class Cluster {
 		this.name = name;
 	}
 
-	public Response create(){
-		return shell.send(createCommand());
-	}
-	
-	public String createCommand(){
-		return String.format("add cluster --name '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default",name);
-	}
 
 }
