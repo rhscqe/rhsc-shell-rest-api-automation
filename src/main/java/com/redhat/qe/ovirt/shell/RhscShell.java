@@ -20,7 +20,7 @@ public class RhscShell {
 	}
 	
 	public void start(){
-		send("rhsc-shell","Welcome");
+		send("rhsc-shell").expect("Welcome");
 	}
 	
 	public void stop(){
@@ -29,15 +29,11 @@ public class RhscShell {
 
 	public void connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
-		Response response = ssh.getShell().send(command, "connected to \\w+ manager");
-	}
-	
-	public Response send(String command, String expectedPattern){
-		return ssh.getShell().send(command, expectedPattern);
+		Response response = ssh.getShell().send(command).expect("connected to \\w+ manager");
 	}
 	
 	public Response send(String command ){
-		return ssh.getShell().send(command,null);
+		return ssh.getShell().send(command);
 	}
 
 }

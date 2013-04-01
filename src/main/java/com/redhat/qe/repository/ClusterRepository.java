@@ -28,7 +28,7 @@ public class ClusterRepository extends Repository {
 	}
 	
 	public Response show(Cluster cluster){
-		return show(cluster.getId());
+		return show(cluster.getName());
 	}
 	
 	public Response show(String nameOrId){
@@ -40,6 +40,6 @@ public class ClusterRepository extends Repository {
 	}
 	
 	public Response destroy(String nameOrId){
-		return getShell().send(String.format("remove cluster %s", nameOrId),"accepted.");
+		return getShell().send(String.format("remove cluster %s", nameOrId)).expect("accepted.");
 	}
 }

@@ -14,12 +14,8 @@ public class Shell {
 	}
 	
 	public Response send(String command){
-		return send(command,null);
-	}
-	
-	public Response send(String command, String expectPattern){
 		__send(command);
-		return new ReadInput(fromShell).read(expectPattern);
+		return new ReadInput(fromShell).read();
 	}
 	
 	private void __send(String command){
