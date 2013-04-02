@@ -22,11 +22,17 @@
       <name>node1</name>
       <address>10.70.35.151</address>
       <rootPassword>rhscauto</rootPassword>
+      <cluster>
+          <name>myCluster</name>
+      </cluster>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
       <address>10.70.35.96</address>
       <rootPassword>rhscauto</rootPassword>
+      <cluster>
+          <name>myCluster</name>
+      </cluster>
     </com.redhat.qe.model.Host>
   </hosts>
 </com.redhat.qe.config.Configuration>
