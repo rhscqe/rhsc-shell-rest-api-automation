@@ -7,7 +7,7 @@
     </credentials>
   </restApi>
   <shellHost>
-    <hostname>rhsc-qa9</hostname>
+    <hostname>10.70.35.103</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>
@@ -20,13 +20,13 @@
   <hosts>
     <com.redhat.qe.model.Host>
       <name>node1</name>
-      <address>rhsc-qa9-node-a</address>
-      <rootPassword>redhat</rootPassword>
+      <address>10.70.35.151</address>
+      <rootPassword>rhscauto</rootPassword>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
-      <name>node1</name>
-      <address>rhsc-qa9-node-b</address>
-      <rootPassword>redhat</rootPassword>
+      <name>node2</name>
+      <address>10.70.35.96</address>
+      <rootPassword>rhscauto</rootPassword>
     </com.redhat.qe.model.Host>
   </hosts>
 </com.redhat.qe.config.Configuration>
