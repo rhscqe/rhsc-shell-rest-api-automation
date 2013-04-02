@@ -36,7 +36,7 @@ public class VolumeTest extends TestBase {
 	}
 	
 	@Test
-	public void test(){
+	public void distributedVolumeTest(){
 		Volume volume = new Volume();
 		volume.setName("myVol");
 		volume.setType("distribute");
@@ -50,13 +50,35 @@ public class VolumeTest extends TestBase {
 		bricks.add(BrickFactory.brick(host2));
 		bricks.add(BrickFactory.brick(host2));
 		volume.setBricks(bricks);
+		VolumeRepository repo = new VolumeRepository(getShell());
+		volume = repo.create(volume);
+		repo.destroy(volume);
 		
 		
+	}
+	
+	@Test
+	public void replicateVolumeTest(){
+		Volume volume = new Volume();
+		volume.setName("myVol");
+		volume.setType("replicate");
+		volume.setReplicaCount(8);
+		volume.setCluster(host1.getCluster());
+		
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host2));
+		bricks.add(BrickFactory.brick(host2));
+		bricks.add(BrickFactory.brick(host2));
+		bricks.add(BrickFactory.brick(host2));
+		volume.setBricks(bricks);
 		
 		VolumeRepository repo = new VolumeRepository(getShell());
-		repo.create(volume);
-		
-		
+		volume = repo.create(volume);
+		repo.destroy(volume);
 		
 	}
 

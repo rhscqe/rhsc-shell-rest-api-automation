@@ -14,8 +14,8 @@ public class VolumeRepository extends Repository{
 	}
 
 	public Volume create(Volume volume){
-		String command = String.format("add glustervolume --cluster-identifier %s --name %s --volume_type %s %s"
-				, volume.getCluster().getId(), volume.getName(), volume.getType(), bricksOptionsOnCreate(volume.getBricks()));
+		String command = String.format("add glustervolume --cluster-identifier %s --name %s --volume_type %s --stripe_count %s --replica_count %s %s"
+				, volume.getCluster().getId(), volume.getName(), volume.getType(), volume.getStripe_count(), volume.getReplica_count(), bricksOptionsOnCreate(volume.getBricks()));
 		return Volume.fromResponse(getShell().send(command).unexpect("error:"));
 	}
 	
@@ -29,6 +29,10 @@ public class VolumeRepository extends Repository{
 			result.append(String.format("--bricks-brick '%s'",brick.toString()));
 		}
 		return result.toString();
+	}
+
+	public Response destroy(Volume volume) {
+		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId())).expect("accepted");	
 	}
 
 }

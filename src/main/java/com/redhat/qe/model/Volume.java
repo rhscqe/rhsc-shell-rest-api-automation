@@ -11,8 +11,8 @@ public class Volume {
 	private String name;
 	private String type;
 	private String status;
-	private int stripe_count;
-	private int replica_count;
+	private int stripe_count =0 ;
+	private int replica_count =0;
 	private List<Brick> bricks;
 	/**
 	 * @return the cluster
@@ -111,7 +111,7 @@ public class Volume {
 	/**
 	 * @param replica_count the replica_count to set
 	 */
-	public void setReplica_count(int replica_count) {
+	public void setReplicaCount(int replica_count) {
 		this.replica_count = replica_count;
 	}
 	public static Volume fromResponse(Response response) {
@@ -121,8 +121,12 @@ public class Volume {
 		volume.setName(attr.get("name"));
 		volume.setType(attr.get("volume_type"));
 		volume.setStatus(attr.get("status-state"));
-		volume.setReplica_count(Integer.parseInt(attr.get("replica_count")));
+		volume.setReplicaCount(Integer.parseInt(attr.get("replica_count")));
 		volume.setStripe_count((Integer.parseInt(attr.get("stripe_count"))));
+		
+		Cluster rcluster = new Cluster();
+		rcluster.setId(attr.get("cluster-id"));
+		volume.setCluster(rcluster);
 		return volume;
 	}
 	
