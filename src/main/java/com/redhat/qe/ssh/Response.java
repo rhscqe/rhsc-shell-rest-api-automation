@@ -21,6 +21,11 @@ public class Response {
 			throw new UnexpectedReponseException(String.format("Response did not contain pattern %s. Response: %s", regex, body));
 		return this;
 	}
+	public Response unexpect(String regex){
+		if(contains(regex))
+			throw new UnexpectedReponseException(String.format("Response contained pattern %s. Response: %s", regex, body));
+		return this;
+	}
 	
 	public String toString(){
 		return body;

@@ -13,6 +13,11 @@ public class Host {
 		result.setId(attributes.get("id"));
 		result.setName(attributes.get("name"));
 		result.setState(attributes.get("status-state"));
+		
+		Cluster resultCluster = new Cluster();
+		resultCluster.setId(attributes.get("cluster-id"));
+		result.setCluster(resultCluster);
+		
 		return result;
 	}
 	private String name;

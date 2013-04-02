@@ -14,7 +14,7 @@ import com.redhat.qe.repository.HostRepository;
 public class HostTest extends TestBase{
 	@Test
 	public void test(){
-		Cluster cluster = ClusterFactory.cluster("HostTest");
+		Cluster cluster = ClusterFactory.cluster("myCluster");
 		cluster = Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(cluster));
 		
 		Host host = HostFactory.create("node1", "rhsc-qa9-node-a", "redhat", cluster);
