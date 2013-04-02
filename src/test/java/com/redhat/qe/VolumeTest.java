@@ -19,29 +19,29 @@ import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
 
 public class VolumeTest extends TestBase {
-	
+
 	private Host host1;
 	private Host host2;
 
 	@Before
-	public void setup(){
+	public void setup() {
 		Cluster cluster = ClusterFactory.cluster("myCluster");
 		cluster = Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(cluster));
-		
+
 		HostRepository hostRepository = new HostRepository(getShell());
 		host1 = hostRepository.createOrShow(HostFactory.create("node1", "rhsc-qa9-node-a", "redhat", cluster));
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1,"up", 400));
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1, "up", 400));
 		host2 = hostRepository.createOrShow(HostFactory.create("node2", "rhsc-qa9-node-b", "redhat", cluster));
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2,"up", 400));
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2, "up", 400));
 	}
-	
+
 	@Test
-	public void distributedVolumeTest(){
+	public void distributedVolumeTest() {
 		Volume volume = new Volume();
 		volume.setName("myVol");
 		volume.setType("distribute");
 		volume.setCluster(host1.getCluster());
-		
+
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
 		bricks.add(BrickFactory.brick(host1));
 		bricks.add(BrickFactory.brick(host1));
@@ -53,33 +53,24 @@ public class VolumeTest extends TestBase {
 		VolumeRepository repo = new VolumeRepository(getShell());
 		volume = repo.create(volume);
 		repo.destroy(volume);
-		
-		
+
 	}
-	
+
 	@Test
-	public void replicateVolumeTest(){
+	public void replicateVolumeTest() {
 		Volume volume = new Volume();
 		volume.setName("myVol");
 		volume.setType("replicate");
 		volume.setReplicaCount(8);
 		volume.setCluster(host1.getCluster());
-		
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		bricks.add(BrickFactory.brick(host1));
-		bricks.add(BrickFactory.brick(host1));
-		bricks.add(BrickFactory.brick(host1));
-		bricks.add(BrickFactory.brick(host1));
-		bricks.add(BrickFactory.brick(host2));
-		bricks.add(BrickFactory.brick(host2));
-		bricks.add(BrickFactory.brick(host2));
-		bricks.add(BrickFactory.brick(host2));
-		volume.setBricks(bricks);
-		
+		for (int i : new int[4])
+			volume.getBricks().add(BrickFactory.brick(host1));
+		for (int i : new int[4])
+			volume.getBricks().add(BrickFactory.brick(host2));
 		VolumeRepository repo = new VolumeRepository(getShell());
 		volume = repo.create(volume);
 		repo.destroy(volume);
-		
+
 	}
 
 }

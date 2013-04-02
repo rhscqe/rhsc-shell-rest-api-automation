@@ -1,5 +1,6 @@
 package com.redhat.qe.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Volume {
 	private String status;
 	private int stripe_count =0 ;
 	private int replica_count =0;
-	private List<Brick> bricks;
+	private List<Brick> bricks = new ArrayList<Brick>();
 	/**
 	 * @return the cluster
 	 */
