@@ -17,10 +17,12 @@ public class ClusterRepository extends Repository {
 	}
 	
 	public Response createOrShow(Cluster cluster){
+		Response result;
 		if(Cluster.fromResponse(show(cluster)).getId() != null)
-			return show(cluster);
+			result = show(cluster);
 		else
-			return create(cluster);
+			result = create(cluster);
+		return result.expect("id");
 	}
 	
 	public String createCommand(Cluster cluster){
