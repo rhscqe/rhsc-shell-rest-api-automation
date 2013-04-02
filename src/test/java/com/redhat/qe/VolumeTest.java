@@ -33,7 +33,9 @@ public class VolumeTest extends TestBase {
 
 		HostRepository hostRepository = new HostRepository(getShell());
 		host1 =	hostRepository.createOrShow(hosts.next());
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1,"up", 400));
 		host2 =	hostRepository.createOrShow(hosts.next());
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2,"up", 400));
 	}
 
 	@Test
