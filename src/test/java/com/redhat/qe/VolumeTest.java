@@ -1,11 +1,13 @@
 package com.redhat.qe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.redhat.qe.config.Configuration;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickFactory;
 import com.redhat.qe.model.Cluster;
@@ -25,14 +27,13 @@ public class VolumeTest extends TestBase {
 
 	@Before
 	public void setup() {
-		Cluster cluster = ClusterFactory.cluster("myCluster");
-		cluster = Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(cluster));
+		Cluster cluster = Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster()));
+		
+		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
 
 		HostRepository hostRepository = new HostRepository(getShell());
-		host1 = hostRepository.createOrShow(HostFactory.create("node1", "rhsc-qa9-node-a", "redhat", cluster));
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1, "up", 400));
-		host2 = hostRepository.createOrShow(HostFactory.create("node2", "rhsc-qa9-node-b", "redhat", cluster));
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2, "up", 400));
+		host1 =	hostRepository.createOrShow(hosts.next());
+		host2 =	hostRepository.createOrShow(hosts.next());
 	}
 
 	@Test
@@ -63,9 +64,9 @@ public class VolumeTest extends TestBase {
 		volume.setType("replicate");
 		volume.setReplicaCount(8);
 		volume.setCluster(host1.getCluster());
-		for (int i : new int[4])
+		for (int _ : new int[4])
 			volume.getBricks().add(BrickFactory.brick(host1));
-		for (int i : new int[4])
+		for (int _ : new int[4])
 			volume.getBricks().add(BrickFactory.brick(host2));
 		VolumeRepository repo = new VolumeRepository(getShell());
 		volume = repo.create(volume);

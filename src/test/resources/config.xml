@@ -14,4 +14,19 @@
     </credentials>
     <port>22</port>
   </shellHost>
+  <cluster>
+    <name>myCluster</name>
+  </cluster>
+  <hosts>
+    <com.redhat.qe.model.Host>
+      <name>node1</name>
+      <address>rhsc-qa9-node-a</address>
+      <rootPassword>redhat</rootPassword>
+    </com.redhat.qe.model.Host>
+    <com.redhat.qe.model.Host>
+      <name>node1</name>
+      <address>rhsc-qa9-node-b</address>
+      <rootPassword>redhat</rootPassword>
+    </com.redhat.qe.model.Host>
+  </hosts>
 </com.redhat.qe.config.Configuration>
