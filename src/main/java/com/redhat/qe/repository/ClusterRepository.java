@@ -12,29 +12,29 @@ public class ClusterRepository extends Repository {
 		super(shell);
 	}
 
-	public Response create(Cluster cluster){
-		return getShell().send(createCommand(cluster));
+	public Cluster create(Cluster cluster){
+		return Cluster.fromResponse(getShell().send(createCommand(cluster)).unexpect("error:"));
 	}
 	
-	public Response createOrShow(Cluster cluster){
-		Response result;
-		if(Cluster.fromResponse(show(cluster)).getId() != null)
+	public Cluster createOrShow(Cluster cluster){
+		Cluster result;
+		if(show(cluster).getId() != null)
 			result = show(cluster);
 		else
 			result = create(cluster);
-		return result.expect("id");
+		return result;
 	}
 	
 	public String createCommand(Cluster cluster){
 		return String.format("add cluster --name '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default",cluster.getName());
 	}
 	
-	public Response show(Cluster cluster){
+	public Cluster show(Cluster cluster){
 		return show(cluster.getName());
 	}
 	
-	public Response show(String nameOrId){
-		return getShell().send(String.format("show cluster %s",nameOrId));
+	public Cluster show(String nameOrId){
+		return Cluster.fromResponse(getShell().send(String.format("show cluster %s",nameOrId)));
 	}
 	
 	public Response destroy(Cluster cluster){

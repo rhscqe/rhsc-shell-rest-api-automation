@@ -17,7 +17,7 @@ public class HostTest extends TestBase{
 	public void test(){
 		
 		Host host = Configuration.getConfiguration().getHosts().iterator().next();
-		Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(host.getCluster()));
+		new ClusterRepository(getShell()).createOrShow(host.getCluster());
 		HostRepository hostRepository = new HostRepository(getShell());
 		host = hostRepository.createOrShow(host);
 		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host,"up", 400));

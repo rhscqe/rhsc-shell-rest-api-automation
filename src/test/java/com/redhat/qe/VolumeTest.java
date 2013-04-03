@@ -29,7 +29,7 @@ public class VolumeTest extends TestBase {
 
 	@BeforeClass
 	public static void setup() {
-		Cluster.fromResponse(new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster()));
+		new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster());
 		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
 
 		HostRepository hostRepository = new HostRepository(getShell());
@@ -41,9 +41,9 @@ public class VolumeTest extends TestBase {
 	
 	@AfterClass
 	public static void teardown(){
-		HostRepository hostRepository = new HostRepository(getShell());
-		destroyHost(hostRepository,host1);
-		destroyHost(hostRepository,host2);
+//		HostRepository hostRepository = new HostRepository(getShell());
+//		destroyHost(hostRepository,host1);
+//		destroyHost(hostRepository,host2);
 	}
 
 	/**

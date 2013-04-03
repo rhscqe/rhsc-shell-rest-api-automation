@@ -11,7 +11,7 @@ public class HostRepository extends Repository {
 	}
 	
 	public Host create(Host host){
-		return Host.fromResponse(getShell().send(createCommand(host)));
+		return Host.fromResponse(getShell().send(createCommand(host)).unexpect("error:"));
 	}
 	
 	public Host show(Host host){

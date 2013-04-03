@@ -7,7 +7,6 @@ public class Repository {
 
 	public Repository(RhscShell shell){
 		this.shell = shell;
-		
 	}
 	
 	public RhscShell getShell(){

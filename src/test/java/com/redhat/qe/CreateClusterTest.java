@@ -11,8 +11,8 @@ public class CreateClusterTest extends TestBase {
 	public void test(){
 		ClusterRepository repo = new ClusterRepository(getShell());
 		Cluster c = new Cluster();
-		c.setName("myCluster");
-		c = Cluster.fromResponse(repo.createOrShow(c));
+		c.setName("myCluster2");
+		c = repo.createOrShow(c);
 		repo.destroy(c);
 	}
 
