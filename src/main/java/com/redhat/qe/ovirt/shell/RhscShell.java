@@ -24,12 +24,12 @@ public class RhscShell {
 	}
 	
 	public void stop(){
-		
+		send("exit");
 	}
 
 	public void connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
-		Response response = ssh.getShell().send(command).expect("connected to \\w+ manager");
+		ssh.getShell().send(command).expect("connected to \\w+ manager");
 	}
 	
 	public Response send(String command ){
