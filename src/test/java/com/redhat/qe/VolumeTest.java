@@ -33,26 +33,28 @@ public class VolumeTest extends TestBase {
 		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
 
 		HostRepository hostRepository = new HostRepository(getShell());
-		host1 =	hostRepository.createOrShow(hosts.next());
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1,"up", 400));
-		host2 =	hostRepository.createOrShow(hosts.next());
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2,"up", 400));
+		host1 = hostRepository.createOrShow(hosts.next());
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host1, "up", 400));
+		host2 = hostRepository.createOrShow(hosts.next());
+		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host2, "up", 400));
 	}
-	
+
 	@AfterClass
-	public static void teardown(){
-//		HostRepository hostRepository = new HostRepository(getShell());
-//		destroyHost(hostRepository,host1);
-//		destroyHost(hostRepository,host2);
+	public static void teardown() {
+		HostRepository hostRepository = new HostRepository(getShell());
+		destroyHost(hostRepository, host1);
+		destroyHost(hostRepository, host2);
 	}
 
 	/**
 	 * @param hostRepository
 	 */
 	private static void destroyHost(HostRepository hostRepository, Host host) {
-		hostRepository.deactivate(host);
-		Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host,"maintenance", 400));
-		hostRepository.destroy(host);
+		if (host != null) {
+			hostRepository.deactivate(host);
+			Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepository, host, "maintenance", 400));
+			hostRepository.destroy(host);
+		}
 	}
 
 	@Test

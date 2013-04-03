@@ -19,7 +19,15 @@ public class HostRepository extends Repository {
 	}
 	
 	public Host show(String nameOrId){
-		return Host.fromResponse(getShell().send(String.format("show host %s", nameOrId)));
+		return Host.fromResponse(_show(nameOrId).unexpect("error:"));
+	}
+	
+	private Host _show(Host host){
+		return Host.fromResponse(_show(host.getName()));
+	}
+	
+	private Response _show(String nameOrId){
+		return getShell().send(String.format("show host %s", nameOrId));
 	}
 	
 	public Host createOrShow(Host host){
@@ -30,8 +38,8 @@ public class HostRepository extends Repository {
 		}
 	}
 
-	private boolean isExist(Host host) {
-		return show(host).getId() != null;
+	public boolean isExist(Host host) {
+		return _show(host).getId() != null;
 	}
 	
 	private String createCommand(Host host) {

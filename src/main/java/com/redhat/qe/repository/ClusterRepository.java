@@ -18,11 +18,15 @@ public class ClusterRepository extends Repository {
 	
 	public Cluster createOrShow(Cluster cluster){
 		Cluster result;
-		if(show(cluster).getId() != null)
+		if(isExist(cluster))
 			result = show(cluster);
 		else
 			result = create(cluster);
 		return result;
+	}
+
+	private boolean isExist(Cluster cluster) {
+		return _show(cluster).getId() != null;
 	}
 	
 	public String createCommand(Cluster cluster){
@@ -34,7 +38,15 @@ public class ClusterRepository extends Repository {
 	}
 	
 	public Cluster show(String nameOrId){
-		return Cluster.fromResponse(getShell().send(String.format("show cluster %s",nameOrId)));
+		return Cluster.fromResponse(_show(nameOrId).unexpect("error:"));
+	}
+	
+	private Cluster _show(Cluster cluster){
+		return Cluster.fromResponse(_show(cluster.getName()));
+	}
+	
+	private Response _show(String nameorId){
+		return getShell().send(String.format("show cluster %s",nameorId));
 	}
 	
 	public Response destroy(Cluster cluster){
