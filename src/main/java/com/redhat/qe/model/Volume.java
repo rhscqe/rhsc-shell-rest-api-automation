@@ -1,30 +1,50 @@
 package com.redhat.qe.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.ListUtil;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
 import com.redhat.qe.repository.GlusterOption;
 import com.redhat.qe.repository.GlusterOptionValue;
+import com.redhat.qe.repository.rest.JaxbContext;
 import com.redhat.qe.ssh.Response;
+import com.redhat.qe.utils.MyMarshaller;
 
+@XmlAccessorType( XmlAccessType.FIELD )
+@XmlRootElement(name="gluster_volume")
 public class Volume extends Model{
+	@XmlAttribute
 	private String id;
+	
+	@XmlTransient
 	private Cluster cluster;
 	private String name;
+	@XmlElement(name = "volume_type")
 	private String type;
-	private String status;
+	private Status status;
 	private int stripe_count =0 ;
 	private int replica_count =0;
 	private String transportType;
 	private HashMap<GlusterOption, GlusterOptionValue> volumeOptions;
-	private List<Brick> bricks = new ArrayList<Brick>();
+	
+	private BrickList bricks = new BrickList();
 	/**
 	 * @return the cluster
 	 */
+	@XmlTransient
 	public Cluster getCluster() {
 		return cluster;
 	}
@@ -62,13 +82,13 @@ public class Volume extends Model{
 	 * @return the bricks
 	 */
 	public List<Brick> getBricks() {
-		return bricks;
+		return bricks.getBricks();
 	}
 	/**
 	 * @param bricks the bricks to set
 	 */
 	public void setBricks(List<Brick> bricks) {
-		this.bricks = bricks;
+		this.bricks.setBricks(bricks);
 	}
 	
 	
@@ -90,13 +110,13 @@ public class Volume extends Model{
 	 * @return the status
 	 */
 	public String getStatus() {
-		return status;
+		return status.getState();
 	}
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(String status) {
-		this.status = status;
+		this.status.setState(status);
 	}
 	/**
 	 * @return the stripe_count
@@ -234,6 +254,16 @@ public class Volume extends Model{
 						|| ((Volume)o).getCluster().getId().equals(getCluster().getId()));
 	}
 	
+	public static void main(String[] args) throws JAXBException{
+		Iterator<Host> hosts = RhscConfiguration.getConfiguration().getHosts().iterator();
+		Host host1 = hosts.next();
+		Host host2 = hosts.next();
+		host1.setId("1");
+		host2.setId("2");
+		Volume vol = VolumeFactory.distributed("hi", host1, host2);
+		String out = new MyMarshaller().marshall(JaxbContext.getContext(), vol);
+		System.out.println(out);
+	}
 	
 	
 

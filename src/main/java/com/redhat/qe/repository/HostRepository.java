@@ -9,7 +9,7 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
 
-public class HostRepository extends Repository<Host> {
+public class HostRepository extends Repository<Host> implements IHostRepository{
 
 	public HostRepository(RhscShellSession shell) {
 		super(shell);

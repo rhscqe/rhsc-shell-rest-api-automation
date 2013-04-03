@@ -1,39 +1,47 @@
 <com.redhat.qe.config.Configuration>
-	<restApi>
-		<url>https://localhost:443/api</url>
-		<credentials>
-			<username>admin@internal</username>
-			<password>redhat</password>
-		</credentials>
-	</restApi>
-	<shellHost>
+  <restApi>
 		<hostname>10.70.37.123</hostname>
-		<credentials>
-			<username>root</username>
-			<password>redhat</password>
-		</credentials>
-		<port>22</port>
-	</shellHost>
-	<cluster>
-		<name>myCluster</name>
-		<majorVersion>3</majorVersion>
-		<minorVersion>2</minorVersion>
-	</cluster>
-
-	<hosts>
-		<com.redhat.qe.model.Host>
-			<name>node1</name>
+    <credentials>
+      <username>admin@internal</username>
+      <password>redhat</password>
+    </credentials>
+  </restApi>
+  <shellHost>
+		<hostname>10.70.37.123</hostname>
+    <credentials>
+      <username>root</username>
+      <password>redhat</password>
+    </credentials>
+    <port>22</port>
+  </shellHost>
+  <cluster>
+    <name>myCluster</name>
+    <majorVersion>3</majorVersion>
+    <minorVersion>2</minorVersion>
+    <datacenter>
+      <name>Default</name>
+    </datacenter>
+    <virtService>false</virtService>
+    <glusterService>true</glusterService>
+    <cpu>
+      <id>Intel SandyBridge Family</id>
+    </cpu>
+    <description>cluster created by automation</description>
+  </cluster>
+  <hosts>
+    <com.redhat.qe.model.Host>
+      <name>node1</name>
       <address>10.70.35.187</address>
-			<rootPassword>rhscauto</rootPassword>
-			<cluster reference="../../../cluster"/>
-		</com.redhat.qe.model.Host>
-
-		<com.redhat.qe.model.Host>
-			<name>node2</name>
+      <rootPassword>redhat</rootPassword>
+      <cluster reference="../../../cluster"/>
+      <reboot>false</reboot>
+    </com.redhat.qe.model.Host>
+    <com.redhat.qe.model.Host>
+      <name>node2</name>
       <address>10.70.35.9</address>
-			<rootPassword>rhscauto</rootPassword>
-			<cluster reference="../../../cluster"/>
-		</com.redhat.qe.model.Host>
-	</hosts>
-
+      <rootPassword>redhat</rootPassword>
+      <cluster reference="../../../cluster"/>
+      <reboot>false</reboot>
+    </com.redhat.qe.model.Host>
+  </hosts>
 </com.redhat.qe.config.Configuration>

@@ -4,27 +4,20 @@ import com.redhat.qe.ssh.Credentials;
 
 
 public class RestApi {
-	private String url;
+	private String hostname;
 	private Credentials credentials;
 	/**
 	 * @return the url
 	 */
 	public String getUrl() {
-		return url;
-	}
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
+		return String.format("https://%s/api", hostname);
 	}
 	/**
 	 * @param url
 	 * @param credentials
 	 */
-	public RestApi(String url, Credentials credentials) {
-		super();
-		this.url = url;
+	public RestApi(String host, Credentials credentials) {
+		this.hostname= host;
 		this.credentials = credentials;
 	}
 	/**
@@ -39,6 +32,20 @@ public class RestApi {
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
+	/**
+	 * @return the host
+	 */
+	public String getHostname() {
+		return hostname;
+	}
+	/**
+	 * @param host the host to set
+	 */
+	public void setHostname(String host) {
+		this.hostname = host;
+	}
+	
+	
 	
 
 }

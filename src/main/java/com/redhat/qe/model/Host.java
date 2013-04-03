@@ -5,6 +5,19 @@ import java.util.HashMap;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.ssh.Response;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import com.redhat.qe.ssh.Response;
+
+@XmlAccessorType( XmlAccessType.FIELD )
+@XmlRootElement(name="host")
 public class Host extends Model{
 	
 	public static Host fromResponse(String raw){
@@ -26,11 +39,18 @@ public class Host extends Model{
 		return fromResponse(response.toString());
 	}
 	private String name;
+	
+	@XmlAttribute
 	private String id;
 	private String address;
+	
+	@XmlElement(name="root_password")
 	private String rootPassword;
 	private Cluster cluster;
-	private String state;
+	private Status status;
+	
+	@XmlElement(name="reboot_after_installation")
+	private boolean reboot = false;
 	
 	/**
 	 * @return the name
@@ -85,13 +105,19 @@ public class Host extends Model{
 	 * @return the state
 	 */
 	public String getState() {
-		return state;
+		if(getStatus() == null){
+			status = new Status();
+		}
+		return getStatus().getState();
 	}
 	/**
 	 * @param state the state to set
 	 */
 	public void setState(String state) {
-		this.state = state;
+		if(getStatus() == null){
+			status = new Status();
+		}
+		getStatus().setState(state);
 	}
 	/**
 	 * @return the id
@@ -111,13 +137,51 @@ public class Host extends Model{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	@Override
-	public boolean equals(Object o){
-		return (o instanceof Host) 
-				&& (getId()==null || ((Host)o).getId().equals(getId()))
-				&& (getName() == null || ((Host)o).getName().equals(getName()));
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
 	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	/**
+	 * @return the reboot
+	 */
+	public boolean isReboot() {
+		return reboot;
+	}
+	/**
+	 * @param reboot the reboot to set
+	 */
+	public void setReboot(boolean reboot) {
+		this.reboot = reboot;
+	}
+	
+	public int hashCode() {
+        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+            // if deriving: appendSuper(super.hashCode()).
+            append(name).
+            toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+
+        Host rhs = (Host) obj;
+        return new EqualsBuilder().
+            // if deriving: appendSuper(super.equals(obj)).
+            append(name, rhs.name).
+            isEquals();
+    }
+	
 	
 	
 	

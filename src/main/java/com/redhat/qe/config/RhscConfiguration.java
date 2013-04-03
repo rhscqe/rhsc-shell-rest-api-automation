@@ -32,5 +32,5 @@ public class RhscConfiguration {
 	private static Configuration getConfigFromXml() throws IOException {
 		return Configuration.fromXml(FileUtil.fileToString(new File(getXmlFile())));
 	}
-	 
+
 }

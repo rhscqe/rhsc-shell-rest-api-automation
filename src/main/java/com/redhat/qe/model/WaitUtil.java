@@ -6,6 +6,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.redhat.qe.repository.HostRepository;
+import com.redhat.qe.repository.IHostRepository;
 
 import dstywho.functional.Closure;
 import dstywho.functional.Predicate;
@@ -125,6 +126,16 @@ public class WaitUtil {
 				return new WaitResult(true, _, new Duration(TimeUnit.MILLISECONDS, System.currentTimeMillis() - starttime));
 		}
 		return new WaitResult(false, numAttempts, new Duration(TimeUnit.MILLISECONDS, System.currentTimeMillis() - starttime));
+	}
+	
+	public static boolean waitForHostStatus(IHostRepository repo, Host host, String status, int numAttempts){
+		int attempt = 0;
+		while(attempt < numAttempts){
+			try{Thread.sleep(1000);}catch(Exception e){throw new RuntimeException(e);}
+			if(repo.show(host).getState().equals(status))
+				return true;
+		}
+		return false;
 	}
 
 }

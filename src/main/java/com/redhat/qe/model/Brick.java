@@ -3,15 +3,26 @@ package com.redhat.qe.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
+import com.redhat.qe.helpers.jaxb.BrickHostToServerIdXmlAdapter;
 
+@XmlAccessorType( XmlAccessType.FIELD )
+@XmlRootElement(name="brick")
 public class Brick extends Model {
-	private Host host;
+	@XmlJavaTypeAdapter(value=BrickHostToServerIdXmlAdapter.class )
+	@XmlElement(name="server_id")
+	private  Host host;
+	@XmlElement(name="brick_dir")
 	private String dir;
 	private String id;
 	private RepeatingHashMap<String, String> mixedAttributes;

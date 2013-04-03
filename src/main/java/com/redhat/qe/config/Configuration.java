@@ -9,6 +9,7 @@ import com.redhat.qe.exceptions.UnableToOpenConfigurationFileException;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.factories.HostFactory;
 import com.redhat.qe.model.Cluster;
+import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.ssh.Credentials;
 import com.thoughtworks.xstream.XStream;
@@ -95,24 +96,31 @@ public class Configuration {
 	
 
 	public static void main(String[] a){
-		RestApi api = new RestApi("https://localhost:443/api", new Credentials("admin@internal", "redhat"));
-		ShellHost shell = new ShellHost("rhsc-qa9", new Credentials("root", "redhat"),22);
+//		RestApi api = new RestApi("https://localhost:443/api", new Credentials("admin@internal", "redhat"));
+		RestApi api = new RestApi("10.70.37.112", new Credentials("admin@internal", "redhat"));
+		ShellHost shell = new ShellHost("10.70.37.112", new Credentials("root", "redhat"),22);
 		Configuration config = new Configuration(api, shell);
 		Cluster clustr = ClusterFactory.cluster("myCluster");
+		clustr.setMajorVersion("3");
+		clustr.setMinorVersion("2");
+		Datacenter dc = new Datacenter();
+		dc.setName("Default");
+		clustr.setDatacenter(dc);
 		config.setCluster(clustr);
 		ArrayList<Host> hostz = new ArrayList<Host>();
 		hostz.add(HostFactory.create("node1", "rhsc-qa9-node-a", "redhat",clustr ));
 		hostz.add(HostFactory.create("node2", "rhsc-qa9-node-b", "redhat",clustr ));
 		config.setHosts(hostz);
 		System.out.println(config.toXml());
+		
+		
+		System.out.println("==============================");
+		System.out.println("==============================");
+		System.out.println("==============================");
+		System.out.println("==============================");
+		
 		String u = fromXml(config.toXml()).getRestApi().getCredentials().getUsername();
 		System.out.println(u);
-		try {
-			System.out.println(fromXml(FileUtil.fileToString(new File("src/test/resources/config.xml"))).toXml());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	}
 

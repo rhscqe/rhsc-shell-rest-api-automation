@@ -6,6 +6,9 @@ public class UnexpectedReponseException extends RuntimeException {
 
 	private Response response;
 
+	public UnexpectedReponseException(String message) {
+		super(message);
+	}
 
 	public UnexpectedReponseException(String message, Response response) {
 		super(message);
