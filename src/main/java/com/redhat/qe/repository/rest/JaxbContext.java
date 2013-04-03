@@ -21,7 +21,9 @@ public class JaxbContext {
 
 	public static JAXBContext getContext() throws JAXBException {
 		if (context == null) {
-			context = JAXBContext.newInstance(Cluster.class, Datacenter.class, DatacenterList.class, ClusterList.class, Host.class, HostList.class,
+			context = JAXBContext.newInstance(Cluster.class, Datacenter.class,
+					DatacenterList.class, ClusterList.class,
+					Host.class, HostList.class,
 					Volume.class, Brick.class, VolumeList.class);
 		}
 		return context;

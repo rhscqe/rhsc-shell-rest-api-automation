@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -110,12 +112,16 @@ public class Volume extends Model{
 	 * @return the status
 	 */
 	public String getStatus() {
+		if(this.status == null)
+			this.status = new Status();
 		return status.getState();
 	}
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(String status) {
+		if(this.status == null)
+			this.status = new Status();
 		this.status.setState(status);
 	}
 	/**
