@@ -1,4 +1,6 @@
-package com.redhat.qe.model;
+package com.redhat.qe.factories;
+
+import com.redhat.qe.model.Cluster;
 
 public class ClusterFactory {
 	

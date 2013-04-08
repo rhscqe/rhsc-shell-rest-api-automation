@@ -2,9 +2,10 @@ package com.redhat.qe.model;
 
 import java.util.HashMap;
 
+import com.redhat.qe.repository.StringUtils;
 import com.redhat.qe.ssh.Response;
 
-public class Host {
+public class Host extends Model{
 	
 	public static Host fromResponse(Response response){
 		HashMap<String, String> attributes = StringUtils.keyAttributeToHash(response.toString());

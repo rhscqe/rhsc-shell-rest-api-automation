@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.ssh.Response;
 
 public class CreateClusterTest extends TestBase {
 	@Test

@@ -7,7 +7,7 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShell;
 import com.redhat.qe.ssh.Response;
 
-public class VolumeRepository extends Repository{
+public class VolumeRepository extends Repository<Volume>{
 	
 	public VolumeRepository(RhscShell shell) {
 		super(shell);
@@ -33,6 +33,16 @@ public class VolumeRepository extends Repository{
 
 	public Response destroy(Volume volume) {
 		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId())).expect("accepted");	
+	}
+
+	public Volume update(Volume entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isExist(Volume entity) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

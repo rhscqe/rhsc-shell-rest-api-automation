@@ -1,10 +1,11 @@
 package com.redhat.qe.model;
 import java.util.HashMap;
 
+import com.redhat.qe.repository.StringUtils;
 import com.redhat.qe.ssh.Response;
 
 
-public class Cluster {
+public class Cluster extends Model{
 	
 	
 	private String id;

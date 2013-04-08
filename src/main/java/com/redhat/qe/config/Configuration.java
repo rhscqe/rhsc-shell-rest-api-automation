@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.redhat.qe.exceptions.UnableToOpenConfigurationFileException;
+import com.redhat.qe.factories.ClusterFactory;
+import com.redhat.qe.factories.HostFactory;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.model.ClusterFactory;
 import com.redhat.qe.model.Host;
-import com.redhat.qe.model.HostFactory;
 import com.redhat.qe.ssh.Credentials;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;

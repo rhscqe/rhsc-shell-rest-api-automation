@@ -4,7 +4,7 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.ovirt.shell.RhscShell;
 import com.redhat.qe.ssh.Response;
 
-public class HostRepository extends Repository {
+public class HostRepository extends Repository<Host> {
 
 	public HostRepository(RhscShell shell) {
 		super(shell);
@@ -56,6 +56,11 @@ public class HostRepository extends Repository {
 
 	public Response destroy(Host host) {
 		return getShell().send(String.format("remove host %s",host.getId())).expect("accepted");
+	}
+
+	public Host update(Host entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

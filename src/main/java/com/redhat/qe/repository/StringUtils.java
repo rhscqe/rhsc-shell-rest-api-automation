@@ -1,4 +1,4 @@
-package com.redhat.qe.model;
+package com.redhat.qe.repository;
 
 import java.util.Arrays;
 import java.util.Collection;

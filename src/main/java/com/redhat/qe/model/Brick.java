@@ -1,6 +1,6 @@
 package com.redhat.qe.model;
 
-public class Brick {
+public class Brick extends Model{
 	private Host host;
 	private String dir;
 	

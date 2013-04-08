@@ -4,7 +4,7 @@ import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShell;
 import com.redhat.qe.ssh.Response;
 
-public class ClusterRepository extends Repository {
+public class ClusterRepository extends Repository<Cluster> {
 	
 
 	
@@ -25,7 +25,7 @@ public class ClusterRepository extends Repository {
 		return result;
 	}
 
-	private boolean isExist(Cluster cluster) {
+	public boolean isExist(Cluster cluster) {
 		return _show(cluster).getId() != null;
 	}
 	
@@ -55,5 +55,10 @@ public class ClusterRepository extends Repository {
 	
 	public Response destroy(String nameOrId){
 		return getShell().send(String.format("remove cluster %s", nameOrId)).expect("accepted.");
+	}
+
+	public Cluster update(Cluster entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,9 +1,12 @@
-package com.redhat.qe.model;
+package com.redhat.qe.factories;
 
 import java.util.Random;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+
+import com.redhat.qe.model.Brick;
+import com.redhat.qe.model.Host;
 
 public class BrickFactory {
 	
