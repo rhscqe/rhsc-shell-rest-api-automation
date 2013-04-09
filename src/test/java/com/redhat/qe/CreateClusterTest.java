@@ -1,8 +1,6 @@
 package com.redhat.qe;
 
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +16,7 @@ public class CreateClusterTest extends TestBase {
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
 
-	@Tcms("167062")
+	@Tcms("167062,233396")
 	@Test
 	public void createCluster() {
 		Cluster c = new Cluster();
@@ -40,7 +38,7 @@ public class CreateClusterTest extends TestBase {
 	}
 
 	@Test
-	@Tcms("212942")
+	@Tcms("233395")
 	public void updateCluster() {
 		Cluster c = new Cluster();
 		c.setName("myCluster2");
@@ -53,5 +51,7 @@ public class CreateClusterTest extends TestBase {
 		
 		getClusterRepository().destroy(c);
 	}
+	
+
 
 }
