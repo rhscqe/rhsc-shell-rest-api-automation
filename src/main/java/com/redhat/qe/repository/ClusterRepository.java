@@ -58,7 +58,10 @@ public class ClusterRepository extends Repository<Cluster> {
 	}
 
 	public Cluster update(Cluster entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return Cluster.fromResponse(_update(entity).unexpect("error:"));
+	}
+	
+	private Response _update( Cluster entity) {
+		return getShell().send(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
 	}
 }
