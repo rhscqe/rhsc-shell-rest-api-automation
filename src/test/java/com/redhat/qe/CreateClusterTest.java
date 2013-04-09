@@ -16,7 +16,7 @@ public class CreateClusterTest extends TestBase {
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
 
-	@Tcms("167062,233396")
+	@Tcms({"167062","233396"})
 	@Test
 	public void createCluster() {
 		Cluster c = new Cluster();
