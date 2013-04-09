@@ -18,17 +18,18 @@ public class Response {
 	
 	public Response expect(String regex){
 		if(!contains(regex))
-			throw new UnexpectedReponseException(String.format("Response did not contain pattern %s. Response: %s", regex, body));
+			throw new UnexpectedReponseException(String.format("Response did not contain pattern %s. Response: %s", regex, body), this);
 		return this;
 	}
 	public Response unexpect(String regex){
 		if(contains(regex))
-			throw new UnexpectedReponseException(String.format("Response contained pattern %s. Response: %s", regex, body));
+			throw new UnexpectedReponseException(String.format("Response contained pattern %s. Response: %s", regex, body),this);
 		return this;
 	}
 	
 	public String toString(){
 		return body;
 	}
+
 
 }

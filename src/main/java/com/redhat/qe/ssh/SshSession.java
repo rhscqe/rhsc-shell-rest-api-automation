@@ -53,13 +53,14 @@ public class SshSession {
 	}
 
 		Shell shell = null;
-		public Shell getShell() {
-		try{
+
+	public Shell getShell() {
+		try {
 			shell = new Shell(channel.getInputStream(), channel.getOutputStream());
-		}catch(IOException e){
+		} catch (IOException e) {
 			throw new UnableToObtainInputOrOutputStreamFromChannel(e);
 		}
-		
+
 		return shell;
 	}
 	

@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.factories.HostFactory;
@@ -23,6 +24,7 @@ public class HostTest extends TestBase{
 		getClusterRepository().createOrShow(host.getCluster());
 	}
 	
+	@Tcms(value = { "174413" })	
 	@Test
 	public void test(){
 		host = getHostRepository().createOrShow(host);
