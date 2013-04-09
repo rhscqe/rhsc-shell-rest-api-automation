@@ -22,9 +22,12 @@ public class HostInClusterTestBase extends TestBase {
 		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
 	
 		host1 = getHostRepository().createOrShow(hosts.next());
-		Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host1, "up", 400));
+		Assert.assertTrue(String.format("host did not come up; host is in ", host1.toJson()),
+				WaitUtil.waitForHostStatus(getHostRepository(), host1, "up", 400));
 		host2 = getHostRepository().createOrShow(hosts.next());
-		Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host2, "up", 400));
+		Assert.assertTrue(String.format("host did not come up; host is in ", host2.toJson()),
+				WaitUtil.waitForHostStatus(getHostRepository(), host2, "up", 400));
+		;
 	}
 
 	@AfterClass
