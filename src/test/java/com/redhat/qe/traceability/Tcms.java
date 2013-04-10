@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.traceability;
 
 import java.io.Console;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.traceability;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ import com.google.gson.GsonBuilder;
 import com.redhat.qe.annoations.Tcms;
 
 
-public class TestCase {
+public class AnnotatedTestCase {
 	
-	public static Set<Method> getImplementedTestCases(){
+	public static Set<Method> getAnnotatedTestCases(){
 		Reflections reflections = new Reflections(ClasspathHelper.forPackage(""), 
 		          new SubTypesScanner(), new TypeAnnotationsScanner(), new FieldAnnotationsScanner(), new MethodAnnotationsScanner() );
 		
@@ -32,7 +32,7 @@ public class TestCase {
 	public static HashMap<String, ArrayList<Method>> getTestCaseToMethodMap(){
 		HashMap<String, ArrayList<Method>> testCaseToMethod = new HashMap<String, ArrayList<Method>>();
 		
-		for(Method method:getImplementedTestCases()){
+		for(Method method:getAnnotatedTestCases()){
 			
 			for(String testcase :method.getAnnotation(Tcms.class).value()){
 				if(testCaseToMethod.get(testcase)== null){
@@ -63,9 +63,8 @@ public class TestCase {
 	
 	
 	public static void main(String[] args){
-		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		System.out.println(gson.toJson(TestCase.getTestCaseToMethodNameMap()));
+		System.out.println(gson.toJson(AnnotatedTestCase.getTestCaseToMethodNameMap()));
 		
 	}
 
