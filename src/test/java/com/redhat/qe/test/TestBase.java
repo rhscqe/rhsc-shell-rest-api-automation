@@ -36,25 +36,40 @@ public class TestBase {
 	}
 	
 	@AfterClass
-	public static void after(){
-		if(session != null)
-			session.stop();
+	public synchronized static void after() {
+		session.stop();
+		clearState();
 	}
-	
-	public static HostRepository getHostRepository(){
-		if(hostRepository == null){
+
+	public synchronized static void clearState() {
+		if (shell != null)
+			shell = null;
+		if (session != null)
+			session = null;
+		if (hostRepository != null)
+			hostRepository = null;
+		if (clusterRepository != null)
+			clusterRepository = null;
+		if (volumeRepository != null)
+			volumeRepository = null;
+	}
+
+	public synchronized static HostRepository getHostRepository() {
+		if (hostRepository == null) {
 			hostRepository = new HostRepository(getShell());
 		}
 		return hostRepository;
 	}
-	public static VolumeRepository getVolumeRepository(){
-		if(volumeRepository== null){
-			volumeRepository= new VolumeRepository(getShell());
+
+	public synchronized static VolumeRepository getVolumeRepository() {
+		if (volumeRepository == null) {
+			volumeRepository = new VolumeRepository(getShell());
 		}
 		return volumeRepository;
 	}
-	public static ClusterRepository getClusterRepository(){
-		if(clusterRepository == null){
+
+	public synchronized static ClusterRepository getClusterRepository() {
+		if (clusterRepository == null) {
 			clusterRepository = new ClusterRepository(getShell());
 		}
 		return clusterRepository;
