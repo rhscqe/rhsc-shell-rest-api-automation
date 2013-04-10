@@ -104,8 +104,8 @@ public class SshSession {
 	}
 
 	private Session startSession() throws JSchException {
-		JSch jsch = new JSch();  
-		session = jsch.getSession(credentials.getUsername(),hostname ,22);
+		JSch jsch = new JSch();
+		session = jsch.getSession(credentials.getUsername(), hostname, port);
 		session.setPassword(credentials.getPassword());
 		session.setConfig("StrictHostKeyChecking", "no");
 		session.connect();
