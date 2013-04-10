@@ -21,9 +21,4 @@ public class HostUnableToCloseChannel extends RuntimeException {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HostUnableToCloseChannel(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
-
 }

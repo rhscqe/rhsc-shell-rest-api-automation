@@ -23,15 +23,6 @@ public class UnableToObtainInputOrOutputStreamFromChannel extends RuntimeExcepti
 
 	/**
 	 * @param message
-	 * @param cause
-	 */
-	public UnableToObtainInputOrOutputStreamFromChannel(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param message
 	 */
 	public UnableToObtainInputOrOutputStreamFromChannel(String message) {
 		super(message);
