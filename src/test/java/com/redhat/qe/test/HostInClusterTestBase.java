@@ -1,4 +1,4 @@
-package com.redhat.qe;
+package com.redhat.qe.test;
 
 import java.util.Iterator;
 

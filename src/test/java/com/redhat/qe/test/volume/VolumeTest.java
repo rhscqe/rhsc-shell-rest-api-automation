@@ -1,10 +1,11 @@
-package com.redhat.qe;
+package com.redhat.qe.test.volume;
 
 
 import org.junit.Test;
 
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.test.HostInClusterTestBase;
 
 public class VolumeTest extends HostInClusterTestBase {
 

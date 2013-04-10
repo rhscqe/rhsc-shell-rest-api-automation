@@ -1,6 +1,7 @@
-package com.redhat.qe;
+package com.redhat.qe.test;
 
 import org.junit.Test;
+
 
 public class InvalidInputTest extends TestBase{
 	@Test

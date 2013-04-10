@@ -1,4 +1,4 @@
-package com.redhat.qe;
+package com.redhat.qe.test;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

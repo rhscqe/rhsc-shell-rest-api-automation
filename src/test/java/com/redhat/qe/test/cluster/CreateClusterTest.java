@@ -1,4 +1,4 @@
-package com.redhat.qe;
+package com.redhat.qe.test.cluster;
 
 
 import org.junit.Assert;
@@ -10,6 +10,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.model.Cluster;
+import com.redhat.qe.test.TestBase;
 
 public class CreateClusterTest extends TestBase {
 

@@ -1,4 +1,4 @@
-package com.redhat.qe;
+package com.redhat.qe.test.host;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +13,7 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
+import com.redhat.qe.test.TestBase;
 
 public class HostTest extends TestBase{
 	
