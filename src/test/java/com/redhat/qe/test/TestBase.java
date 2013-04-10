@@ -26,18 +26,22 @@ public class TestBase {
 	}
 
 	@BeforeClass
-	public static void before(){
+	public synchronized static void before() {
 		Configuration config = Configuration.getConfiguration();
 		session = SshSession.fromConfiguration(config);
 		session.start();
+		session.openChannel();
 		shell = RhscShell.fromConfiguration(session, config);
 		shell.start();
 		shell.connect();
 	}
-	
+
 	@AfterClass
 	public synchronized static void after() {
-		session.stop();
+		if (session != null){
+			session.closeChannel();
+			session.stop();
+		}
 		clearState();
 	}
 
@@ -73,6 +77,6 @@ public class TestBase {
 			clusterRepository = new ClusterRepository(getShell());
 		}
 		return clusterRepository;
-		
+
 	}
 }
