@@ -39,7 +39,7 @@ public class TestBase {
 	@AfterClass
 	public synchronized static void after() {
 		if (session != null){
-			session.closeChannel();
+			session.stopChannel();
 			session.stop();
 		}
 		clearState();

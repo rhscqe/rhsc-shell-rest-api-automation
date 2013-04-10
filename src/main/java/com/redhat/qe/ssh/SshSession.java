@@ -54,12 +54,14 @@ public class SshSession {
 	/**
 	 * 
 	 */
-	private void stopChannel() {
+	public void stopChannel() {
 		try {
-			closeChannel();
+			channel.disconnect();
 		} catch (Exception e) {
 			throw new HostUnableToCloseChannel(e);
 		}
+		channel = null;
+		
 	}
 
 	Shell shell = null;
@@ -98,10 +100,6 @@ public class SshSession {
 		}
 	}
 
-	public void closeChannel() {
-		getChannel().disconnect();
-		channel = null;
-	}
 
 	private Session startSession() throws JSchException {
 		JSch jsch = new JSch();
