@@ -15,10 +15,9 @@ public class MyListener extends RunListener {
 
 	private static RemoteAPI reportEngine = new RemoteAPI();
 	HashMap<String, Failure> descriptionToFailure = new HashMap<String, Failure>();
-	
-	public MyListener() throws UnknownHostException, Exception{
+
+	public MyListener() throws UnknownHostException, Exception {
 		reportEngine.initClient(InetAddress.getLocalHost().getHostName() + " [" + InetAddress.getLocalHost().getHostAddress() + "]");
-		
 	}
 
 	/**
@@ -28,13 +27,12 @@ public class MyListener extends RunListener {
 	 *            describes the tests to be run
 	 */
 	public void testRunStarted(Description description) throws Exception {
-		if (!(reportEngine.isClientConfigurationSuccess())) {
-			return;
-		}
-		try {
-			reportEngine.insertTestGroup("all tests");
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (reportEngine.isClientConfigurationSuccess()) {
+			try {
+				reportEngine.insertTestGroup("all tests");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 
@@ -46,17 +44,19 @@ public class MyListener extends RunListener {
 	 *            failed
 	 */
 	public void testRunFinished(Result result) throws Exception {
-		if (!(reportEngine.isClientConfigurationSuccess()))
-			return;
-		try {
-			reportEngine.updateTestSuite("Completed", getBuildVersion());
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (reportEngine.isClientConfigurationSuccess()) {
+			try {
+				reportEngine.updateTestSuite("Completed", getBuildVersion());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
+
 	public static String getBuildVersion() {
 		return System.getProperty(reportEngine.getBuildVersionReference());
 	}
+
 	/**
 	 * Called when an atomic test is about to be started.
 	 * 
@@ -65,12 +65,12 @@ public class MyListener extends RunListener {
 	 *            a class and method name)
 	 */
 	public void testStarted(Description description) throws Exception {
-		if (!(reportEngine.isClientConfigurationSuccess()))
-			return;
-		try {
-			reportEngine.insertTestCase(description.getDisplayName(), "Running");
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (reportEngine.isClientConfigurationSuccess()) {
+			try {
+				reportEngine.insertTestCase(description.getDisplayName(), "Running");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 
@@ -106,14 +106,13 @@ public class MyListener extends RunListener {
 	 *            thrown
 	 */
 	public void testFailure(Failure failure) throws Exception {
-
-		if (!(reportEngine.isClientConfigurationSuccess()))
-			return;
-		try {
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (reportEngine.isClientConfigurationSuccess()) {
+			try {
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			descriptionToFailure.put(failure.getDescription().getDisplayName(), failure);
 		}
-		descriptionToFailure.put(failure.getDescription().getDisplayName(), failure);
 	}
 
 }
