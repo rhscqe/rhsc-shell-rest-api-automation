@@ -15,23 +15,11 @@ import com.redhat.qe.test.TestBase;
 
 public class CreateClusterTest extends TestBase {
 
-	@Rule
-	public ExpectedException expectedEx = ExpectedException.none();
 
 	@Tcms({"167062","233396"})
 	@Test
 	public void createCluster() {
 		Cluster c = getClusterRepository().createOrShow(ClusterFactory.cluster("rhsccluster"));
-		getClusterRepository().destroy(c);
-	}
-
-	@Test
-	@Tcms("212942")
-	public void createClusterNegative() {
-		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("name in use"));
-		Cluster c = getClusterRepository().createOrShow(ClusterFactory.cluster("cluster_seats_taken"));
-		c = getClusterRepository().create(c);
 		getClusterRepository().destroy(c);
 	}
 
