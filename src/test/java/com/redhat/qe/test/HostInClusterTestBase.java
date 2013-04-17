@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
@@ -15,10 +16,11 @@ public class HostInClusterTestBase extends TestBase {
 
 	protected static Host host1;
 	protected static Host host2;
+	private static Cluster cluster;
 
 	@BeforeClass
 	public static void setup() {
-		new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster());
+		cluster = new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster());
 		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
 	
 		host1 = getHostRepository().createOrShow(hosts.next());
@@ -34,6 +36,8 @@ public class HostInClusterTestBase extends TestBase {
 	public static void teardown() {
 		destroyHost( host1);
 		destroyHost( host2);
+		getClusterRepository().destroy(cluster);
+		
 	}
 
 	/**
