@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.test.HostInClusterTestBase;
+import com.redhat.qe.test.TwoHostClusterTestBase;
 
-public class VolumeTest extends HostInClusterTestBase {
+public class VolumeTest extends TwoHostClusterTestBase {
 
 	@Test
 	public void distributedVolumeTest() {
