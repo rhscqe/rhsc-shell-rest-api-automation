@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.factories.HostFactory;
 import com.redhat.qe.model.Cluster;
@@ -21,7 +22,7 @@ public class HostTest extends TestBase{
 	
 	@Before
 	public void setup(){
-		host = Configuration.getConfiguration().getHosts().iterator().next();
+		host = RhscConfiguration.getConfiguration().getHosts().iterator().next();
 		getClusterRepository().createOrShow(host.getCluster());
 	}
 	

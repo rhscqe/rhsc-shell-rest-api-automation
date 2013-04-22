@@ -20,4 +20,5 @@ public class RemoveClusterNegativeTest extends TwoHostClusterTestBase{
 		expectedEx.expect(new ResponseMessageMatcher("vds detected"));
 		getClusterRepository().destroy(host1.getCluster());
 	}
+	
 }

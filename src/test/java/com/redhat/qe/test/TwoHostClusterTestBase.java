@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
@@ -20,8 +21,8 @@ public class TwoHostClusterTestBase extends TestBase {
 
 	@BeforeClass
 	public static void setup() {
-		cluster = new ClusterRepository(getShell()).createOrShow(Configuration.getConfiguration().getCluster());
-		Iterator<Host> hosts = Configuration.getConfiguration().getHosts().iterator();
+		cluster = new ClusterRepository(getShell()).createOrShow(RhscConfiguration.getConfiguration().getCluster());
+		Iterator<Host> hosts = RhscConfiguration.getConfiguration().getHosts().iterator();
 	
 		host1 = getHostRepository().createOrShow(hosts.next());
 		Assert.assertTrue(String.format("host did not come up; host is in ", host1.toJson()),

@@ -105,14 +105,7 @@ public class Configuration {
 	}
 	
 	public static Configuration INSTANCE;
-	public static synchronized Configuration getConfiguration(){
-		try {
-			return INSTANCE == null ? fromXml(FileUtil.fileToString(new File("src/test/resources/config.xml"))) : INSTANCE;
-		} catch (IOException e) {
-			throw new UnableToOpenConfigurationFileException(e);
-		}
-	}
-	 
+
 	public static void main(String[] a){
 		RestApi api = new RestApi("https://localhost:443/api", new Credentials("admin@internal", "redhat"));
 		ShellHost shell = new ShellHost("rhsc-qa9", new Credentials("root", "redhat"),22);

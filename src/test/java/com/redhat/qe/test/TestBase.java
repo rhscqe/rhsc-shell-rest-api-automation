@@ -4,6 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.ovirt.shell.RhscShell;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
@@ -27,7 +28,7 @@ public class TestBase {
 
 	@BeforeClass
 	public synchronized static void before() {
-		Configuration config = Configuration.getConfiguration();
+		Configuration config = RhscConfiguration.getConfiguration();
 		session = SshSession.fromConfiguration(config);
 		session.start();
 		session.openChannel();
