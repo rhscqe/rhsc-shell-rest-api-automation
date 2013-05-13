@@ -48,7 +48,7 @@ public class WaitUtil {
 	public static <T> T muteLogger(Closure<T> closure) {
 		LOG.debug("turning logging off");
 		Level level = Logger.getRootLogger().getLevel();
-		Logger.getRootLogger().setLevel(Level.OFF);
+		Logger.getRootLogger().setLevel(Level.ERROR);
 		T result = null;
 		try {
 			result = closure.call();
