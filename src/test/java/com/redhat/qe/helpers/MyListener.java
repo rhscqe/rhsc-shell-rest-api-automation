@@ -17,7 +17,7 @@ public class MyListener extends RunListener {
 	HashMap<String, Failure> descriptionToFailure = new HashMap<String, Failure>();
 
 	public MyListener() throws UnknownHostException, Exception {
-		reportEngine.initClient(InetAddress.getLocalHost().getHostName() + " [" + InetAddress.getLocalHost().getHostAddress() + "]");
+		reportEngine.initClient("RHSC-CLI_OVERNIGHT");
 	}
 
 	/**
