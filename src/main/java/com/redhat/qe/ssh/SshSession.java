@@ -103,6 +103,7 @@ public class SshSession {
 
 	private Session startSession() throws JSchException {
 		JSch jsch = new JSch();
+		LOG.debug(String.format("connecting to %s@%s:%s", credentials.getUsername(),hostname,port));
 		session = jsch.getSession(credentials.getUsername(), hostname, port);
 		session.setPassword(credentials.getPassword());
 		session.setConfig("StrictHostKeyChecking", "no");
