@@ -43,7 +43,7 @@ public class HostRepository extends Repository<Host> {
 	}
 	
 	private String createCommand(Host host) {
-		return String.format("add host --name %s --address '%s' --root_password %s --cluster-name %s", host.getName(), host.getAddress(), host.getRootPassword(), host.getCluster().getName());
+		return String.format("add host --name %s --address '%s' --root_password %s --cluster-name %s --reboot_after_installation false", host.getName(), host.getAddress(), host.getRootPassword(), host.getCluster().getName());
 	}
 	
 	public Response deactivate(Host host){
