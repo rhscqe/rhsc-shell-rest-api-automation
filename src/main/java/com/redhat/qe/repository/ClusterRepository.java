@@ -54,7 +54,7 @@ public class ClusterRepository extends Repository<Cluster> {
 	}
 	
 	public Response destroy(String nameOrId){
-		return getShell().send(String.format("remove cluster %s", nameOrId)).expect("accepted.");
+		return getShell().send(String.format("remove cluster %s", nameOrId)).expect("complete");
 	}
 
 	public Cluster update(Cluster entity) {

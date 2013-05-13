@@ -32,7 +32,7 @@ public class VolumeRepository extends Repository<Volume>{
 	}
 
 	public Response destroy(Volume volume) {
-		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId())).expect("accepted");	
+		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId())).expect("complete");	
 	}
 
 	public Volume update(Volume entity) {

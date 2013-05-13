@@ -55,7 +55,7 @@ public class HostRepository extends Repository<Host> {
 	}
 
 	public Response destroy(Host host) {
-		return getShell().send(String.format("remove host %s",host.getId())).expect("accepted");
+		return getShell().send(String.format("remove host %s",host.getId())).expect("complete");
 	}
 
 	public Host update(Host entity) {
