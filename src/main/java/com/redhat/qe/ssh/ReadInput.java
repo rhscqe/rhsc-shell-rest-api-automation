@@ -9,15 +9,12 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import dstywho.regexp.RegexMatch;
+public abstract class ReadInput {
 
-public class ReadInput implements Callable<Response> {
-	private static final Logger LOG = Logger.getLogger(ReadInput.class);
-	public static final Pattern RHSC_PROMPT = Pattern.compile("\\[RHSC\\sshell\\s\\(\\w+\\)\\]#\\s");
-
-	StringBuffer buffer;
-	private InputStream inputStream;
-	private Duration timeout;
+	private static final Logger LOG = Logger.getLogger(RhscShellReadInput.class);
+	protected StringBuffer buffer;
+	protected InputStream inputStream;
+	protected Duration timeout;
 
 	public ReadInput(InputStream inputStream, Duration timeout) {
 		this.inputStream = inputStream;
@@ -28,20 +25,13 @@ public class ReadInput implements Callable<Response> {
 	public ReadInput(InputStream inputStream) {
 		this(inputStream, new Duration(TimeUnit.SECONDS, 15));
 	}
-
+	
 	public Response call() {
 		long starttime = System.currentTimeMillis();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			while (!bufferContainsPrompt() && !hasTimedOut(starttime)) {
 				if (reader.ready()) {
-					// char singleChar = (char) reader.read();
-					// if(new
-					// RegexMatch(String.valueOf(singleChar)).find("\\w|\\s|:|;|\\.|\\(|\\)|\\[|\\]|-|\\+").size()
-					// < 1)
-					// buffer.append("["+ (int)singleChar + "]");
-					// else
-					// buffer.append(singleChar);
 					buffer.append((char) reader.read());
 				}
 			}
@@ -58,25 +48,27 @@ public class ReadInput implements Callable<Response> {
 
 	private String getBuffer() {
 		return stripEscapes(buffer.toString());
-
-	}
 	
-	public String getBufferWithEscapes(){
+	}
+
+	private String getBufferWithEscapes() {
 		return buffer.toString();
 	}
-
 
 	private boolean hasTimedOut(long startTime) {
 		return (System.currentTimeMillis() - startTime) > TimeUnit.MILLISECONDS.convert(timeout.getInterval(), timeout.getUnits());
 	}
 
 	private boolean bufferContainsPrompt() {
-		boolean result = RHSC_PROMPT.matcher(buffer.toString()).find();
+		boolean result = getPrompt().matcher(buffer.toString()).find();
 		LOG.trace(String.format("bufferContainsShell() = %s", result));
 		return result;
 	}
 
+	abstract Pattern getPrompt(); 
+	
 	public Response read() {
 		return call();
 	}
+
 }

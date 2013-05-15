@@ -1,12 +1,12 @@
 package com.redhat.qe.repository;
 
 import com.redhat.qe.model.Host;
-import com.redhat.qe.ovirt.shell.RhscShell;
+import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
 
 public class HostRepository extends Repository<Host> {
 
-	public HostRepository(RhscShell shell) {
+	public HostRepository(RhscShellSession shell) {
 		super(shell);
 	}
 	

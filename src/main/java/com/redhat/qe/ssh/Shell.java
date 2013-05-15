@@ -5,20 +5,23 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class Shell {
-	private InputStream fromShell;
-	private PrintStream toShell;
 
-	public Shell(InputStream fromShell, OutputStream toShell){
+	protected InputStream fromShell;
+	protected PrintStream toShell;
+	private Class<? extends ReadInput> inputReader;
+
+	public Shell(InputStream fromShell, OutputStream toShell, Class<? extends ReadInput> inputReader){
 		this.fromShell = fromShell;
 		this.toShell =  new PrintStream(toShell);  // printStream for convenience
-	}
-	
-	public Response send(String command){
+		this.inputReader = inputReader;
+	}	
+
+	public Response send(String command) {
 		__send(command);
-		return new ReadInput(fromShell).read();
+		return new ReadInputFactory().getReadInput(inputReader, fromShell).read(); 
 	}
-	
-	private void __send(String command){
+
+	private void __send(String command) {
 		toShell.println(command); toShell.flush();
 	}
 

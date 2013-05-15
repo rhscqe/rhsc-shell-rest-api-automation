@@ -1,14 +1,14 @@
 package com.redhat.qe.repository;
 
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.ovirt.shell.RhscShell;
+import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
 
 public class ClusterRepository extends Repository<Cluster> {
 	
 
 	
-	public ClusterRepository(RhscShell shell) {
+	public ClusterRepository(RhscShellSession shell) {
 		super(shell);
 	}
 

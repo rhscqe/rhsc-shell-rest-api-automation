@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.ovirt.shell.RhscShell;
+import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
 
 public class VolumeRepository extends Repository<Volume>{
 	
-	public VolumeRepository(RhscShell shell) {
+	public VolumeRepository(RhscShellSession shell) {
 		super(shell);
 	}
 

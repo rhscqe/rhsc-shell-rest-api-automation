@@ -64,22 +64,11 @@ public class SshSession {
 		
 	}
 
-	Shell shell = null;
-
-	public Shell getShell() {
-		try {
-			shell = new Shell(getChannel().getInputStream(), getChannel().getOutputStream());
-		} catch (IOException e) {
-			throw new UnableToObtainInputOrOutputStreamFromChannel(e);
-		}
-
-		return shell;
-	}
 
 	/**
 	 * @return
 	 */
-	private ChannelShell getChannel() {
+	public ChannelShell getChannel() {
 		if (channel == null) {
 			throw new ChannelClosedUnexpectedlyException();
 		}
