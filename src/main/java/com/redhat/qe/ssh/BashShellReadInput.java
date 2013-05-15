@@ -12,7 +12,7 @@ public class BashShellReadInput  extends ReadInput {
 
 	@Override
 	Pattern getPrompt() {
-		return Pattern.compile("adsflkdsajflkdsajf");
+		return Pattern.compile("@.*#");
 	}
 
 
