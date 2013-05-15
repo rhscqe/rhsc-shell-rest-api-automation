@@ -49,7 +49,7 @@ public class ReadInput implements Callable<Response> {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return new Response(getBuffer());
+		return new Response(getBuffer(), getBufferWithEscapes());
 	}
 
 	private String stripEscapes(String input) {
@@ -59,6 +59,10 @@ public class ReadInput implements Callable<Response> {
 	private String getBuffer() {
 		return stripEscapes(buffer.toString());
 
+	}
+	
+	public String getBufferWithEscapes(){
+		return buffer.toString();
 	}
 
 

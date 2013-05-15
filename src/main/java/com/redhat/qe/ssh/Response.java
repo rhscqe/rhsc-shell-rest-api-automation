@@ -7,7 +7,13 @@ import dstywho.regexp.RegexMatch;
 public class Response {
 	
 	private String body;
+	private String raw;
 
+	public Response(String body, String raw) {
+		this.body = body;
+		this.raw = raw;
+	}
+	
 	public Response(String body) {
 		this.body = body;
 	}
@@ -27,6 +33,10 @@ public class Response {
 		return this;
 	}
 	
+	public String getRaw() {
+		return raw;
+	}
+
 	public String toString(){
 		return body;
 	}
