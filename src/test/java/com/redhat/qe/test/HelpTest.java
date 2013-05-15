@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 
-public class HelpTest extends TestBase {
+public class HelpTest extends OpenShellSessionTestBase {
 
 
 	@Tcms({"250461"})

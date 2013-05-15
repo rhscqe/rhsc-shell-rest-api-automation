@@ -13,7 +13,7 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
 
-public class TwoHostClusterTestBase extends TestBase {
+public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 
 	protected static Host host1;
 	protected static Host host2;

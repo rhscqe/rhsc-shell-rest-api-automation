@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 
-public class ClearTest extends TestBase {
+public class ClearTest extends OpenShellSessionTestBase {
 
 
 	@Tcms({"250540"})

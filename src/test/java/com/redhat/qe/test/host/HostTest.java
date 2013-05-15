@@ -14,9 +14,9 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
-import com.redhat.qe.test.TestBase;
+import com.redhat.qe.test.OpenShellSessionTestBase;
 
-public class HostTest extends TestBase{
+public class HostTest extends OpenShellSessionTestBase{
 	
 	private Host host;
 	

@@ -11,9 +11,9 @@ import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.test.TestBase;
+import com.redhat.qe.test.OpenShellSessionTestBase;
 
-public class CreateClusterTest extends TestBase {
+public class CreateClusterTest extends OpenShellSessionTestBase {
 
 
 	@Tcms({"167062","233396"})

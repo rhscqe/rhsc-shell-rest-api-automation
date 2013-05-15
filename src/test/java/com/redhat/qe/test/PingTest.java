@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 
-public class PingTest extends TestBase {
+public class PingTest extends OpenShellSessionTestBase {
 
 
 	@Tcms({"250541"})
