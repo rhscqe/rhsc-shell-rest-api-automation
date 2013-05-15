@@ -2,11 +2,11 @@ package com.redhat.qe.test;
 
 import java.util.Iterator;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 
-import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
@@ -19,8 +19,8 @@ public class TwoHostClusterTestBase extends TestBase {
 	protected static Host host2;
 	private static Cluster cluster;
 
-	@BeforeClass
-	public static void setup() {
+	@Before
+	public void setup() {
 		cluster = new ClusterRepository(getShell()).createOrShow(RhscConfiguration.getConfiguration().getCluster());
 		Iterator<Host> hosts = RhscConfiguration.getConfiguration().getHosts().iterator();
 	
@@ -33,8 +33,8 @@ public class TwoHostClusterTestBase extends TestBase {
 		;
 	}
 
-	@AfterClass
-	public static void teardown() {
+	@After
+	public void teardown() {
 		destroyHost( host1);
 		destroyHost( host2);
 		getClusterRepository().destroy(cluster);
@@ -44,7 +44,7 @@ public class TwoHostClusterTestBase extends TestBase {
 	/**
 	 * @param hostRepository
 	 */
-	private static void destroyHost(Host host) {
+	private void destroyHost(Host host) {
 		if (host != null) {
 			getHostRepository().deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host, "maintenance", 400));

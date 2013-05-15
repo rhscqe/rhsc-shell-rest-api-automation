@@ -1,7 +1,7 @@
 package com.redhat.qe.test;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RhscConfiguration;
@@ -13,21 +13,21 @@ import com.redhat.qe.ssh.SshSession;
 
 public class TestBase {
 
-	protected static SshSession session;
-	protected static RhscShell shell;
-	private static HostRepository hostRepository;
-	private static VolumeRepository volumeRepository;
-	private static ClusterRepository clusterRepository;
+	protected SshSession session;
+	protected RhscShell shell;
+	private HostRepository hostRepository;
+	private VolumeRepository volumeRepository;
+	private ClusterRepository clusterRepository;
 
 	/**
 	 * @return the shell
 	 */
-	public static RhscShell getShell() {
+	public RhscShell getShell() {
 		return shell;
 	}
 
-	@BeforeClass
-	public synchronized static void before() {
+	@Before
+	public void before() {
 		Configuration config = RhscConfiguration.getConfiguration();
 		session = SshSession.fromConfiguration(config);
 		session.start();
@@ -37,16 +37,15 @@ public class TestBase {
 		shell.connect();
 	}
 
-	@AfterClass
-	public synchronized static void after() {
+	@After	
+	public void after() {
 		if (session != null){
 			session.stopChannel();
 			session.stop();
 		}
-		clearState();
 	}
 
-	public synchronized static void clearState() {
+	public void clearState() {
 		if (shell != null)
 			shell = null;
 		if (session != null)
@@ -59,21 +58,21 @@ public class TestBase {
 			volumeRepository = null;
 	}
 
-	public synchronized static HostRepository getHostRepository() {
+	public HostRepository getHostRepository() {
 		if (hostRepository == null) {
 			hostRepository = new HostRepository(getShell());
 		}
 		return hostRepository;
 	}
 
-	public synchronized static VolumeRepository getVolumeRepository() {
+	public VolumeRepository getVolumeRepository() {
 		if (volumeRepository == null) {
 			volumeRepository = new VolumeRepository(getShell());
 		}
 		return volumeRepository;
 	}
 
-	public synchronized static ClusterRepository getClusterRepository() {
+	public ClusterRepository getClusterRepository() {
 		if (clusterRepository == null) {
 			clusterRepository = new ClusterRepository(getShell());
 		}
