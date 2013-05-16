@@ -20,11 +20,13 @@ import com.redhat.qe.test.OpenShellSessionTestBase;
 public class ListClustersTest extends OpenShellSessionTestBase{
 	private Cluster c1;
 	private Cluster c2;
+	private Cluster c3;
 	
 	@Before
 	public void beforeThis(){
 		c1 = getClusterRepository().createOrShow(ClusterFactory.cluster("c1"));
 		c2 = getClusterRepository().createOrShow(ClusterFactory.cluster("c2"));
+		c3 = getClusterRepository().createOrShow(ClusterFactory.cluster("TestCluster"));
 		
 	}
 
@@ -32,6 +34,7 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 	public void afterThis(){
 		getClusterRepository().destroy(c1);
 		getClusterRepository().destroy(c2);
+		getClusterRepository().destroy(c3);
 	}
 	@Test
 	@Tcms("250545")
@@ -65,5 +68,13 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 			
 		}
 		
+	}
+	
+	@Test
+	@Tcms("250975")
+	public void testQuery(){
+		List<Cluster> clusters = getClusterRepository().list("--query 'name=TestCluster'");
+		assertEquals("num clusters",clusters.size() ,1);
+		assertEquals("num clusters",clusters.get(0).getName(),"TestCluster");
 	}
 }
