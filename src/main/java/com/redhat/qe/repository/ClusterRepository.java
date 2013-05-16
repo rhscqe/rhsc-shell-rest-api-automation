@@ -35,7 +35,7 @@ public class ClusterRepository extends Repository<Cluster> {
 	}
 	
 	public String createCommand(Cluster cluster){
-		return String.format("add cluster --name '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default",cluster.getName());
+		return String.format("add cluster --name '%s' --description '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default",cluster.getName(),cluster.getDescription());
 	}
 	
 	public Cluster show(Cluster cluster){
