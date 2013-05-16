@@ -7,8 +7,8 @@ import com.redhat.qe.ssh.Response;
 
 public class Host extends Model{
 	
-	public static Host fromResponse(Response response){
-		HashMap<String, String> attributes = StringUtils.keyAttributeToHash(response.toString());
+	public static Host fromResponse(String raw){
+		HashMap<String, String> attributes = StringUtils.keyAttributeToHash(raw);
 		Host result = new Host();
 		result.setAddress(attributes.get("address"));
 		result.setId(attributes.get("id"));
@@ -20,6 +20,10 @@ public class Host extends Model{
 		result.setCluster(resultCluster);
 		
 		return result;
+	}
+	
+	public static Host fromResponse(Response response){
+		return fromResponse(response.toString());
 	}
 	private String name;
 	private String id;
@@ -100,6 +104,13 @@ public class Host extends Model{
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		return (o instanceof Host) 
+				&& (getId()==null || ((Host)o).getId().equals(getId()))
+				&& (getName() == null || ((Host)o).getName().equals(getName()));
 	}
 	
 	

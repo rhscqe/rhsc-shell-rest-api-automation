@@ -1,5 +1,10 @@
 package com.redhat.qe.repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
@@ -56,6 +61,19 @@ public class HostRepository extends Repository<Host> {
 
 	public Response destroy(Host host) {
 		return getShell().send(String.format("remove host %s",host.getId())).expect("complete");
+	}
+	
+	public List<Host> list(String options){
+		Collection<String> properties = StringUtils.getPropertyKeyValueSets(_list(options).toString());
+		ArrayList<Host> hosts = new ArrayList<Host>();
+		for(String property :properties){
+			hosts.add(Host.fromResponse(property));
+		}
+		return hosts;
+	}
+	
+	public Response _list(String options){
+		return (options == null) ? getShell().send("list hosts") : getShell().send("list hosts" + " " + options);
 	}
 
 	public Host update(Host entity) {
