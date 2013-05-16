@@ -16,7 +16,7 @@ import com.redhat.qe.test.OpenShellSessionTestBase;
 public class CreateClusterTest extends OpenShellSessionTestBase {
 
 
-	@Tcms({"167062","233396"})
+	@Tcms({"167062","233396", "250979"})
 	@Test
 	public void createCluster() {
 		Cluster c = getClusterRepository().createOrShow(ClusterFactory.cluster("rhsccluster"));
