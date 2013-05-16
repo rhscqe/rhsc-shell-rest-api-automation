@@ -21,12 +21,14 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 	private Cluster c1;
 	private Cluster c2;
 	private Cluster c3;
+	private Cluster c4;
 	
 	@Before
 	public void beforeThis(){
 		c1 = getClusterRepository().createOrShow(ClusterFactory.cluster("c1"));
 		c2 = getClusterRepository().createOrShow(ClusterFactory.cluster("c2"));
 		c3 = getClusterRepository().createOrShow(ClusterFactory.cluster("TestCluster"));
+		c4 = getClusterRepository().createOrShow(ClusterFactory.cluster("DontBreakStuff"));
 		
 	}
 
@@ -35,6 +37,7 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 		getClusterRepository().destroy(c1);
 		getClusterRepository().destroy(c2);
 		getClusterRepository().destroy(c3);
+		getClusterRepository().destroy(c4);
 	}
 	@Test
 	@Tcms("250545")
@@ -76,5 +79,13 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 		List<Cluster> clusters = getClusterRepository().list("--query 'name=TestCluster'");
 		assertEquals("num clusters",clusters.size() ,1);
 		assertEquals("num clusters",clusters.get(0).getName(),"TestCluster");
+	}
+	
+	@Test
+	@Tcms("250977")
+	public void testQueryGlob(){
+		List<Cluster> clusters = getClusterRepository().list("--query 'name=D*f'");
+		assertEquals("num clusters",clusters.size() ,1);
+		assertEquals("num clusters",clusters.get(0).getName(),"DontBreakStuff");
 	}
 }
