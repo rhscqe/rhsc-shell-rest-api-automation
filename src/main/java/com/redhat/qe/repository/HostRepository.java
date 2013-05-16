@@ -60,7 +60,14 @@ public class HostRepository extends Repository<Host> {
 	}
 
 	public Response destroy(Host host) {
-		return getShell().send(String.format("remove host %s",host.getId())).expect("complete");
+		return destroy(host,null);
+	}
+	
+	public Response destroy(Host host, String options) {
+		StringBuilder command = new StringBuilder();
+		command.append(String.format("remove host %s",host.getId()));
+		if(options != null) command.append(" " + options);
+		return getShell().send(command.toString()).expect("complete");
 	}
 	
 	public List<Host> list(String options){
