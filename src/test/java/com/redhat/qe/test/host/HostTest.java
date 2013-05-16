@@ -20,7 +20,7 @@ public class HostTest extends OpenShellSessionTestBase{
 		getClusterRepository().createOrShow(host.getCluster());
 	}
 	
-	@Tcms(value = { "174413","250987" })	
+	@Tcms(value = { "174413","250987","250988" })	
 	@Test
 	public void test(){
 		host = getHostRepository().createOrShow(host);
