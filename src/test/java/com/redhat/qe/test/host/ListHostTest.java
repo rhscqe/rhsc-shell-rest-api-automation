@@ -1,5 +1,7 @@
 package com.redhat.qe.test.host;
 
+import static org.junit.Assert.*;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,22 @@ public class ListHostTest extends TwoHostClusterTestBase{
 		List<Host> hosts = getHostRepository().list(null);
 		hosts.contains(host1);
 		hosts.contains(host2);
+	}
+	
+	@Test
+	@Tcms("250982")
+	public void listMax(){
+		List<Host> hosts = getHostRepository().list("--max 1");
+		assertEquals(1, hosts.size());
+	}
+	
+	
+	@Test
+	@Tcms("250983")
+	public void listQuery(){
+		List<Host> hosts = getHostRepository().list("--query " + host1.getName());
+		assertEquals(1, hosts.size());
+		assertEquals(host1.getName(), hosts.get(0).getName());
 	}
 	
 	@Test
