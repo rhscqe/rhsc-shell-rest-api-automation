@@ -3,6 +3,8 @@ package com.redhat.qe.ssh;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.TimeUnit;
+
 
 public class Shell {
 
@@ -15,6 +17,10 @@ public class Shell {
 		this.toShell =  new PrintStream(toShell);  // printStream for convenience
 		this.inputReader = inputReader;
 	}	
+	
+	public Response clear(){
+		return new ReadInputFactory().getReadInput(inputReader, fromShell, new Duration(TimeUnit.SECONDS, 1)).clear(); 
+	}
 
 	public Response send(String command) {
 		__send(command);

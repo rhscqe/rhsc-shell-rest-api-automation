@@ -10,6 +10,14 @@ public class BashShellReadInput  extends ReadInput {
 		super(inputStream);
 	}
 
+	/**
+	 * @param inputStream
+	 * @param timeout
+	 */
+	public BashShellReadInput(InputStream inputStream, Duration timeout) {
+		super(inputStream, timeout);
+	}
+
 	@Override
 	Pattern getPrompt() {
 		return Pattern.compile("@.*#");

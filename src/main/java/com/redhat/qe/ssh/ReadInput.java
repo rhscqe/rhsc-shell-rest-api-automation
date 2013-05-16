@@ -27,6 +27,10 @@ public abstract class ReadInput {
 	}
 	
 	public Response call() {
+		return call(true);
+	}
+	
+	public Response call(boolean logoutput) {
 		long starttime = System.currentTimeMillis();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -35,11 +39,16 @@ public abstract class ReadInput {
 					buffer.append((char) reader.read());
 				}
 			}
-			LOG.debug("[shell output] " + getBuffer());
+			if(logoutput)
+				LOG.debug("[shell output] " + getBuffer());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return new Response(getBuffer(), getBufferWithEscapes());
+	}
+	
+	public Response clear() {
+		return call(false);
 	}
 
 	private String stripEscapes(String input) {
