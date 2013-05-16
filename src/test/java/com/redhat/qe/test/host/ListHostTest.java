@@ -1,12 +1,10 @@
 package com.redhat.qe.test.host;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -93,7 +91,7 @@ public class ListHostTest extends TwoHostClusterTestBase{
 			Asserts.assertContains(  "version-full_version"                                                          , hostProperties.keySet() , "version-full_version"                 );
 			Asserts.assertContains(  "version-major"                                                                 , hostProperties.keySet() , "version-major"                        );
 			Asserts.assertContains(  "version-minor"                                                                 , hostProperties.keySet() , "version-minor"                        );
-			Assert.assertEquals("up", hostProperties.get("status-state"));
+			assertEquals("up", hostProperties.get("status-state"));
 			
 		}
 		

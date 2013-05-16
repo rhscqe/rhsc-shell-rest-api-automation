@@ -99,6 +99,12 @@ public class Host extends Model{
 	public String getId() {
 		return id;
 	}
+	
+	
+	public String getIdOrName(){
+		return (getId() == null) ? getName() : getId();
+	}
+	
 	/**
 	 * @param id the id to set
 	 */

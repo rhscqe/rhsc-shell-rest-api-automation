@@ -75,10 +75,22 @@ public class HostRepository extends Repository<Host> {
 	public Response _list(String options){
 		return (options == null) ? getShell().send("list hosts") : getShell().send("list hosts" + " " + options);
 	}
+	
 
 	public Host update(Host entity) {
-		// TODO Auto-generated method stub
-		return null;
+		_update(entity);
+		return show(entity);
+	}
+
+	/**
+	 * @param entity
+	 * @return
+	 */
+	private Response _update(Host entity) {
+		StringBuilder command = new StringBuilder();
+		command.append(String.format("update host %s", entity.getIdOrName()));
+		if(entity.getName() != null) command.append("--name " + entity.getName());
+		return getShell().send(command.toString()).unexpect("error");
 	}
 
 }
