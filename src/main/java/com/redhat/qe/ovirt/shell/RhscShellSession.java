@@ -42,9 +42,9 @@ public class RhscShellSession {
 		send("exit");
 	}
 
-	public void connect() {
+	public Response connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
-		shell.send(command).expect("connected to \\w+ manager");
+		return shell.send(command).expect("connected to \\w+ manager");
 	}
 	
 	public Response send(String command ){
