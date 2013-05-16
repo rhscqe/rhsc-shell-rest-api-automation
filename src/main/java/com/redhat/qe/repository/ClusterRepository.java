@@ -1,5 +1,10 @@
 package com.redhat.qe.repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
@@ -63,5 +68,18 @@ public class ClusterRepository extends Repository<Cluster> {
 	
 	private Response _update( Cluster entity) {
 		return getShell().send(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
+	}
+	
+	public List<Cluster> list(){
+		Collection<String> clusterDefinitions = StringUtils.getKeyValues(_list().toString());
+		List<Cluster> clusters = new ArrayList<Cluster>();
+		for(String clusterDefinition :clusterDefinitions){
+			clusters.add(Cluster.fromKeyValue(clusterDefinition));
+		}
+		return clusters;
+	}
+	
+	public Response _list(){
+		return getShell().send("list clusters");
 	}
 }

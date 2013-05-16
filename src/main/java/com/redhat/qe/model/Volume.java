@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.redhat.qe.repository.StringUtils;
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.ssh.Response;
 
 public class Volume extends Model{

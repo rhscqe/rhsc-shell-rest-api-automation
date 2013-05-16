@@ -2,7 +2,7 @@ package com.redhat.qe.model;
 
 import java.util.HashMap;
 
-import com.redhat.qe.repository.StringUtils;
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.ssh.Response;
 
 public class Host extends Model{

@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.helpers;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,5 +17,10 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
 			 result.put(keyToValue[0].trim(), keyToValue[1].trim());
 		}
 		return result;
+	}
+	
+	public static Collection<String> getKeyValues(String raw){
+		String[] potentialClusterDefinitions = raw.split("\n\r");
+		return Collections2.filter(Arrays.asList(potentialClusterDefinitions), Predicates.containsPattern(":"));
 	}
 }
