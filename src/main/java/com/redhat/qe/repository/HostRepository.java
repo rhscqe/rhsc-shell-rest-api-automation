@@ -55,8 +55,28 @@ public class HostRepository extends Repository<Host> {
 		return deactivate(host.getId());
 	}
 	
+	public Response activate(Host host){
+		return activate(host.getId());
+	}
+	
 	public Response deactivate(String nameOrId){
-		return getShell().send(String.format("action host %s deactivate", nameOrId)).expect("status-state: complete");
+		return _deactivate(nameOrId).expect("status-state: complete");
+	}
+
+	/**
+	 * @param nameOrId
+	 * @return
+	 */
+	private Response _deactivate(String nameOrId) {
+		return getShell().send(String.format("action host %s deactivate", nameOrId));
+	}
+	
+	public Response _deactivate(Host host) {
+		return _deactivate(host.getId());
+	}
+	
+	public Response activate(String nameOrId){
+		return getShell().send(String.format("action host %s activate", nameOrId)).expect("status-state: complete");
 	}
 
 	public Response destroy(Host host) {

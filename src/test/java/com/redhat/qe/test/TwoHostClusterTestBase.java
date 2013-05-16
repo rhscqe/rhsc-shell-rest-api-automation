@@ -46,7 +46,7 @@ public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 	 */
 	private void destroyHost(Host host) {
 		if (host != null) {
-			getHostRepository().deactivate(host);
+			getHostRepository()._deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host, "maintenance", 400));
 			getHostRepository().destroy(host);
 		}
