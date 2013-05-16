@@ -23,17 +23,6 @@ public class CreateClusterTest extends OpenShellSessionTestBase {
 		getClusterRepository().destroy(c);
 	}
 
-	@Test
-	@Tcms("233395")
-	public void updateCluster() {
-		Cluster cluster = getClusterRepository().createOrShow(ClusterFactory.cluster("clusterToBeUpdated"));
-		
-		Cluster expected = cluster;
-		Cluster actual = getClusterRepository().update(cluster);
-		Assert.assertEquals(expected.getName(), actual.getName());
-		
-		getClusterRepository().destroy(cluster);
-	}
 	
 
 
