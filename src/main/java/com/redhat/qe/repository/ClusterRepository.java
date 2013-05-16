@@ -70,8 +70,8 @@ public class ClusterRepository extends Repository<Cluster> {
 		return getShell().send(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
 	}
 	
-	public List<Cluster> list(){
-		Collection<String> clusterDefinitions = StringUtils.getKeyValues(_list().toString());
+	public List<Cluster> list(String options){
+		Collection<String> clusterDefinitions = StringUtils.getPropertyKeyValueSets(_list(options).toString());
 		List<Cluster> clusters = new ArrayList<Cluster>();
 		for(String clusterDefinition :clusterDefinitions){
 			clusters.add(Cluster.fromKeyValue(clusterDefinition));
@@ -79,7 +79,12 @@ public class ClusterRepository extends Repository<Cluster> {
 		return clusters;
 	}
 	
-	public Response _list(){
-		return getShell().send("list clusters");
+	public List<Cluster> list(){
+		return list(null);
+	}
+	
+	public Response _list(String options){
+		String command = "list clusters";
+		return ( options == null) ? getShell().send(command) :	getShell().send(command +" " + options);
 	}
 }
