@@ -20,6 +20,7 @@ import com.redhat.qe.test.OpenShellSessionTestBase;
 public class ListClustersTest extends OpenShellSessionTestBase{
 	private Cluster c1;
 	private Cluster c2;
+	
 	@Before
 	public void beforeThis(){
 		c1 = getClusterRepository().createOrShow(ClusterFactory.cluster("c1"));
@@ -38,6 +39,13 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 		List<Cluster> clusters = getClusterRepository().list();
 		clusters.contains(c1);
 		clusters.contains(c2);
+	}
+	
+	@Test
+	@Tcms("250548")
+	public void testMax(){
+		List<Cluster> clusters = getClusterRepository().list("--max 2");
+		assertEquals("num clusters",clusters.size() ,2);
 	}
 	
 	@Test
