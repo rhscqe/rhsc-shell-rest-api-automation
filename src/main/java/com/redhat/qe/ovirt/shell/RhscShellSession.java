@@ -35,7 +35,7 @@ public class RhscShellSession {
 	}
 	
 	public void start(){
-		send("rhsc-shell").expect("Welcome");
+		send("rhsc-shell || ovirt-shell").expect("Welcome");
 	}
 	
 	public void stop(){
