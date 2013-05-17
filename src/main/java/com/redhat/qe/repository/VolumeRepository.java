@@ -23,6 +23,12 @@ public class VolumeRepository extends Repository<Volume>{
 		return Volume.fromResponse(getShell().send(String.format("show volume %s", volume.getName())));
 	}
 	
+	
+	public Volume showOrCreate(Volume volume){
+		//TODO
+		return null;
+	}
+	
 	private String bricksOptionsOnCreate(List<Brick> bricks){
 		StringBuffer result = new StringBuffer(); 
 		for(Brick brick : bricks){
@@ -38,6 +44,15 @@ public class VolumeRepository extends Repository<Volume>{
 	public Volume update(Volume entity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Response start(Volume entity){
+		return getShell().send(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
+				.expect("complete");
+	}
+	public Response stop(Volume entity){
+		return getShell().send(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
+				.expect("complete");
 	}
 
 	public boolean isExist(Volume entity) {
