@@ -15,6 +15,7 @@ public class Volume extends Model{
 	private String status;
 	private int stripe_count =0 ;
 	private int replica_count =0;
+	private String transportType;
 	private List<Brick> bricks = new ArrayList<Brick>();
 	/**
 	 * @return the cluster
@@ -116,6 +117,20 @@ public class Volume extends Model{
 	public void setReplicaCount(int replica_count) {
 		this.replica_count = replica_count;
 	}
+	
+	
+	/**
+	 * @return the transportType
+	 */
+	public String getTransportType() {
+		return transportType;
+	}
+	/**
+	 * @param transportType the transportType to set
+	 */
+	public void setTransportType(String transportType) {
+		this.transportType = transportType;
+	}
 	public static Volume fromResponse(Response response) {
 		HashMap<String, String> attr = StringUtils.keyAttributeToHash(response.toString());
 		Volume volume = new Volume();
@@ -125,6 +140,7 @@ public class Volume extends Model{
 		volume.setStatus(attr.get("status-state"));
 		volume.setReplicaCount(Integer.parseInt(attr.get("replica_count")));
 		volume.setStripe_count((Integer.parseInt(attr.get("stripe_count"))));
+		volume.setTransportType(attr.get("transport_types-transport_type"));
 		
 		Cluster rcluster = new Cluster();
 		rcluster.setId(attr.get("cluster-id"));

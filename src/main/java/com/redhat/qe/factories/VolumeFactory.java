@@ -37,5 +37,19 @@ public class VolumeFactory {
 		return volume;
 		
 	}
+	
+	public static Volume distributedReplicate(String name, Host host1, Host host2) {
+		Volume volume = new Volume();
+		volume.setName(name);
+		volume.setType("DISTRIBUTED_REPLICATE");
+		volume.setReplicaCount(2);
+		volume.setCluster(host1.getCluster());
+		for (int _ : new int[2])
+			volume.getBricks().add(BrickFactory.brick(host1));
+		for (int _ : new int[2])
+			volume.getBricks().add(BrickFactory.brick(host2));
+		return volume;
+		
+	}
 
 }
