@@ -132,21 +132,44 @@ public class Volume extends Model{
 		this.transportType = transportType;
 	}
 	public static Volume fromResponse(Response response) {
-		HashMap<String, String> attr = StringUtils.keyAttributeToHash(response.toString());
+		return fromResponse(response.toString());
+	}
+	
+	public static Volume fromResponse(String response) {
+		HashMap<String, String> attr = StringUtils.keyAttributeToHash(response);
 		Volume volume = new Volume();
 		volume.setId(attr.get("id"));
 		volume.setName(attr.get("name"));
 		volume.setType(attr.get("volume_type"));
 		volume.setStatus(attr.get("status-state"));
-		volume.setReplicaCount(Integer.parseInt(attr.get("replica_count")));
-		volume.setStripe_count((Integer.parseInt(attr.get("stripe_count"))));
+		String rawReplicaCount = attr.get("replica_count");
+		if(rawReplicaCount != null && rawReplicaCount.matches("\\d+"))
+			volume.setReplicaCount(Integer.parseInt(rawReplicaCount));
+		String rawStripeCount = attr.get("stripe_count");
+		if(rawStripeCount != null && rawStripeCount.matches("\\d+"))
+			volume.setStripe_count((Integer.parseInt(rawStripeCount)));
 		volume.setTransportType(attr.get("transport_types-transport_type"));
 		
-		Cluster rcluster = new Cluster();
-		rcluster.setId(attr.get("cluster-id"));
-		volume.setCluster(rcluster);
+		if(attr.get("cluster-id")!= null){
+			Cluster rcluster = new Cluster();
+			rcluster.setId(attr.get("cluster-id"));
+			volume.setCluster(rcluster);
+		}
 		return volume;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		return (o instanceof Volume) 
+				&& (getId()==null || ((Volume)o).getId().equals(getId()))
+				&& (getName() == null || ((Volume)o).getName().equals(getName()))
+				&& ( ((Volume)o).getCluster() == null 
+						|| ((Volume)o).getCluster().getId() == null 
+						|| getCluster() == null 
+						|| getCluster().getId() == null 
+						|| ((Volume)o).getCluster().getId().equals(getCluster().getId()));
+	}
+	
 	
 	
 

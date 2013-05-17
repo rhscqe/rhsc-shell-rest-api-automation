@@ -1,9 +1,12 @@
 package com.redhat.qe.helpers;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Assert;
+
+import com.redhat.qe.model.Volume;
 
 
 public class Asserts {
@@ -13,8 +16,10 @@ public class Asserts {
 		Assert.assertTrue(String.format("%s: the target string <<<%s>>> does not contain substring <<<%s>>>", description,target, substring), target.contains(substring));
 	}
 
-	public static void assertContains(String description, Collection<String> target, String substring) {
-		Assert.assertTrue(String.format("%s: the target  <<<%s>>> does not contain substring <<<%s>>>", description,target.toString(), substring), target.contains(substring));
+	public static <T> void assertContains(String description, Collection<T> target, T entry) {
+		Assert.assertTrue(String.format("%s: the target  <<<%s>>> does not contain substring <<<%s>>>", description,target.toString(), entry), target.contains(entry));
 	}
+
+
 
 }

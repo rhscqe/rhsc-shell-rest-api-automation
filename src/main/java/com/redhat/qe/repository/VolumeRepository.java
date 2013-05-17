@@ -1,7 +1,10 @@
 package com.redhat.qe.repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
@@ -59,6 +62,21 @@ public class VolumeRepository extends Repository<Volume>{
 	public boolean isExist(Volume entity) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public Response _list(Cluster cluster){
+		String cmd = String.format("list glustervolumes --cluster-identifier %s", cluster.getId());
+		return getShell().send(cmd);
+	}
+	
+	public ArrayList<Volume> list(Cluster cluster){
+		Response response = _list(cluster).unexpect("error");
+		Collection<String> volumesProperties = StringUtils.getPropertyKeyValueSets(response.toString());
+		ArrayList<Volume> result = new ArrayList<Volume>();
+		for(String volumeProperties : volumesProperties){
+			result.add(Volume.fromResponse(volumeProperties));
+		}
+		return result;
 	}
 
 }
