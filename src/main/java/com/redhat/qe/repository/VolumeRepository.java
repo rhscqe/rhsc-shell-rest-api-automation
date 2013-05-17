@@ -3,6 +3,7 @@ package com.redhat.qe.repository;
 import java.util.List;
 
 import com.redhat.qe.model.Brick;
+import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.Response;
@@ -20,7 +21,7 @@ public class VolumeRepository extends Repository<Volume>{
 	}
 	
 	public Volume show(Volume volume){
-		return Volume.fromResponse(getShell().send(String.format("show volume %s", volume.getName())));
+		return Volume.fromResponse(getShell().send(String.format("show glustervolume %s --cluster-identifier %s", volume.getId(), volume.getCluster().getId())).unexpect("error"));
 	}
 	
 	
