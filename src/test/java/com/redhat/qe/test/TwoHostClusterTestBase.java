@@ -8,10 +8,14 @@ import org.junit.Assert;
 import org.junit.Before;
 
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
+import com.redhat.qe.ssh.Response;
+
+import dstywho.timeout.Duration;
 
 public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 
@@ -48,7 +52,16 @@ public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 		if (host != null) {
 			getHostRepository()._deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host, "maintenance", 400));
-			getHostRepository().destroy(host);
+			Response response = getHostRepository()._destroy(host, null);
+			if(response.contains("locked")){
+				Duration.ONE_SECOND.sleep();
+				getHostRepository().destroy(host);
+			}else if(response.contains("complete")){
+				return;
+			}else{
+				throw new UnexpectedReponseException("expecting 'complete'",response);
+				
+			}
 		}
 	}
 
