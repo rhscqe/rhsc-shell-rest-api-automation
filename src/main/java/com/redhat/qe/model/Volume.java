@@ -137,6 +137,14 @@ public class Volume extends Model{
 	
 	public static Volume fromResponse(String response) {
 		HashMap<String, String> attr = StringUtils.keyAttributeToHash(response);
+		Volume volume = fromAttrs(attr);
+		return volume;
+	}
+	/**
+	 * @param attr
+	 * @return
+	 */
+	public static Volume fromAttrs(HashMap<String, String> attr) {
 		Volume volume = new Volume();
 		volume.setId(attr.get("id"));
 		volume.setName(attr.get("name"));

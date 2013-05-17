@@ -64,13 +64,18 @@ public class VolumeRepository extends Repository<Volume>{
 		return false;
 	}
 	
-	public Response _list(Cluster cluster){
-		String cmd = String.format("list glustervolumes --cluster-identifier %s", cluster.getId());
+	public Response _list(Cluster cluster,String options){
+		String formatedOptions = (options == null) ? "" : options;
+		String cmd = String.format("list glustervolumes --cluster-identifier %s %s", cluster.getId(), formatedOptions);
 		return getShell().send(cmd);
 	}
 	
 	public ArrayList<Volume> list(Cluster cluster){
-		Response response = _list(cluster).unexpect("error");
+		return list(cluster, null);
+	}
+	
+	public ArrayList<Volume> list(Cluster cluster, String options){
+		Response response = _list(cluster, options).unexpect("error");
 		Collection<String> volumesProperties = StringUtils.getPropertyKeyValueSets(response.toString());
 		ArrayList<Volume> result = new ArrayList<Volume>();
 		for(String volumeProperties : volumesProperties){
@@ -80,3 +85,4 @@ public class VolumeRepository extends Repository<Volume>{
 	}
 
 }
+ 
