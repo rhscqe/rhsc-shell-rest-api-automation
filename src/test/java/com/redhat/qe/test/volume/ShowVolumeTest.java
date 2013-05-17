@@ -13,7 +13,7 @@ public class ShowVolumeTest extends SingleVolumeTestBase {
 
 	
 	@Test
-	@Tcms("250997")
+	@Tcms({"250997", "251243"})
 	public void test() {
 		Volume actual = getVolumeRepository().show(volume);
 		Volume expected = volume;
