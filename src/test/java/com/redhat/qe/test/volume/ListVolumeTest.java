@@ -42,7 +42,7 @@ public class ListVolumeTest extends ThreeVolumeTestBase{
 		for(HashMap<String, String> volumeProperties: volumesProperties){
 			Set<String> keys = volumeProperties.keySet();
 			
-			Volume actual = Volume.fromAttrs(volumeProperties);
+			Volume actual = Volume.fromAttrs(volumeProperties, null);
 			Volume expected = Collections2.filter(Arrays.asList(new Volume[]{volume1,volume2,volume3}), Predicates.equalTo(actual)).iterator().next();			
 			assertEquals("replica count",expected.getReplica_count(),actual.getReplica_count());
 			assertEquals("status","down",actual.getStatus());

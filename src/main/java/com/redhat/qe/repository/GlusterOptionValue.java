@@ -1,37 +1,17 @@
 package com.redhat.qe.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.redhat.qe.model.Volume;
+
 public class GlusterOptionValue {
-	private GlusterOption option;
 	private String value;
 	
 	
-	
-	public GlusterOptionValue(GlusterOption option, String value) {
-		this.option = option;
-		this.value = value;
+	public GlusterOptionValue(String string) {
+		this.value = string;
 	}
-	/**
-	 * 
-	 */
-	public GlusterOptionValue() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	/**
-	 * @return the option
-	 */
-	public GlusterOption getOption() {
-		return option;
-	}
-	/**
-	 * @param option the option to set
-	 */
-	public void setOption(GlusterOption option) {
-		this.option = option;
-	}
-	/**
-	 * @return the value
-	 */
 	public String getValue() {
 		return value;
 	}
@@ -44,7 +24,21 @@ public class GlusterOptionValue {
 	}
 	
 	public String toString(){
-		return String.format("--option-name \"%s\" --option-value \"%s\"", getOption().getName(), getValue() );
+		return String.format("--option-value \"%s\"",  getValue() );
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		return (o instanceof GlusterOptionValue) 
+				&& (getValue() == null || ((GlusterOptionValue)o).getValue().equals(getValue()));
+	}	
+	
+	public static HashMap<GlusterOption, GlusterOptionValue> fromHashMap(HashMap<String, String> volumeOptions) {
+		HashMap<GlusterOption, GlusterOptionValue> optionValues = new HashMap<GlusterOption, GlusterOptionValue>();
+		for(String key: volumeOptions.keySet()){
+			optionValues.put(new GlusterOption(key), new GlusterOptionValue(volumeOptions.get(key)));
+		}
+		return optionValues;
 	}
 	
 	

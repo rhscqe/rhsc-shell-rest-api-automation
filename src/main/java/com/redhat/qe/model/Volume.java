@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.redhat.qe.helpers.ListUtil;
 import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
+import com.redhat.qe.repository.GlusterOption;
+import com.redhat.qe.repository.GlusterOptionValue;
 import com.redhat.qe.ssh.Response;
 
 public class Volume extends Model{
@@ -16,6 +20,7 @@ public class Volume extends Model{
 	private int stripe_count =0 ;
 	private int replica_count =0;
 	private String transportType;
+	private HashMap<GlusterOption, GlusterOptionValue> volumeOptions;
 	private List<Brick> bricks = new ArrayList<Brick>();
 	/**
 	 * @return the cluster
@@ -131,21 +136,68 @@ public class Volume extends Model{
 	public void setTransportType(String transportType) {
 		this.transportType = transportType;
 	}
+	
+
+	/**
+	 * @return the volumeOptions
+	 */
+	public HashMap<GlusterOption, GlusterOptionValue> getVolumeOptions() {
+		return volumeOptions;
+	}
+	/**
+	 * @param myvolumeOptions the volumeOptions to set
+	 */
+	public void setVolumeOptions(HashMap<GlusterOption, GlusterOptionValue> myvolumeOptions) {
+		this.volumeOptions = myvolumeOptions;
+	}
 	public static Volume fromResponse(Response response) {
 		return fromResponse(response.toString());
 	}
 	
 	public static Volume fromResponse(String response) {
 		HashMap<String, String> attr = StringUtils.keyAttributeToHash(response);
-		Volume volume = fromAttrs(attr);
+		HashMap<GlusterOption, GlusterOptionValue> myvolumeOptions = parseVolumeOptions(response);
+		Volume volume = fromAttrs(attr, myvolumeOptions);
+		return volume;
+	}
+	/**
+	 * @param response
+	 * @return
+	 */
+	private static HashMap<GlusterOption, GlusterOptionValue> parseVolumeOptions(String response) {
+		HashMap<GlusterOption, GlusterOptionValue> result = null;
+		RepeatingHashMap<String, String> collectedAttributes= StringUtils.repeatingKeyAttributeToHash(response);
+		if(collectedAttributes.keys().contains("options-option-name") && collectedAttributes.keys().contains("options-option-value")){
+			HashMap<String, String> volumeOptions = ListUtil.joinHashMap(collectedAttributes.get("options-option-name"), collectedAttributes.get("options-option-value"));
+			result = GlusterOptionValue.fromHashMap(volumeOptions);
+		}
+		return result;
+		
+		
+	}
+	/**
+	 * @param attr
+	 * @param myvolumeOptions 
+	 * @return
+	 */
+	public static Volume fromAttrs(HashMap<String, String> attr, HashMap<GlusterOption, GlusterOptionValue> myvolumeOptions) {
+		Volume volume = new Volume();
+		setFields(attr, volume);
+		
+		
+		if(myvolumeOptions != null){
+			volume.setVolumeOptions(myvolumeOptions);
+		}
+		
+		
+		setClusterIfAvailable(attr, volume);
 		return volume;
 	}
 	/**
 	 * @param attr
-	 * @return
+	 * @param volume
 	 */
-	public static Volume fromAttrs(HashMap<String, String> attr) {
-		Volume volume = new Volume();
+	private static void setFields(HashMap<String, String> attr, Volume volume) {
 		volume.setId(attr.get("id"));
 		volume.setName(attr.get("name"));
 		volume.setType(attr.get("volume_type"));
@@ -157,13 +209,17 @@ public class Volume extends Model{
 		if(rawStripeCount != null && rawStripeCount.matches("\\d+"))
 			volume.setStripe_count((Integer.parseInt(rawStripeCount)));
 		volume.setTransportType(attr.get("transport_types-transport_type"));
-		
+	}
+	/**
+	 * @param attr
+	 * @param volume
+	 */
+	private static void setClusterIfAvailable(HashMap<String, String> attr, Volume volume) {
 		if(attr.get("cluster-id")!= null){
 			Cluster rcluster = new Cluster();
 			rcluster.setId(attr.get("cluster-id"));
 			volume.setCluster(rcluster);
 		}
-		return volume;
 	}
 	
 	@Override
