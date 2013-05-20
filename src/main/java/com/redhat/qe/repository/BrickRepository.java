@@ -1,7 +1,9 @@
 package com.redhat.qe.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
@@ -27,6 +29,13 @@ public class BrickRepository  {
 		String command = String.format("remove brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getId(),
 				volume.getCluster().getId(), volume.getId());
 		return this.shell.send(command);
+	}
+	public Brick show(Volume volume, Brick brick){
+		String command = String.format("show brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
+				volume.getCluster().getId(), volume.getId());
+		Response response = this.shell.send(command);
+		HashMap<String, String> attrs = StringUtils.keyAttributeToHash(response.toString());
+		return Brick.fromAttrs(attrs);
 	}
 
 	public ArrayList<Brick> list(Volume volume, String options){

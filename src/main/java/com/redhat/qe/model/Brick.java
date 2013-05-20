@@ -77,7 +77,7 @@ public class Brick extends Model{
 	 * @param brickattrs
 	 * @return
 	 */
-	private static Brick fromAttrs(HashMap<String, String> brickattrs) {
+	public static Brick fromAttrs(HashMap<String, String> brickattrs) {
 		Brick brick = new Brick();
 		brick.setId(brickattrs.get("id"));
 		String name = (brickattrs.get("name"));
@@ -125,6 +125,10 @@ public class Brick extends Model{
 		}
 
 		return builder.toHashCode();
+	}
+
+	public String getName() {
+		return String.format("%s:%s", getHost().getAddress(), getDir());
 	}	
 	
 	
