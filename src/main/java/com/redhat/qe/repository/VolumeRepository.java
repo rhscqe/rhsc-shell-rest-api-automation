@@ -99,6 +99,10 @@ public class VolumeRepository extends Repository<Volume>{
 		}
 		return result;
 	}
+	
+	public ArrayList<Brick> listBricks(Volume volume){
+		return new BrickRepository(volume, getShell()).list(volume,null);
+	}
 
 }
  
