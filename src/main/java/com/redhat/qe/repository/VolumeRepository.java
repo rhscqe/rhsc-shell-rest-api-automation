@@ -101,7 +101,15 @@ public class VolumeRepository extends Repository<Volume>{
 	}
 	
 	public ArrayList<Brick> listBricks(Volume volume){
-		return new BrickRepository(volume, getShell()).list(volume,null);
+		return listBricks(volume, null);
+	}
+	
+	public ArrayList<Brick> listBricks(Volume volume,String options){
+		return new BrickRepository(volume, getShell()).list(volume,options);
+	}
+	
+	public Response _listBricks(Volume volume,String options){
+		return new BrickRepository(volume, getShell())._list(volume,options);
 	}
 
 }

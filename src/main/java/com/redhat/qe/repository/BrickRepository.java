@@ -19,8 +19,18 @@ public class BrickRepository  {
 
 	public ArrayList<Brick> list(Volume volume, String options){
 		options  = (options == null) ? "" : options;
-		String command = String.format("list bricks --cluster-identifier %s --glustervolume-identifier %s %s", volume.getCluster().getId(), volume.getId(), options);
-		Response response = this.shell.send(command).expect("id");
+		Response response = _list(volume, options).expect("id");
 		return Brick.listFromReponse(response.toString());
+	}
+
+	/**
+	 * @param volume
+	 * @param options
+	 * @return
+	 */
+	Response _list(Volume volume, String options) {
+		String command = String.format("list bricks --cluster-identifier %s --glustervolume-identifier %s %s", volume.getCluster().getId(), volume.getId(), options);
+		Response response = this.shell.send(command);
+		return response;
 	}
 }

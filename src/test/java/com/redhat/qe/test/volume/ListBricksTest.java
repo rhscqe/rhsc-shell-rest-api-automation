@@ -1,6 +1,8 @@
 package com.redhat.qe.test.volume;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -12,6 +14,7 @@ import org.junit.rules.ExpectedException;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.test.TwoHostClusterTestBase;
@@ -42,6 +45,24 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 		Asserts.assertContains("", bricks, existingBricks.get(0));
 		Asserts.assertContains("", bricks, existingBricks.get(1));
 		Asserts.assertContains("", bricks, existingBricks.get(2));
+	}
+	
+	@Test
+	@Tcms("251286")
+	public void showAllTest(){
+		ArrayList<Brick> bricks = getVolumeRepository().listBricks(volume, "--show-all");
+		Asserts.assertContains("", bricks, existingBricks.get(0));
+		Asserts.assertContains("", bricks, existingBricks.get(1));
+		Asserts.assertContains("", bricks, existingBricks.get(2));
+		
+		
+		ArrayList<Brick> response = getVolumeRepository().listBricks(volume, "--show-all");
+		Collection<HashMap<String, String>> attrsforeachbrick = StringUtils.getProperties(response.toString());
+		for(HashMap<String,String> attrsforBrick : attrsforeachbrick){
+			Asserts.assertContains("", attrsforBrick.keySet(), "server_id");
+			Asserts.assertContains("", attrsforBrick.keySet(), "gluster_volume-id");
+			Asserts.assertContains("", attrsforBrick.keySet(), "status-state");
+		}
 	}
 
 }
