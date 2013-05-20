@@ -28,7 +28,7 @@ public class BrickRepository  {
 	public Response removeBrick(Volume volume, Brick brick){
 		String command = String.format("remove brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getId(),
 				volume.getCluster().getId(), volume.getId());
-		return this.shell.send(command);
+		return this.shell.send(command).expect("complete");
 	}
 	public Brick show(Volume volume, Brick brick){
 		String command = String.format("show brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
