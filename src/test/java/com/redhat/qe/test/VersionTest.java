@@ -16,7 +16,8 @@ import com.redhat.qe.ssh.Response;
 import dstywho.regexp.RegexMatch;
 
 public class VersionTest extends ShellSessionTestBase {
-	private static final String VERSION_PATTERN = "(\\d+\\.?)+-?.*[^.noarch]";
+//	private static final String VERSION_PATTERN = "(\\d+\\.?)+-?.*[^.noarch]";
+	private static final String VERSION_PATTERN = "\\d+\\.\\d+";
 
 	@Test
 	@Tcms("250538")
