@@ -54,6 +54,12 @@ public class VolumeRepository extends Repository<Volume>{
 		return getShell().send(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
 				.expect("complete");
 	}
+	
+	public Response setOption(Volume entity, GlusterOptionValue optionValue ){
+		return getShell().send(String.format("action glustervolume %s setoption --cluster-identifier %s %s", entity.getId(), entity.getCluster().getId(), optionValue))		
+				.expect("complete");
+	}
+	
 	public Response stop(Volume entity){
 		return getShell().send(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
 				.expect("complete");
