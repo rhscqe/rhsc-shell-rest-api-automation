@@ -24,7 +24,7 @@ import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.test.OpenShellSessionTestBase;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
-public class NegativeAddVolumeHostsNotOnSameServerTest extends OpenShellSessionTestBase {
+public class AddVolumeHostsNotOnSameServerNegativeTest extends OpenShellSessionTestBase {
 	
 	private Host host2;
 	private Host host1;
