@@ -19,6 +19,10 @@ public class Asserts {
 	public static <T> void assertContains(String description, Collection<T> target, T entry) {
 		Assert.assertTrue(String.format("%s: the target  <<<%s>>> does not contain <<<%s>>>", description,target.toString(), entry), target.contains(entry));
 	}
+	
+	public static <T> void assertDoesntContain(String description, Collection<T> target, T entry) {
+		Assert.assertTrue(String.format("%s: the target  <<<%s>>> does contain <<<%s>>>", description,target.toString(), entry), !target.contains(entry));
+	}
 
 
 

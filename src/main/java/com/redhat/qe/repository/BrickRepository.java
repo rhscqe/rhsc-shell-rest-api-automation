@@ -23,6 +23,11 @@ public class BrickRepository  {
 				volume.getCluster().getId(), volume.getId(), brick.getHost().getId(), brick.getDir());
 		return this.shell.send(command);
 	}
+	public Response removeBrick(Volume volume, Brick brick){
+		String command = String.format("remove brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getId(),
+				volume.getCluster().getId(), volume.getId());
+		return this.shell.send(command);
+	}
 
 	public ArrayList<Brick> list(Volume volume, String options){
 		options  = (options == null) ? "" : options;
