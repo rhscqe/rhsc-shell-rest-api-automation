@@ -9,6 +9,7 @@ import org.junit.Before;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnexpectedReponseException;
+import com.redhat.qe.helpers.HostCleanup;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
@@ -49,20 +50,7 @@ public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 	 * @param hostRepository
 	 */
 	private void destroyHost(Host host) {
-		if (host != null) {
-			getHostRepository()._deactivate(host);
-			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host, "maintenance", 400));
-			Response response = getHostRepository()._destroy(host, null);
-			if(response.contains("locked")){
-				Duration.ONE_SECOND.sleep();
-				getHostRepository().destroy(host);
-			}else if(response.contains("complete")){
-				return;
-			}else{
-				throw new UnexpectedReponseException("expecting 'complete'",response);
-				
-			}
-		}
+		HostCleanup.destroyHost(host, getHostRepository());
 	}
 
 	public TwoHostClusterTestBase() {
