@@ -67,14 +67,23 @@ public class Brick extends Model{
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
 		Collection<HashMap<String, String>> attrsforeachbrick = StringUtils.getProperties(response)	;		
 		for(HashMap<String,String> brickattrs : attrsforeachbrick){
-			Brick brick = new Brick();
-			brick.setId(brickattrs.get("id"));
-			String name = (brickattrs.get("name"));
-			brick.setHost(parseHost(name));
-			brick.setDir(parseDir(name));
+			Brick brick = fromAttrs(brickattrs);
 			bricks.add(brick);
 		}
 		return bricks;
+	}
+
+	/**
+	 * @param brickattrs
+	 * @return
+	 */
+	private static Brick fromAttrs(HashMap<String, String> brickattrs) {
+		Brick brick = new Brick();
+		brick.setId(brickattrs.get("id"));
+		String name = (brickattrs.get("name"));
+		brick.setHost(parseHost(name));
+		brick.setDir(parseDir(name));
+		return brick;
 	}
 
 	/**

@@ -11,10 +11,17 @@ public class BrickRepository  {
 	
 	private Volume volume;
 	private RhscShellSession shell;
+	
 
 	public BrickRepository(Volume volume, RhscShellSession shell) {
 		this.shell =shell;
 		this.volume = volume;
+	}
+	
+	public Response addBrick(Volume volume, Brick brick){
+		String command = String.format("add brick --cluster-identifier %s --glustervolume-identifier %s --brick \"brick.server_id=%s,brick.brick_dir=%s\"",
+				volume.getCluster().getId(), volume.getId(), brick.getHost().getId(), brick.getDir());
+		return this.shell.send(command);
 	}
 
 	public ArrayList<Brick> list(Volume volume, String options){
