@@ -9,6 +9,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
@@ -35,6 +36,7 @@ public class CleanupTool {
 		 * @param hostRepo
 		 */
 		private void destroyAll(ClusterRepository clusterrepo, VolumeRepository volumeRepo, HostRepository hostRepo) {
+			activateHostsIfNotUp(hostRepo);
 			destroyAllVolumes(clusterrepo, volumeRepo);
 			destroyAllHosts(hostRepo);
 			destroyAllClusters(clusterrepo);
@@ -45,8 +47,8 @@ public class CleanupTool {
 		 */
 		private void destroyAllClusters(ClusterRepository clusterrepo) {
 			List<Cluster> clusters = clusterrepo.list();
-			for(Cluster cluster: clusters){
-				if(!cluster.getName().contains("Default")){
+			for (Cluster cluster : clusters) {
+				if (!cluster.getName().contains("Default")) {
 					clusterrepo.destroy(cluster);
 				}
 			}
@@ -70,6 +72,16 @@ public class CleanupTool {
 		private void destroyAllHosts(HostRepository hostRepo) {
 			for(Host host: hostRepo.list(null)){
 				HostCleanup.destroyHost(host, hostRepo);
+			}
+		}
+
+		private void activateHostsIfNotUp(HostRepository hostRepo) {
+			List<Host> hosts = hostRepo.list("--show-all");
+			for(Host host:hosts){
+				if(!host.getState().equals("up")){
+					hostRepo.activate(host);
+					WaitUtil.waitForHostStatus(hostRepo, host, "up", 400);
+				}
 			}
 		}
 
@@ -108,7 +120,6 @@ public class CleanupTool {
 		});
 		
 	}
-	
 	
 	private void startSession(Closure2<Boolean,RhscShellSession> c){
 		{
