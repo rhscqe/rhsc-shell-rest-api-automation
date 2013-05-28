@@ -44,7 +44,7 @@ public class RemoveLastBrickFromVolumeNegativeTest extends TwoHostClusterTestBas
 
 	
 	@Test
-	@Tcms("251288")
+	@Tcms("251280")
 	public void test(){
 		expectedEx.expect(UnexpectedReponseException.class);
 		expectedEx.expect(new ResponseMessageMatcher("can not remove all bricks from volume"));
