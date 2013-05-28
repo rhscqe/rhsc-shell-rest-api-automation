@@ -71,8 +71,10 @@ public class VolumeRepository extends Repository<Volume>{
 	}
 	
 	public Response stop(Volume entity){
-		return getShell().send(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
-				.expect("complete");
+		return _stop(entity).expect("complete");
+	}
+	public Response _stop(Volume entity){
+		return getShell().send(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()));
 	}
 
 	public boolean isExist(Volume entity) {
