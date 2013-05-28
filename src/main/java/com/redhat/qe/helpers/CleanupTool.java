@@ -3,9 +3,13 @@ package com.redhat.qe.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jclouds.rest.annotations.Credential;
+
 import com.jcraft.jsch.ChannelShell;
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RestApi;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.config.ShellHost;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
@@ -14,14 +18,15 @@ import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
+import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.SshSession;
 
 import dstywho.functional.Closure2;
 
 public class CleanupTool {
 	
-	public void cleanup(){
-		repositories(new Cleaner());
+	public void cleanup(final Configuration config){
+		repositories(config, new Cleaner());
 	}
 	
 	
@@ -31,7 +36,7 @@ public class CleanupTool {
 		}
 
 		/**
-		 * @param clusterrepo
+		 * @param clusterreCleanerpo
 		 * @param volumeRepo
 		 * @param hostRepo
 		 */
@@ -106,8 +111,8 @@ public class CleanupTool {
 		
 	}
 	
-	private void repositories(final RepositoryCallback doRepoStuff){
-		startSession(new Closure2<Boolean, RhscShellSession>() {
+	private void repositories(final Configuration config, final RepositoryCallback doRepoStuff){
+		startSession(config, new Closure2<Boolean, RhscShellSession>() {
 			
 			@Override
 			public Boolean act(RhscShellSession shell) {
@@ -121,9 +126,8 @@ public class CleanupTool {
 		
 	}
 	
-	private void startSession(Closure2<Boolean,RhscShellSession> c){
+	private void startSession(final Configuration config, Closure2<Boolean,RhscShellSession> c){
 		{
-			Configuration config = RhscConfiguration.getConfiguration();
 			SshSession session = SshSession.fromConfiguration(config);
 			session.start();
 			session.openChannel();
@@ -139,8 +143,19 @@ public class CleanupTool {
 		}
 	}
 	
+	
+	//shellhost hostusername hostpassword rhscusername rhscpassword
 	public static void main(String[] args){
-		new CleanupTool().cleanup();
+		if(args.length < 5){
+			System.out.println("need to pass arguments: clihost/ip host_username host_pass rhsc_username rhscpass");
+			System.exit(1);
+		}else{
+			RestApi api = new RestApi("https://localhost:443/api", new Credentials(args[3],args[4] ));
+			ShellHost shell = new ShellHost(args[0], new Credentials(args[1], args[2]),22);
+			Configuration config = new Configuration(api, shell);
+			
+			new CleanupTool().cleanup(config);
+		}
 	}
 		
 
