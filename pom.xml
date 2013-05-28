@@ -123,7 +123,7 @@
 		</plugins>
 	</build>
 	<profiles>
-		<!-- mvn exec:java -Dannotated -->
+		<!-- mvn exec:java -P annotated -->
 		<profile>
 			<id>annotated</id>
 			<build>
@@ -135,6 +135,24 @@
 						<configuration>
 							<classpathScope>test</classpathScope>
 							<mainClass>com.redhat.qe.traceability.AnnotatedTestCase</mainClass>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+    <!-- mvn -P cleanup exec:java -->
+		<profile>
+			<id>cleanup</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2.1</version>
+						<configuration>
+							<classpathScope>test</classpathScope>
+							<mainClass>com.redhat.qe.helpers.CleanupTool</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>

@@ -146,7 +146,9 @@ public class CleanupTool {
 	
 	//shellhost hostusername hostpassword rhscusername rhscpassword
 	public static void main(String[] args){
-		if(args.length < 5){
+		if(args.length == 0){
+			new CleanupTool().cleanup(RhscConfiguration.getConfiguration());
+		}else if(args.length < 5){
 			System.out.println("need to pass arguments: clihost/ip host_username host_pass rhsc_username rhscpass");
 			System.exit(1);
 		}else{
