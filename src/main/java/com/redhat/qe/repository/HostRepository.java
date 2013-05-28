@@ -32,7 +32,7 @@ public class HostRepository extends Repository<Host> {
 	}
 	
 	private Response _show(String nameOrId){
-		return getShell().send(String.format("show host %s", nameOrId));
+		return getShell().send(String.format("show host \"%s\"", nameOrId));
 	}
 	
 	public Host createOrShow(Host host){
