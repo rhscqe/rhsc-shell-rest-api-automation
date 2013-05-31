@@ -31,7 +31,7 @@ public class BrickRepository  {
 		return this.shell.send(command).expect("complete");
 	}
 	public Brick show(Volume volume, Brick brick){
-		String command = String.format("show brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
+		String command = String.format("show brick \"%s\" --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
 				volume.getCluster().getId(), volume.getId());
 		Response response = this.shell.send(command);
 		HashMap<String, String> attrs = StringUtils.keyAttributeToHash(response.toString());
