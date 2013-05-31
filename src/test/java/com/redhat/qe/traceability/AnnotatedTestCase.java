@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;
@@ -44,8 +45,8 @@ public class AnnotatedTestCase {
 		return testCaseToMethod;
 		
 	}
-	public static HashMap<String, ArrayList<String>> getTestCaseToMethodNameMap(){
-		HashMap<String,ArrayList<String>> result = new HashMap<String,ArrayList<String>>();
+	public static TreeMap<String, ArrayList<String>> getTestCaseToMethodNameMap(){
+		TreeMap<String,ArrayList<String>> result = new TreeMap<String,ArrayList<String>>();
 		HashMap<String, ArrayList<Method>> testcasesToMethods = getTestCaseToMethodMap();
 		for (String testcase: testcasesToMethods.keySet()){
 			ArrayList<Method> methods = testcasesToMethods.get(testcase);
