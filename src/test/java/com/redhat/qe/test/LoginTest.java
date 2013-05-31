@@ -10,7 +10,7 @@ public class LoginTest extends ShellSessionTestBase{
 	public void test(){
 		shell.start();
 		shell.connect()
-				.expect(">>> connected to RHSC manager.*<<<")
+				.expect(">>> connected to (RHSC|OVIRT) manager.*<<<")
 				.expect("\\(connected\\)");
 	}
 
