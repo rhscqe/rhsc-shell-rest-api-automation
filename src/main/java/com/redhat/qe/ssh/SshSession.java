@@ -61,7 +61,8 @@ public class SshSession {
 	 */
 	public void stopChannel() {
 		try {
-			channel.disconnect();
+			if(channel != null)
+				channel.disconnect();
 		} catch (Exception e) {
 			throw new HostUnableToCloseChannel(e);
 		}
