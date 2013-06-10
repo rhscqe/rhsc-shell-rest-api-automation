@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 public abstract class ReadInput {
 
-	private static final Logger LOG = Logger.getLogger(RhscShellReadInput.class);
+	private static final Logger LOG = Logger.getLogger(ReadInput.class);
 	protected StringBuffer buffer;
 	protected InputStream inputStream;
 	protected Duration timeout;
@@ -23,7 +23,7 @@ public abstract class ReadInput {
 	}
 
 	public ReadInput(InputStream inputStream) {
-		this(inputStream, new Duration(TimeUnit.SECONDS, 15));
+		this(inputStream, new Duration(TimeUnit.SECONDS, 25));
 	}
 	
 	public Response call() {
