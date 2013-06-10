@@ -40,10 +40,15 @@ public class SshSession {
 	}
 
 	public void start() {
+		//ugly try to start the ssh session twice
 		try {
 			startSession();
 		} catch (JSchException e) {
-			throw new HostUnableToConnectException(e);
+			try {
+				startSession();
+			} catch (JSchException e2) {
+				throw new HostUnableToConnectException(e2);
+			}
 		}
 	}
 
