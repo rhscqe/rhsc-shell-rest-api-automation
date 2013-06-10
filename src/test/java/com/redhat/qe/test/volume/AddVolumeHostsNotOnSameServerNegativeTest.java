@@ -10,11 +10,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.redhat.qe.annoations.Tcms;
+import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.factories.HostFactory;
 import com.redhat.qe.factories.VolumeFactory;
+import com.redhat.qe.helpers.CleanupTool;
 import com.redhat.qe.helpers.HostCleanup;
 import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.model.Cluster;
@@ -54,11 +56,7 @@ public class AddVolumeHostsNotOnSameServerNegativeTest extends OpenShellSessionT
 
 	@After
 	public void _after(){
-		HostCleanup.destroyHost(host1, getHostRepository());
-		HostCleanup.destroyHost(host2, getHostRepository());
-		getClusterRepository().destroy(cluster1);
-		getClusterRepository().destroy(cluster2);
-		
+		new CleanupTool().cleanup(Configuration.getINSTANCE());
 	}
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();

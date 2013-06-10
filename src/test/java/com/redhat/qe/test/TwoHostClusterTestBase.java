@@ -9,6 +9,7 @@ import org.junit.Before;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnexpectedReponseException;
+import com.redhat.qe.helpers.CleanupTool;
 import com.redhat.qe.helpers.HostCleanup;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
@@ -40,10 +41,7 @@ public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 
 	@After
 	public void teardown() {
-		destroyHost( host1);
-		destroyHost( host2);
-		getClusterRepository().destroy(cluster);
-		
+		new CleanupTool().cleanup(RhscConfiguration.getConfiguration());
 	}
 
 	/**
