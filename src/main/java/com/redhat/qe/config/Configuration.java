@@ -83,18 +83,7 @@ public class Configuration {
 	public void setCluster(Cluster cluster) {
 		this.cluster = cluster;
 	}
-	/**
-	 * @return the iNSTANCE
-	 */
-	public static Configuration getINSTANCE() {
-		return INSTANCE;
-	}
-	/**
-	 * @param iNSTANCE the iNSTANCE to set
-	 */
-	public static void setINSTANCE(Configuration iNSTANCE) {
-		INSTANCE = iNSTANCE;
-	}
+	
 	public String toXml(){
 		XStream xstream = new XStream(new DomDriver());
 		return xstream.toXML(this);
@@ -104,7 +93,6 @@ public class Configuration {
 		return (Configuration) xstream.fromXML(config);
 	}
 	
-	public static Configuration INSTANCE;
 
 	public static void main(String[] a){
 		RestApi api = new RestApi("https://localhost:443/api", new Credentials("admin@internal", "redhat"));

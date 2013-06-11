@@ -16,11 +16,14 @@ public class VolumeRepository extends Repository<Volume>{
 	public VolumeRepository(RhscShellSession shell) {
 		super(shell);
 	}
-
-	public Volume create(Volume volume){
+	public Response _create(Volume volume){
 		String command = String.format("add glustervolume --cluster-identifier %s --name %s --volume_type %s --stripe_count %s --replica_count %s %s"
 				, volume.getCluster().getId(), volume.getName(), volume.getType(), volume.getStripe_count(), volume.getReplica_count(), bricksOptionsOnCreate(volume.getBricks()));
-		return Volume.fromResponse(getShell().send(command).unexpect("error:"));
+		return getShell().send(command);
+	}
+
+	public Volume create(Volume volume){
+		return Volume.fromResponse(_create(volume).unexpect("error:"));
 	}
 	
 	public Volume show(Volume volume){

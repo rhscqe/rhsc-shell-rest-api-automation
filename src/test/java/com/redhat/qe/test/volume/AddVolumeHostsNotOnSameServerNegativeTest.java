@@ -56,18 +56,14 @@ public class AddVolumeHostsNotOnSameServerNegativeTest extends OpenShellSessionT
 
 	@After
 	public void _after(){
-		new CleanupTool().cleanup(Configuration.getINSTANCE());
+		new CleanupTool().cleanup(RhscConfiguration.getConfiguration());
 	}
-	@Rule
-	public ExpectedException expectedEx = ExpectedException.none();
 	
 	
 	@Test
 	@Tcms("261777")
 	public void test(){
-		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("invalid brick server id"));
-		getVolumeRepository().create(VolumeFactory.distributed("notgonnawork", host1, host2));
+		getVolumeRepository()._create(VolumeFactory.distributed("notgonnawork", host1, host2)).expect("invalid brick server id");
 	}
 	
 }
