@@ -7,7 +7,7 @@
 		</credentials>
 	</restApi>
 	<shellHost>
-		<hostname>rhsc-bb3.tsang</hostname>
+		<hostname>10.70.35.185</hostname>
 		<credentials>
 			<username>root</username>
 			<password>redhat</password>
@@ -21,8 +21,8 @@
 	<hosts>
 		<com.redhat.qe.model.Host>
 			<name>node1</name>
-      <address>rhsc-bb3-node-a</address>
-			<rootPassword>redhat</rootPassword>
+      <address>10.70.37.111</address>
+			<rootPassword>rhscauto</rootPassword>
 			<cluster>
 				<name>myCluster</name>
 			</cluster>
@@ -30,8 +30,8 @@
 		
 		<com.redhat.qe.model.Host>
 			<name>node2</name>
-      <address>rhsc-bb3-node-b</address>
-			<rootPassword>redhat</rootPassword>
+      <address>10.70.37.82</address>
+			<rootPassword>rhscauto</rootPassword>
 			<cluster>
 				<name>myCluster</name>
 			</cluster>
