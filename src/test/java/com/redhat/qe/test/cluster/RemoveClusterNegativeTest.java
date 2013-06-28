@@ -10,15 +10,11 @@ import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
 public class RemoveClusterNegativeTest extends TwoHostClusterTestBase{
-	@Rule
-	public ExpectedException expectedEx = ExpectedException.none();
-	
+ 
 	@Test
 	@Tcms("233398")
 	public void removeNegative() {
-		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("vds detected"));
-		getClusterRepository().destroy(host1.getCluster());
+		getClusterRepository()._destroy(host1.getCluster()).expect("vds detected");
 	}
 	
 }

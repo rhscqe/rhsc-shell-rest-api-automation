@@ -35,7 +35,8 @@ public class ClusterRepository extends Repository<Cluster> {
 	}
 	
 	public String createCommand(Cluster cluster){
-		return String.format("add cluster --name '%s' --description '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default",cluster.getName(),cluster.getDescription());
+		return String.format("add cluster --name '%s' --description '%s' --cpu-id 'Intel SandyBridge Family' --gluster_service True --virt_service False --datacenter-name Default --version-major %s --version-minor %s",
+				cluster.getName(),cluster.getDescription(),cluster.getMajorVersion(), cluster.getMinorVersion());
 	}
 	
 	public Cluster show(Cluster cluster){
@@ -58,8 +59,16 @@ public class ClusterRepository extends Repository<Cluster> {
 		return destroy(cluster.getId());
 	}
 	
+	public Response _destroy(Cluster cluster){
+		return _destroy(cluster.getId());
+	}
+	
 	public Response destroy(String nameOrId){
-		return getShell().send(String.format("remove cluster %s", nameOrId)).expect("complete");
+		return _destroy(nameOrId).expect("complete");
+	}
+	
+	public Response _destroy(String nameOrId){
+		 return getShell().send(String.format("remove cluster %s", nameOrId));
 	}
 
 	public Cluster update(Cluster entity) {

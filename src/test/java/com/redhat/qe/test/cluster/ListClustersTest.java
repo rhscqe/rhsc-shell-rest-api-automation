@@ -68,7 +68,6 @@ public class ListClustersTest extends OpenShellSessionTestBase{
 			Asserts.assertContains("virt_service", property.keySet(), "virt_service");
 			assertEquals("gluster_service property value", property.get("gluster_service"), "True");
 			assertEquals("virt_service property value", property.get("virt_service"), "False");
-			
 		}
 		
 	}

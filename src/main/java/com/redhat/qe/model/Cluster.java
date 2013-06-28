@@ -11,6 +11,9 @@ public class Cluster extends Model{
 	private String id;
 	private String name;
 	private String description;
+	private String majorVersion;
+	private String minorVersion;
+	
 	public static Cluster fromResponse(Response response){
 		return fromKeyValue(response.toString());
 	}
@@ -21,6 +24,8 @@ public class Cluster extends Model{
 		cluster.setId(attributes.get("id"));
 		cluster.setName(attributes.get("name"));
 		cluster.setDescription(attributes.get("description"));
+		cluster.setMajorVersion(attributes.get("version-major"));
+		cluster.setMinorVersion(attributes.get("version-minor"));
 		return cluster;
 	}
 	/**
@@ -62,6 +67,34 @@ public class Cluster extends Model{
 		this.description = description;
 	}
 	
+	/**
+	 * @return the majorVersion
+	 */
+	public String getMajorVersion() {
+		return majorVersion;
+	}
+
+	/**
+	 * @param majorVersion the majorVersion to set
+	 */
+	public void setMajorVersion(String majorVersion) {
+		this.majorVersion = majorVersion;
+	}
+
+	/**
+	 * @return the minorVersion
+	 */
+	public String getMinorVersion() {
+		return minorVersion;
+	}
+
+	/**
+	 * @param minorVersion the minorVersion to set
+	 */
+	public void setMinorVersion(String minorVersion) {
+		this.minorVersion = minorVersion;
+	}
+
 	@Override
 	public boolean equals(Object o){
 		return (o instanceof Cluster) 
