@@ -98,10 +98,11 @@ public class Configuration {
 		RestApi api = new RestApi("https://localhost:443/api", new Credentials("admin@internal", "redhat"));
 		ShellHost shell = new ShellHost("rhsc-qa9", new Credentials("root", "redhat"),22);
 		Configuration config = new Configuration(api, shell);
-		config.setCluster(ClusterFactory.cluster("myCluster"));
+		Cluster clustr = ClusterFactory.cluster("myCluster");
+		config.setCluster(clustr);
 		ArrayList<Host> hostz = new ArrayList<Host>();
-		hostz.add(HostFactory.create("node1", "rhsc-qa9-node-a", "redhat",ClusterFactory.cluster("myCluster") ));
-		hostz.add(HostFactory.create("node2", "rhsc-qa9-node-b", "redhat",ClusterFactory.cluster("myCluster") ));
+		hostz.add(HostFactory.create("node1", "rhsc-qa9-node-a", "redhat",clustr ));
+		hostz.add(HostFactory.create("node2", "rhsc-qa9-node-b", "redhat",clustr ));
 		config.setHosts(hostz);
 		System.out.println(config.toXml());
 		String u = fromXml(config.toXml()).getRestApi().getCredentials().getUsername();

@@ -16,26 +16,24 @@
 	</shellHost>
 	<cluster>
 		<name>myCluster</name>
+		<majorVersion>3</majorVersion>
+		<minorVersion>2</minorVersion>
 	</cluster>
-	
+
 	<hosts>
 		<com.redhat.qe.model.Host>
 			<name>node1</name>
       <address>10.70.37.111</address>
 			<rootPassword>rhscauto</rootPassword>
-			<cluster>
-				<name>myCluster</name>
-			</cluster>
+			<cluster reference="../../../cluster"/>
 		</com.redhat.qe.model.Host>
-		
+
 		<com.redhat.qe.model.Host>
 			<name>node2</name>
       <address>10.70.37.82</address>
 			<rootPassword>rhscauto</rootPassword>
-			<cluster>
-				<name>myCluster</name>
-			</cluster>
+			<cluster reference="../../../cluster"/>
 		</com.redhat.qe.model.Host>
 	</hosts>
-	
+
 </com.redhat.qe.config.Configuration>
