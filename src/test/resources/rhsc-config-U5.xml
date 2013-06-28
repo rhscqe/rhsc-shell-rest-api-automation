@@ -1,0 +1,39 @@
+<com.redhat.qe.config.Configuration>
+	<restApi>
+		<url>https://localhost:443/api</url>
+		<credentials>
+			<username>admin@internal</username>
+			<password>redhat</password>
+		</credentials>
+	</restApi>
+	<shellHost>
+		<hostname>10.70.35.185</hostname>
+		<credentials>
+			<username>root</username>
+			<password>redhat</password>
+		</credentials>
+		<port>22</port>
+	</shellHost>
+	<cluster>
+		<name>myCluster</name>
+		<majorVersion>3</majorVersion>
+		<minorVersion>1</minorVersion>
+	</cluster>
+
+	<hosts>
+		<com.redhat.qe.model.Host>
+			<name>node1</name>
+			<address>10.70.37.204</address>
+			<rootPassword>rhscauto</rootPassword>
+			<cluster reference="../../../cluster"/>
+		</com.redhat.qe.model.Host>
+
+		<com.redhat.qe.model.Host>
+			<name>node2</name>
+			<address>10.70.37.88</address>
+			<rootPassword>rhscauto</rootPassword>
+			<cluster reference="../../../cluster"/>
+		</com.redhat.qe.model.Host>
+	</hosts>
+
+</com.redhat.qe.config.Configuration>
