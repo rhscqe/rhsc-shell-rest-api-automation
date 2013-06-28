@@ -13,11 +13,23 @@ import com.redhat.reportengine.client.RemoteAPI;
 
 public class MyListener extends RunListener {
 
+	private static final String REPORT_ENGINE_ID_ENV_VAR = "RHSC_SHELL_TEST_REPORT_ENGINE_ID";
+	private static final String DEFAULT_REPORT_ID = "RHSC-CLI_OVERNIGHT";
 	private static RemoteAPI reportEngine = new RemoteAPI();
 	HashMap<String, Failure> descriptionToFailure = new HashMap<String, Failure>();
 
 	public MyListener() throws UnknownHostException, Exception {
-		reportEngine.initClient("RHSC-CLI_OVERNIGHT");
+		reportEngine.initClient(getReportId());
+	}
+	
+	String getReportId(){
+		String result = System.getenv(REPORT_ENGINE_ID_ENV_VAR);
+		if(result ==null){
+			return DEFAULT_REPORT_ID;
+		}else{
+			return result;
+		}
+		
 	}
 
 	/**
