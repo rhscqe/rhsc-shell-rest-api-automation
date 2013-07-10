@@ -30,7 +30,7 @@
 
 		<com.redhat.qe.model.Host>
 			<name>node2</name>
-      <address>10.70.37.52</address>
+      <address>10.70.35.52</address>
 			<rootPassword>rhscauto</rootPassword>
 			<cluster reference="../../../cluster"/>
 		</com.redhat.qe.model.Host>
