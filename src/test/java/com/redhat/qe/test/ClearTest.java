@@ -2,11 +2,12 @@ package com.redhat.qe.test;
 
 
 
-import org.calgb.test.performance.html.RegexMatch;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
+
+import dstywho.regexp.RegexMatch;
 
 public class ClearTest extends OpenShellSessionTestBase {
 
