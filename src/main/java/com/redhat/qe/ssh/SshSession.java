@@ -10,7 +10,7 @@ import com.redhat.qe.exceptions.HostUnableToConnectException;
 
 public class SshSession {
 
-	private static final Logger LOG = Logger.getLogger(ChannelSshSession.class);
+	private static final Logger LOG = Logger.getLogger(SshSession.class);
 	protected Credentials credentials;
 	protected String hostname;
 	protected int port;

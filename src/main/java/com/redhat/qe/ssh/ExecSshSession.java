@@ -2,23 +2,25 @@ package com.redhat.qe.ssh;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
-import org.jclouds.compute.domain.ExecChannel;
+import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import com.redhat.qe.config.Configuration;
-import com.redhat.qe.exceptions.ChannelClosedUnexpectedlyException;
 import com.redhat.qe.exceptions.ChannelFailedToOpenException;
-import com.redhat.qe.exceptions.HostUnableToCloseChannel;
+import com.redhat.qe.model.WaitUtil;
 
-import dstywho.functional.Closure2;
+import dstywho.functional.Predicate;
+import dstywho.timeout.Timeout;
 
 public class ExecSshSession extends SshSession {
+	private static final Logger LOG = Logger.getLogger(ExecSshSession.class);
+	private static final int MAX_ATTEMPTS = 15;
 
+	
 	public static ExecSshSession fromConfiguration(Configuration config) {
 		return new ExecSshSession(config.getShellHost().getCredentials(), config.getShellHost().getHostname(), config.getShellHost().getPort());
 	}
@@ -93,6 +95,11 @@ public class ExecSshSession extends SshSession {
 		public void setStdout(String stdout) {
 			this.stdout = stdout;
 		}
+		
+		public Response expectSuccessful(){
+			Assert.assertEquals(0, getExitCode());
+			return this;
+		}
 
 	}
 
@@ -101,15 +108,21 @@ public class ExecSshSession extends SshSession {
 		
 		 InputStream stdout = getInputStream(channel );
 		InputStream stderr = getErrStream(channel);
+		
 	
+		LOG.debug("running command---------:" + command);
+		LOG.debug("command:" + command);
 		channel.setCommand(command);
 		connectChannel(channel);
-		waitUntilCommanFinishes(channel);
+		waitUntilCommanFinishes(channel, stdout);
 		String stdErr = getOutput(stderr);
 		String stdOut = getOutput(stdout);
 		int exitStatus = channel.getExitStatus();
 		Response response = new Response(exitStatus, stdErr, stdOut);
 		channel.disconnect();
+		LOG.debug("exit status:" + exitStatus);
+		LOG.debug("stderr:" + stdErr);
+		LOG.debug("stdout:" + stdOut);
 		return response;
 	}
 
@@ -152,12 +165,18 @@ public class ExecSshSession extends SshSession {
 	}
 
 	/**
+	 * @param stdout 
 	 * 
 	 */
-	private void waitUntilCommanFinishes(ChannelExec channel) {
+	private void waitUntilCommanFinishes(ChannelExec channel, InputStream stdout) {
+		int attempt = 0;
 		while(true){
-			if(channel.isEOF()){
+			if(channel.isEOF() || attempt > MAX_ATTEMPTS){
 				break;
+			}else{
+				
+				Timeout.TIMEOUT_ONE_SECOND.sleep();
+				attempt++;
 			}
 		}
 	}

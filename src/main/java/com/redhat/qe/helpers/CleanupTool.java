@@ -19,14 +19,37 @@ import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.ssh.Credentials;
-import com.redhat.qe.ssh.SshSession;
+import com.redhat.qe.ssh.ChannelSshSession;
+import com.redhat.qe.ssh.ExecSshSession;
+import com.redhat.qe.ssh.ExecSshSession.Response;
 
 import dstywho.functional.Closure2;
 
 public class CleanupTool {
 	
 	public void cleanup(final Configuration config){
-		repositories(config, new Cleaner());
+		withRhscCliRepositories(config, new Cleaner());
+		cleanupWithGlusterCli(config);
+	}
+
+	/**
+	 * @param config
+	 */
+	private void cleanupWithGlusterCli(final Configuration config) {
+		for(Host host: config.getHosts()){
+			ExecSshSession session = new ExecSshSession(new Credentials("root", host.getRootPassword()), host.getAddress());
+			session.start();
+			com.redhat.qe.repository.glustercli.VolumeRepository volRepo = new com.redhat.qe.repository.glustercli.VolumeRepository(session);
+			for(Volume vol : volRepo.info()){
+				volRepo.delete(vol);
+			}
+			com.redhat.qe.repository.glustercli.HostRepository hostRepository = new com.redhat.qe.repository.glustercli.HostRepository(session);
+			for( Host peer : hostRepository.list()){
+				hostRepository.detach(peer);
+			}
+			session.stop();
+			
+		}
 	}
 	
 	
@@ -111,7 +134,7 @@ public class CleanupTool {
 		
 	}
 	
-	private void repositories(final Configuration config, final RepositoryCallback doRepoStuff){
+	private void withRhscCliRepositories(final Configuration config, final RepositoryCallback doRepoStuff){
 		startSession(config, new Closure2<Boolean, RhscShellSession>() {
 			
 			@Override
@@ -128,7 +151,7 @@ public class CleanupTool {
 	
 	private void startSession(final Configuration config, Closure2<Boolean,RhscShellSession> c){
 		{
-			SshSession session = SshSession.fromConfiguration(config);
+			ChannelSshSession session = ChannelSshSession.fromConfiguration(config);
 			session.start();
 			session.openChannel();
 			final RhscShellSession shell = RhscShellSession.fromConfiguration(session, config);
