@@ -9,7 +9,7 @@ import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
 
 public class BashShell extends Shell {
 	
-	public static BashShell fromSsh(SshSession ssh){
+	public static BashShell fromSsh(ChannelSshSession ssh){
 		BashShell shell = null;
 		try {
 			shell = new BashShell(ssh.getChannel().getInputStream(), ssh.getChannel().getOutputStream());

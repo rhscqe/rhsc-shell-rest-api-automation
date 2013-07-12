@@ -12,18 +12,18 @@ import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
-import com.redhat.qe.ssh.SshSession;
+import com.redhat.qe.ssh.ChannelSshSession;
 
 public class ShellSessionTestBase {
 
-	protected SshSession session;
+	protected ChannelSshSession session;
 	protected RhscShellSession shell;
 
 
 	@Before
 	public void before() {
 		Configuration config = RhscConfiguration.getConfiguration();
-		session = SshSession.fromConfiguration(config);
+		session = ChannelSshSession.fromConfiguration(config);
 		session.start();
 		session.openChannel();
 		ChannelShell channel = session.getChannel();

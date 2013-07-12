@@ -8,14 +8,14 @@ import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.Response;
 import com.redhat.qe.ssh.RhscShell;
 import com.redhat.qe.ssh.Shell;
-import com.redhat.qe.ssh.SshSession;
+import com.redhat.qe.ssh.ChannelSshSession;
 
 public class RhscShellSession {
 	private String url;
 	private Credentials credentials;
 	private Shell shell;
 	
-	public static  RhscShellSession fromConfiguration(SshSession ssh, Configuration config){
+	public static  RhscShellSession fromConfiguration(ChannelSshSession ssh, Configuration config){
 		RhscShell _shell;
 		try {
 			_shell = new RhscShell(ssh.getChannel().getInputStream(), ssh.getChannel().getOutputStream());
