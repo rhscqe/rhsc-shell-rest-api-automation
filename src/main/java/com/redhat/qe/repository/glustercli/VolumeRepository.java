@@ -9,12 +9,8 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 
 public class VolumeRepository extends Repository {
 	
-	/**
-	 * @param shell
-	 */
 	public VolumeRepository(ExecSshSession shell) {
 		super(shell);
-		// TODO Auto-generated constructor stub
 	}
 
 	public ArrayList<Volume> info(){
@@ -23,7 +19,11 @@ public class VolumeRepository extends Repository {
 	}
 	
 	public void  delete(Volume volume){
-		getShell().runCommand(String.format("gluster --mode=script volume delete '%s' || echo crap", volume.getName())).expectSuccessful();
+		getShell().runCommand(String.format("gluster --mode=script volume delete '%s'", volume.getName())).expectSuccessful();
+	}
+
+	public void stop(Volume vol) {
+		getShell().runCommand(String.format("gluster --mode=script volume stop '%s' || echo \"can't stop. volume was already stopped\"", vol.getName())).expectSuccessful();
 	}
 
 }

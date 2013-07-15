@@ -41,6 +41,7 @@ public class CleanupTool {
 			session.start();
 			com.redhat.qe.repository.glustercli.VolumeRepository volRepo = new com.redhat.qe.repository.glustercli.VolumeRepository(session);
 			for(Volume vol : volRepo.info()){
+				volRepo.stop(vol);
 				volRepo.delete(vol);
 			}
 			com.redhat.qe.repository.glustercli.HostRepository hostRepository = new com.redhat.qe.repository.glustercli.HostRepository(session);
