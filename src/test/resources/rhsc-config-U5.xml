@@ -7,7 +7,7 @@
 		</credentials>
 	</restApi>
 	<shellHost>
-		<hostname>10.70.37.171</hostname>
+		<hostname>10.70.37.189</hostname>
 		<credentials>
 			<username>root</username>
 			<password>redhat</password>
@@ -23,14 +23,14 @@
 	<hosts>
 		<com.redhat.qe.model.Host>
 			<name>node1</name>
-			<address>10.70.37.156</address>
+			<address>10.70.37.178</address>
 			<rootPassword>rhscauto</rootPassword>
 			<cluster reference="../../../cluster"/>
 		</com.redhat.qe.model.Host>
 
 		<com.redhat.qe.model.Host>
 			<name>node2</name>
-			<address>10.70.37.48</address>
+			<address>10.70.37.125</address>
 			<rootPassword>rhscauto</rootPassword>
 			<cluster reference="../../../cluster"/>
 		</com.redhat.qe.model.Host>
