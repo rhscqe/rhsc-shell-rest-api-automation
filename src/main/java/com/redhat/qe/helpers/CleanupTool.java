@@ -28,7 +28,7 @@ import dstywho.functional.Closure2;
 public class CleanupTool {
 
 	public void cleanup(final Configuration config) {
-		// withRhscCliRepositories(config, new Cleaner());
+	    withRhscCliRepositories(config, new Cleaner());
 		cleanupWithGlusterCli(config);
 	}
 
