@@ -26,9 +26,9 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 import dstywho.functional.Closure2;
 
 public class CleanupTool {
-	
-	public void cleanup(final Configuration config){
-		withRhscCliRepositories(config, new Cleaner());
+
+	public void cleanup(final Configuration config) {
+		// withRhscCliRepositories(config, new Cleaner());
 		cleanupWithGlusterCli(config);
 	}
 
@@ -36,26 +36,31 @@ public class CleanupTool {
 	 * @param config
 	 */
 	private void cleanupWithGlusterCli(final Configuration config) {
-		for(Host host: config.getHosts()){
-			ExecSshSession session = new ExecSshSession(new Credentials("root", host.getRootPassword()), host.getAddress());
+		for (Host host : config.getHosts()) {
+			ExecSshSession session = new ExecSshSession(new Credentials("root",
+					host.getRootPassword()), host.getAddress());
 			session.start();
-			com.redhat.qe.repository.glustercli.VolumeRepository volRepo = new com.redhat.qe.repository.glustercli.VolumeRepository(session);
-			for(Volume vol : volRepo.info()){
-				volRepo.stop(vol);
-				volRepo.delete(vol);
+			try {
+				com.redhat.qe.repository.glustercli.VolumeRepository volRepo = new com.redhat.qe.repository.glustercli.VolumeRepository(
+						session);
+				for (Volume vol : volRepo.info()) {
+					volRepo.stop(vol);
+					volRepo.delete(vol);
+				}
+				com.redhat.qe.repository.glustercli.HostRepository hostRepository = new com.redhat.qe.repository.glustercli.HostRepository(
+						session);
+				for (Host peer : hostRepository.list()) {
+					hostRepository.detach(peer);
+				}
+			} finally {
+				session.stop();
 			}
-			com.redhat.qe.repository.glustercli.HostRepository hostRepository = new com.redhat.qe.repository.glustercli.HostRepository(session);
-			for( Host peer : hostRepository.list()){
-				hostRepository.detach(peer);
-			}
-			session.stop();
-			
 		}
 	}
-	
-	
+
 	private final class Cleaner implements RepositoryCallback {
-		public void call(ClusterRepository clusterrepo, VolumeRepository volumeRepo, HostRepository hostRepo) {
+		public void call(ClusterRepository clusterrepo,
+				VolumeRepository volumeRepo, HostRepository hostRepo) {
 			destroyAll(clusterrepo, volumeRepo, hostRepo);
 		}
 
@@ -64,7 +69,8 @@ public class CleanupTool {
 		 * @param volumeRepo
 		 * @param hostRepo
 		 */
-		private void destroyAll(ClusterRepository clusterrepo, VolumeRepository volumeRepo, HostRepository hostRepo) {
+		private void destroyAll(ClusterRepository clusterrepo,
+				VolumeRepository volumeRepo, HostRepository hostRepo) {
 			activateHostsIfNotUp(hostRepo);
 			destroyAllVolumes(clusterrepo, volumeRepo);
 			destroyAllHosts(hostRepo);
@@ -88,9 +94,10 @@ public class CleanupTool {
 		 * @param volumeRepo
 		 * @return
 		 */
-		private void destroyAllVolumes(ClusterRepository clusterrepo, VolumeRepository volumeRepo) {
+		private void destroyAllVolumes(ClusterRepository clusterrepo,
+				VolumeRepository volumeRepo) {
 			List<Cluster> clusters = clusterrepo.list();
-			for(Cluster cluster: clusters){
+			for (Cluster cluster : clusters) {
 				cleanUpVolumes(volumeRepo, cluster);
 			}
 		}
@@ -99,15 +106,15 @@ public class CleanupTool {
 		 * @param hostRepo
 		 */
 		private void destroyAllHosts(HostRepository hostRepo) {
-			for(Host host: hostRepo.list(null)){
+			for (Host host : hostRepo.list(null)) {
 				HostCleanup.destroyHost(host, hostRepo);
 			}
 		}
 
 		private void activateHostsIfNotUp(HostRepository hostRepo) {
 			List<Host> hosts = hostRepo.list("--show-all");
-			for(Host host:hosts){
-				if(!host.getState().equals("up")){
+			for (Host host : hosts) {
+				if (!host.getState().equals("up")) {
 					hostRepo.activate(host);
 					WaitUtil.waitForHostStatus(hostRepo, host, "up", 400);
 				}
@@ -119,70 +126,77 @@ public class CleanupTool {
 		 * @param cluster
 		 */
 		private void cleanUpVolumes(VolumeRepository volumeRepo, Cluster cluster) {
-			ArrayList<Volume> volumes = volumeRepo.list(cluster,"--show-all");
-			for (Volume volume :volumes){
+			ArrayList<Volume> volumes = volumeRepo.list(cluster, "--show-all");
+			for (Volume volume : volumes) {
 				volumeRepo._stop(volume);
 				volumeRepo.destroy(volume);
 			}
 		}
 	}
 
+	private static interface RepositoryCallback {
 
-	private static interface RepositoryCallback{
-		
-		public void call(ClusterRepository clusterrepo, VolumeRepository volumeRepo, HostRepository hostRepo);
-			
-		
+		public void call(ClusterRepository clusterrepo,
+				VolumeRepository volumeRepo, HostRepository hostRepo);
+
 	}
-	
-	private void withRhscCliRepositories(final Configuration config, final RepositoryCallback doRepoStuff){
+
+	private void withRhscCliRepositories(final Configuration config,
+			final RepositoryCallback doRepoStuff) {
 		startSession(config, new Closure2<Boolean, RhscShellSession>() {
-			
+
 			@Override
 			public Boolean act(RhscShellSession shell) {
 				final HostRepository hostRepository = new HostRepository(shell);
-				final VolumeRepository volumeRepository = new VolumeRepository(shell);
-				final ClusterRepository clusterRepository = new ClusterRepository(shell);
-				doRepoStuff.call(clusterRepository, volumeRepository, hostRepository);
+				final VolumeRepository volumeRepository = new VolumeRepository(
+						shell);
+				final ClusterRepository clusterRepository = new ClusterRepository(
+						shell);
+				doRepoStuff.call(clusterRepository, volumeRepository,
+						hostRepository);
 				return true;
 			}
 		});
-		
+
 	}
-	
-	private void startSession(final Configuration config, Closure2<Boolean,RhscShellSession> c){
+
+	private void startSession(final Configuration config,
+			Closure2<Boolean, RhscShellSession> c) {
 		{
-			ChannelSshSession session = ChannelSshSession.fromConfiguration(config);
+			ChannelSshSession session = ChannelSshSession
+					.fromConfiguration(config);
 			session.start();
 			session.openChannel();
-			final RhscShellSession shell = RhscShellSession.fromConfiguration(session, config);
+			final RhscShellSession shell = RhscShellSession.fromConfiguration(
+					session, config);
 			shell.start();
 			shell.connect();
-			try{
+			try {
 				c.call(shell);
-			}finally{
+			} finally {
 				session.stopChannel();
 				session.stop();
 			}
 		}
 	}
-	
-	
-	//shellhost hostusername hostpassword rhscusername rhscpassword
-	public static void main(String[] args){
-		if(args.length == 0){
+
+	// shellhost hostusername hostpassword rhscusername rhscpassword
+	public static void main(String[] args) {
+		if (args.length == 0) {
 			new CleanupTool().cleanup(RhscConfiguration.getConfiguration());
-		}else if(args.length < 5){
-			System.out.println("need to pass arguments: clihost/ip host_username host_pass rhsc_username rhscpass");
+		} else if (args.length < 5) {
+			System.out
+					.println("need to pass arguments: clihost/ip host_username host_pass rhsc_username rhscpass");
 			System.exit(1);
-		}else{
-			RestApi api = new RestApi("https://localhost:443/api", new Credentials(args[3],args[4] ));
-			ShellHost shell = new ShellHost(args[0], new Credentials(args[1], args[2]),22);
+		} else {
+			RestApi api = new RestApi("https://localhost:443/api",
+					new Credentials(args[3], args[4]));
+			ShellHost shell = new ShellHost(args[0], new Credentials(args[1],
+					args[2]), 22);
 			Configuration config = new Configuration(api, shell);
-			
+
 			new CleanupTool().cleanup(config);
 		}
 	}
-		
 
 }
