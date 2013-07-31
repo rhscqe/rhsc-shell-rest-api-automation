@@ -32,8 +32,12 @@ public class VolumeRepository extends Repository<Volume>{
 	
 	
 	public Volume showOrCreate(Volume volume){
-		//TODO
-		return null;
+		Volume show = Volume.fromResponse(getShell().send(String.format("show glustervolume %s --cluster-identifier %s", volume.getName(), volume.getCluster().getName())));
+		if(show.getId() != null){
+			return show;
+		}else{
+			return create(volume);
+		}
 	}
 	
 	private String bricksOptionsOnCreate(List<Brick> bricks){
@@ -111,6 +115,10 @@ public class VolumeRepository extends Repository<Volume>{
 	
 	public ArrayList<Brick> listBricks(Volume volume,String options){
 		return new BrickRepository(volume, getShell()).list(volume,options);
+	}
+	
+	public ArrayList<Brick> listBricksAllContent(Volume volume){
+		return new BrickRepository(volume, getShell()).listAllContentTrue(volume);
 	}
 	
 	public Response _listBricks(Volume volume,String options){

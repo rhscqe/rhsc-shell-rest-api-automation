@@ -43,6 +43,11 @@ public class BrickRepository  {
 		Response response = _list(volume, options).expect("id");
 		return Brick.listFromReponse(response.toString());
 	}
+	
+	public ArrayList<Brick> listAllContentTrue(Volume volume){
+		Response response = _list(volume, "--show-all --all_content True").unexpect("error");
+		return Brick.allContentlistFromReponse(response.toString());
+	}
 
 	/**
 	 * @param volume

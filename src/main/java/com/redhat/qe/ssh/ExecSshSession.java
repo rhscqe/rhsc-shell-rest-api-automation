@@ -11,15 +11,20 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.exceptions.ChannelFailedToOpenException;
-import com.redhat.qe.model.WaitUtil;
+import com.redhat.qe.model.Host;
 
-import dstywho.functional.Predicate;
 import dstywho.timeout.Timeout;
 
 public class ExecSshSession extends SshSession {
 	private static final Logger LOG = Logger.getLogger(ExecSshSession.class);
 	private static final int MAX_ATTEMPTS = 15;
 
+	public static ExecSshSession fromHost(Host host){
+		return new ExecSshSession(new Credentials("root",
+				host.getRootPassword()), host.getAddress());
+		
+	}
+	
 	
 	public static ExecSshSession fromConfiguration(Configuration config) {
 		return new ExecSshSession(config.getShellHost().getCredentials(), config.getShellHost().getHostname(), config.getShellHost().getPort());

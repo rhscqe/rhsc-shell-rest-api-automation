@@ -3,21 +3,23 @@ package com.redhat.qe.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.redhat.qe.helpers.ListUtil;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
-import com.redhat.qe.repository.GlusterOption;
 
-public class Brick extends Model{
-	private  Host host;
+public class Brick extends Model {
+	private Host host;
 	private String dir;
 	private String id;
-	
-	public String toString(){
-		return String.format("brick.server_id=%s,brick.brick_dir=%s", host.getId(), dir);
+	private RepeatingHashMap<String, String> mixedAttributes;
+	private HashMap<String, String> attributes;
+
+	public String toString() {
+		return String.format("brick.server_id=%s,brick.brick_dir=%s",
+				host.getId(), dir);
 	}
 
 	/**
@@ -28,7 +30,8 @@ public class Brick extends Model{
 	}
 
 	/**
-	 * @param host the host to set
+	 * @param host
+	 *            the host to set
 	 */
 	public void setHost(Host host) {
 		this.host = host;
@@ -42,13 +45,13 @@ public class Brick extends Model{
 	}
 
 	/**
-	 * @param dir the dir to set
+	 * @param dir
+	 *            the dir to set
 	 */
 	public void setDir(String dir) {
 		this.dir = dir;
 	}
-	
-	
+
 	/**
 	 * @return the id
 	 */
@@ -57,18 +60,39 @@ public class Brick extends Model{
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public static ArrayList<Brick> listFromReponse(String response){
+	public static ArrayList<Brick> listFromReponse(String response) {
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		Collection<HashMap<String, String>> attrsforeachbrick = StringUtils.getProperties(response)	;		
-		for(HashMap<String,String> brickattrs : attrsforeachbrick){
+		Collection<HashMap<String, String>> attrsforeachbrick = StringUtils
+				.getProperties(response);
+		for (HashMap<String, String> brickattrs : attrsforeachbrick) {
 			Brick brick = fromAttrs(brickattrs);
 			bricks.add(brick);
+		}
+		return bricks;
+	}
+
+	public static ArrayList<Brick> allContentlistFromReponse(String response) {
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		Collection<String> rawBrickDataForAllBricks = StringUtils
+				.getPropertyKeyValueSets(response);
+		for (String rawBrickData : rawBrickDataForAllBricks) {
+			HashMap<String, String> basicInfo = StringUtils
+					.getProperties(rawBrickData).iterator().next();
+			if (basicInfo != null) {
+				Brick brick = fromAttrs(basicInfo);
+				RepeatingHashMap<String, String> attrs = StringUtils
+						.repeatingKeyAttributeToHash(rawBrickData);
+				brick.setAttributes(attrs);
+
+				bricks.add(brick);
+			}
 		}
 		return bricks;
 	}
@@ -81,9 +105,14 @@ public class Brick extends Model{
 		Brick brick = new Brick();
 		brick.setId(brickattrs.get("id"));
 		String name = (brickattrs.get("name"));
-		brick.setHost(parseHost(name));
-		brick.setDir(parseDir(name));
+		brick.setHostDirFromName(name);
+
 		return brick;
+	}
+
+	public void setHostDirFromName(String name) {
+		setHost(parseHost(name));
+		setDir(parseDir(name));
 	}
 
 	/**
@@ -97,25 +126,25 @@ public class Brick extends Model{
 		myhost.setAddress(hostnameToBrickDir[0]);
 		return myhost;
 	}
+
 	private static String parseDir(String name) {
 		String[] hostnameToBrickDir = name.split(":");
 		return hostnameToBrickDir[1];
 	}
-	
-	
+
 	@Override
-	public boolean equals(Object o){
-		return (o instanceof Brick) 
-				&& (getDir() == null || ((Brick)o).getDir() == null ||((Brick)o).getDir().equals(getDir()))				
-				&& ( getHost() == null 
-						|| ((Brick)o).getHost() == null 
+	public boolean equals(Object o) {
+		return (o instanceof Brick)
+				&& (getDir() == null || ((Brick) o).getDir() == null || ((Brick) o)
+						.getDir().equals(getDir()))
+				&& (getHost() == null || ((Brick) o).getHost() == null
 						|| getHost().getAddress() == null
-						|| ((Brick)o).getHost().getAddress() == null
-						||((Brick)o).getHost().getAddress().equals(getHost().getAddress()));
-	}	
-	
+						|| ((Brick) o).getHost().getAddress() == null || ((Brick) o)
+						.getHost().getAddress().equals(getHost().getAddress()));
+	}
+
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder(17, 19);
 		builder.append(getDir());
 		if (getHost() == null) {
@@ -129,7 +158,28 @@ public class Brick extends Model{
 
 	public String getName() {
 		return String.format("%s:%s", getHost().getAddress(), getDir());
-	}	
-	
-	
+	}
+
+	public HashMap<String, String> getAttributes() {
+		HashMap<String, String> results = new HashMap<String, String>();
+		if (attributes != null)
+			results.putAll(attributes);
+		if (mixedAttributes != null)
+			results.putAll(mixedAttributes.flatten());
+		return results;
+
+	}
+
+	public void setAttributes(HashMap<String, String> map) {
+		this.attributes = map;
+	}
+
+	public RepeatingHashMap<String, String> getMixedAttributes() {
+		return mixedAttributes;
+	}
+
+	public void setAttributes(RepeatingHashMap<String, String> attrs) {
+		this.mixedAttributes = attrs;
+	}
+
 }

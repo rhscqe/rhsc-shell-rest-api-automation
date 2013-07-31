@@ -21,9 +21,9 @@ import dstywho.timeout.Duration;
 
 public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 
-	protected static Host host1;
-	protected static Host host2;
-	private static Cluster cluster;
+	protected Host host1;
+	protected Host host2;
+	protected Cluster cluster;
 
 	@Before
 	public void setup() {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 
@@ -38,8 +39,22 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
 			return hash.get(key);
 		}
 		
+		public V getFirst(T key){
+			return hash.get(key).get(0);
+		}
+		
 		public  Set<T> keys(){
 			return hash.keySet();
+		}
+		
+		public HashMap<T,String> flatten(){
+			HashMap<T, String> result = new HashMap<T,String>();
+			for(T key :keys()){
+				String value = Joiner.on(",").join(hash.get(key));		
+				result.put(key, value);
+			}
+			return result;
+			
 		}
 		
 		
