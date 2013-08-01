@@ -7,7 +7,7 @@
 		</credentials>
 	</restApi>
 	<shellHost>
-		<hostname>10.70.37.189</hostname>
+		<hostname>10.70.37.112</hostname>
 		<credentials>
 			<username>root</username>
 			<password>redhat</password>
