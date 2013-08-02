@@ -40,6 +40,17 @@ public class ListHostTest extends TwoHostClusterTestBase{
 		assertEquals(1, hosts.size());
 		assertEquals(host1.getName(), hosts.get(0).getName());
 	}
+
+	@Test
+	@Tcms("250985")
+	public void listGlobQueryTest(){
+		String firstChar = host1.getName().substring(0, 1);
+		String lastChar = host1.getName().substring(host1.getName().length() -1);
+		String query = "--query \"" + firstChar + "*"+ lastChar + "\"";
+		List<Host> hosts = getHostRepository().list(query);
+		assertEquals(1, hosts.size());
+		assertEquals(host1.getName(), hosts.get(0).getName());
+	}
 	
 	@Test
 	@Tcms("250981")
