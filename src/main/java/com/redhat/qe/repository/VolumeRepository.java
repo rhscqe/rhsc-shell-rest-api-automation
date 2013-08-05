@@ -127,6 +127,9 @@ public class VolumeRepository extends Repository<Volume>{
 	public Brick showBrick(Volume volume, Brick brick){
 		return new BrickRepository(volume, getShell()).show(volume, brick);
 	}
+	public Response _removeBrick(Volume volume, Brick brick) {
+		return new BrickRepository(volume, getShell())._removeBrick(volume, brick);
+	}
 
 }
  

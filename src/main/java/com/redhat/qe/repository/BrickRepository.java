@@ -25,11 +25,17 @@ public class BrickRepository  {
 				volume.getCluster().getId(), volume.getId(), brick.getHost().getId(), brick.getDir());
 		return this.shell.send(command);
 	}
+
 	public Response removeBrick(Volume volume, Brick brick){
+		return _removeBrick(volume,brick).expect("complete");
+	}
+
+	public Response _removeBrick(Volume volume, Brick brick){
 		String command = String.format("remove brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getId(),
 				volume.getCluster().getId(), volume.getId());
-		return this.shell.send(command).expect("complete");
+		return this.shell.send(command);
 	}
+	
 	public Brick show(Volume volume, Brick brick){
 		String command = String.format("show brick \"%s\" --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
 				volume.getCluster().getId(), volume.getId());
