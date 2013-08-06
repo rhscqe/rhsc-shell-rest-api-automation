@@ -28,7 +28,12 @@ import dstywho.functional.Closure2;
 public class CleanupTool {
 
 	public void cleanup(final Configuration config) {
-	    withRhscCliRepositories(config, new Cleaner());
+		try {
+			withRhscCliRepositories(config, new Cleaner());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		cleanupWithGlusterCli(config);
 	}
 
@@ -47,6 +52,15 @@ public class CleanupTool {
 					volRepo.stop(vol);
 					volRepo.delete(vol);
 				}
+			} finally {
+				session.stop();
+			}
+		}
+		for (Host host : config.getHosts()) {
+			ExecSshSession session = new ExecSshSession(new Credentials("root",
+					host.getRootPassword()), host.getAddress());
+			session.start();
+			try {
 				com.redhat.qe.repository.glustercli.HostRepository hostRepository = new com.redhat.qe.repository.glustercli.HostRepository(
 						session);
 				for (Host peer : hostRepository.list()) {
