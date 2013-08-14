@@ -51,11 +51,13 @@ public class SshSession {
 		session.setPassword(credentials.getPassword());
 		session.setConfig("StrictHostKeyChecking", "no");
 		session.connect();
+		LOG.debug("connected");
 		return session;
 	}
 
 	public void stopSession() {
 		session.disconnect();
+		LOG.debug("disconnected");
 	}
 
 }

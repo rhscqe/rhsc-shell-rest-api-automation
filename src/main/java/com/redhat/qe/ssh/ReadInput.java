@@ -23,7 +23,7 @@ public abstract class ReadInput {
 	}
 
 	public ReadInput(InputStream inputStream) {
-		this(inputStream, new Duration(TimeUnit.SECONDS, 25));
+		this(inputStream, new Duration(TimeUnit.SECONDS, 60));
 	}
 	
 	public Response call() {
@@ -34,6 +34,7 @@ public abstract class ReadInput {
 		long starttime = System.currentTimeMillis();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+			LOG.debug("collecting output");
 			while (!bufferContainsPrompt() && !hasTimedOut(starttime)) {
 				if (reader.ready()) {
 					buffer.append((char) reader.read());

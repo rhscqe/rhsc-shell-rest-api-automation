@@ -24,6 +24,13 @@ public class Asserts {
 		Assert.assertTrue(String.format("%s: the target  <<<%s>>> does contain <<<%s>>>", description,target.toString(), entry), !target.contains(entry));
 	}
 
+	public static void assertFuzzy(int fuzz, int expected , int actual) {
+		int upperbound = expected + fuzz;
+		int lowerbound = expected - fuzz;
+		Assert.assertTrue(String.format("actual[%s] fell outside expected[%s] +/- %s (%s to %s)", actual, expected, fuzz, lowerbound, upperbound), 
+				actual <= upperbound && actual >= lowerbound);		
+	}
+
 
 
 }
