@@ -7,9 +7,9 @@ import java.util.List;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 
-public class ClusterRepository extends Repository<Cluster> {
+public class ClusterRepository extends Repository<Cluster>implements IClusterRepository {
 	
 
 	
@@ -51,23 +51,23 @@ public class ClusterRepository extends Repository<Cluster> {
 		return Cluster.fromResponse(_show(cluster.getName()));
 	}
 	
-	private Response _show(String nameorId){
+	private IResponse _show(String nameorId){
 		return getShell().send(String.format("show cluster %s",nameorId));
 	}
 	
-	public Response destroy(Cluster cluster){
+	public IResponse destroy(Cluster cluster){
 		return destroy(cluster.getId());
 	}
 	
-	public Response _destroy(Cluster cluster){
+	public IResponse _destroy(Cluster cluster){
 		return _destroy(cluster.getId());
 	}
 	
-	public Response destroy(String nameOrId){
+	public IResponse destroy(String nameOrId){
 		return _destroy(nameOrId).expect("complete");
 	}
 	
-	public Response _destroy(String nameOrId){
+	public IResponse _destroy(String nameOrId){
 		 return getShell().send(String.format("remove cluster %s", nameOrId));
 	}
 
@@ -75,7 +75,7 @@ public class ClusterRepository extends Repository<Cluster> {
 		return Cluster.fromResponse(_update(entity).unexpect("error:"));
 	}
 	
-	private Response _update( Cluster entity) {
+	private IResponse _update( Cluster entity) {
 		return getShell().send(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
 	}
 	
@@ -92,7 +92,7 @@ public class ClusterRepository extends Repository<Cluster> {
 		return list(null);
 	}
 	
-	public Response _list(String options){
+	public IResponse _list(String options){
 		String command = "list clusters";
 		return ( options == null) ? getShell().send(command) :	getShell().send(command +" " + options);
 	}

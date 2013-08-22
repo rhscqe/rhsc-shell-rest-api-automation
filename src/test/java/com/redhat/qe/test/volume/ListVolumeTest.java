@@ -16,7 +16,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 
 public class ListVolumeTest extends ThreeVolumeTestBase{
 
@@ -37,7 +37,7 @@ public class ListVolumeTest extends ThreeVolumeTestBase{
 		Asserts.assertContains("volume1", volumes, volume1);
 		Asserts.assertContains("volume2", volumes, volume2);
 		Asserts.assertContains("volume3", volumes, volume3);
-		Response listResponse= getVolumeRepository()._list(volume1.getCluster(),"--show-all");
+		IResponse listResponse= getVolumeRepository()._list(volume1.getCluster(),"--show-all");
 		Collection<HashMap<String, String>> volumesProperties = StringUtils.getProperties(listResponse.toString());
 		for(HashMap<String, String> volumeProperties: volumesProperties){
 			Set<String> keys = volumeProperties.keySet();

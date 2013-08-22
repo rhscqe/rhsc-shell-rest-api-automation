@@ -1,5 +1,8 @@
 package com.redhat.qe.config;
 
+import org.calgb.test.performance.HttpSession;
+import org.calgb.test.performance.HttpSession.HttpProtocol;
+
 import com.redhat.qe.ssh.Credentials;
 
 
@@ -12,6 +15,7 @@ public class RestApi {
 	public String getUrl() {
 		return String.format("https://%s/api", hostname);
 	}
+	
 	/**
 	 * @param url
 	 * @param credentials

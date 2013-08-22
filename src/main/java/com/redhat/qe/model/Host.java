@@ -3,7 +3,7 @@ package com.redhat.qe.model;
 import java.util.HashMap;
 
 import com.redhat.qe.helpers.StringUtils;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -35,7 +35,7 @@ public class Host extends Model{
 		return result;
 	}
 	
-	public static Host fromResponse(Response response){
+	public static Host fromResponse(IResponse response){
 		return fromResponse(response.toString());
 	}
 	private String name;

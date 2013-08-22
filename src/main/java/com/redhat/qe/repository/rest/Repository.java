@@ -99,18 +99,38 @@ public abstract class Repository<T extends Model> {
 	}
 
 	ResponseWrapper delete(T entity, String collectionPath) {
-		ResponseWrapper response = sendTransaction(new HttpDelete(memberPath(
-		entity, collectionPath)));
+		ResponseWrapper response = _delete(entity, collectionPath);
 		response.expectCode(200);
 		return response;
 	}
 
-	ResponseWrapper customAction(T entity, String collectionPath, String action) {
-		ResponseWrapper response = sendTransaction(new PostRequestFactory()
-				.createPost(customActionPath(entity, collectionPath, action),
-						"<action />"));
+	/**
+	 * @param entity
+	 * @param collectionPath
+	 * @return
+	 */
+	protected ResponseWrapper _delete(T entity, String collectionPath) {
+		return sendTransaction(new HttpDelete(memberPath(
+		entity, collectionPath)));
+	}
+
+	protected ResponseWrapper customAction(T entity, String collectionPath, String action) {
+		ResponseWrapper response = _customAction(entity, collectionPath, action);
 		response.expectCode(200);
 		return response;
+	}
+
+	/**
+	 * @param entity
+	 * @param collectionPath
+	 * @param action
+	 * @return
+	 */
+	protected ResponseWrapper _customAction(T entity, String collectionPath,
+			String action) {
+		return sendTransaction(new PostRequestFactory()
+				.createPost(customActionPath(entity, collectionPath, action),
+						"<action />"));
 	}
 
 	/**

@@ -6,7 +6,9 @@ import org.calgb.test.performance.UseSslException;
 import org.junit.After;
 import org.junit.Before;
 
+import com.redhat.qe.config.RestApi;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.helpers.HttpSessionFactory;
 import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.repository.rest.ClusterRepository;
 import com.redhat.qe.repository.rest.DatacenterRepository;
@@ -17,9 +19,9 @@ public class TestBase {
 
 	@Before
 	public void setup() throws UseSslException{ 
-		session = new HttpSession(RhscConfiguration.getConfiguration().getRestApi().getHostname(),443, HttpProtocol.HTTPS);
-		session.useBasicAuthentication("admin@internal", "redhat");
+		session = new HttpSessionFactory().createHttpSession(RhscConfiguration.getConfiguration().getRestApi());
 	}
+
 	@After
 	public void teardown(){
 		session.stop();

@@ -7,9 +7,10 @@ import java.util.List;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.repository.rest.IHostRepositoryExtended;
+import com.redhat.qe.ssh.IResponse;
 
-public class HostRepository extends Repository<Host> implements IHostRepository{
+public class HostRepository extends Repository<Host> implements IHostRepository, IHostRepositoryExtended{
 
 	public HostRepository(RhscShellSession shell) {
 		super(shell);
@@ -31,7 +32,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 		return Host.fromResponse(_show(host.getName()));
 	}
 	
-	private Response _show(String nameOrId){
+	private IResponse _show(String nameOrId){
 		return getShell().send(String.format("show host \"%s\"", nameOrId));
 	}
 	
@@ -51,15 +52,15 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 		return String.format("add host --name %s --address '%s' --root_password %s --cluster-name %s --reboot_after_installation false", host.getName(), host.getAddress(), host.getRootPassword(), host.getCluster().getName());
 	}
 	
-	public Response deactivate(Host host){
+	public IResponse deactivate(Host host){
 		return deactivate(host.getId());
 	}
 	
-	public Response activate(Host host){
+	public IResponse activate(Host host){
 		return activate(host.getId());
 	}
 	
-	public Response deactivate(String nameOrId){
+	public IResponse deactivate(String nameOrId){
 		return _deactivate(nameOrId).expect("status-state: complete");
 	}
 
@@ -67,23 +68,23 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 	 * @param nameOrId
 	 * @return
 	 */
-	private Response _deactivate(String nameOrId) {
+	private IResponse _deactivate(String nameOrId) {
 		return getShell().send(String.format("action host %s deactivate", nameOrId));
 	}
 	
-	public Response _deactivate(Host host) {
+	public IResponse _deactivate(Host host) {
 		return _deactivate(host.getId());
 	}
 	
-	public Response activate(String nameOrId){
+	public IResponse activate(String nameOrId){
 		return getShell().send(String.format("action host %s activate", nameOrId)).expect("status-state: complete");
 	}
 
-	public Response destroy(Host host) {
+	public IResponse destroy(Host host) {
 		return destroy(host,null);
 	}
 	
-	public Response destroy(Host host, String options) {
+	public IResponse destroy(Host host, String options) {
 		return _destroy(host,options).expect("complete");
 	}
 
@@ -91,9 +92,13 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 	 * @param command
 	 * @return
 	 */
-	public Response _destroy(Host host, String options) {
+	public IResponse _destroy(Host host, String options) {
 		StringBuilder command = destroyCommand(host, options);
 		return getShell().send(command.toString());
+	}
+	
+	public IResponse _destroy(Host host){
+		return _destroy(host,null);
 	}
 
 	/**
@@ -117,7 +122,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 		return hosts;
 	}
 	
-	public Response _list(String options){
+	public IResponse _list(String options){
 		return (options == null) ? getShell().send("list hosts") : getShell().send("list hosts" + " " + options);
 	}
 	
@@ -131,11 +136,15 @@ public class HostRepository extends Repository<Host> implements IHostRepository{
 	 * @param entity
 	 * @return
 	 */
-	private Response _update(Host entity) {
+	private IResponse _update(Host entity) {
 		StringBuilder command = new StringBuilder();
 		command.append(String.format("update host %s", entity.getIdOrName()));
 		if(entity.getName() != null) command.append("--name " + entity.getName());
 		return getShell().send(command.toString()).unexpect("error");
+	}
+
+	public List<Host> listAll() {
+		return list("--show-all");
 	}
 
 }

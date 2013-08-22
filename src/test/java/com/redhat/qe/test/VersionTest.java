@@ -11,7 +11,7 @@ import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.PropertyListParse;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.BashShell;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 
 import dstywho.regexp.RegexMatch;
 
@@ -31,7 +31,7 @@ public class VersionTest extends ShellSessionTestBase {
 		rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
 		rhscSession.start();
 		rhscSession.connect();
-		Response info = rhscSession.send("info");
+		IResponse info = rhscSession.send("info");
 		HashMap<String, String> infoMap = PropertyListParse.parsePropertyList(info.toString());
 		Asserts.assertContains("python version", infoMap.get("python version"), pythonversion);
 		Asserts.assertContains("entry point", infoMap.get("entry point"),RhscConfiguration.getConfiguration().getRestApi().getUrl());
@@ -45,7 +45,7 @@ public class VersionTest extends ShellSessionTestBase {
 	 * @return
 	 */
 	private String getSdkVersion(BashShell bash) {
-		Response sdkverison = bash.send("rpm -qa | grep rhsc-sdk").expect("");
+		IResponse sdkverison = bash.send("rpm -qa | grep rhsc-sdk").expect("");
 		String sdk_version = new RegexMatch(sdkverison.toString()).find("rhsc-sdk-.*\\.noarch").get(0).find(VERSION_PATTERN).get(0).getText().trim();
 		return sdk_version;
 	}
@@ -55,7 +55,7 @@ public class VersionTest extends ShellSessionTestBase {
 	 * @return
 	 */
 	private String getPythonVersion(BashShell bash) {
-		Response pythonVersion = bash.send("python -V").expect("");
+		IResponse pythonVersion = bash.send("python -V").expect("");
 		String pversion = new RegexMatch(pythonVersion.toString()).find(VERSION_PATTERN).get(0).getText().trim();
 		return pversion;
 	}
@@ -66,7 +66,7 @@ public class VersionTest extends ShellSessionTestBase {
 	 * @return
 	 */
 	private String cliVersion( BashShell bash) {
-		Response rhscversions = bash.send("rpm -qa | grep rhsc-cli").expect("");
+		IResponse rhscversions = bash.send("rpm -qa | grep rhsc-cli").expect("");
 		String version = new RegexMatch(rhscversions.toString()).find("rhsc-cli-.*\\.noarch").get(0).find(VERSION_PATTERN).get(0).getText().trim();
 		return version;
 	}

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
-public class RhscShellReadInput extends ReadInput implements Callable<Response>{
+public class RhscShellReadInput extends ReadInput implements Callable<IResponse>{
 	public static final Pattern RHSC_PROMPT = Pattern.compile("(\\[RHSC\\sshell\\s\\(\\w+\\)\\]#\\s)|(OVIRT shell\\s\\(\\w+\\)\\]#)");
 
 	public RhscShellReadInput(InputStream inputStream, Duration timeout) {

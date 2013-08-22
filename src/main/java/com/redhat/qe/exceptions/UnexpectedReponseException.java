@@ -1,22 +1,22 @@
 package com.redhat.qe.exceptions;
 
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 
 public class UnexpectedReponseException extends RuntimeException {
 
-	private Response response;
+	private IResponse response;
 
 	public UnexpectedReponseException(String message) {
 		super(message);
 	}
 
-	public UnexpectedReponseException(String message, Response response) {
+	public UnexpectedReponseException(String message, IResponse response) {
 		super(message);
 		this.response = response;
 			
 	}
 	
-	public Response getResponse(){
+	public IResponse getResponse(){
 		return response;
 	}
 	

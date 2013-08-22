@@ -5,7 +5,7 @@ import java.io.IOException;
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
 import com.redhat.qe.ssh.Credentials;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 import com.redhat.qe.ssh.RhscShell;
 import com.redhat.qe.ssh.Shell;
 import com.redhat.qe.ssh.ChannelSshSession;
@@ -42,12 +42,12 @@ public class RhscShellSession {
 		send("exit");
 	}
 
-	public Response connect() {
+	public IResponse connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
 		return shell.send(command).expect("connected to \\w+ manager");
 	}
 	
-	public Response send(String command ){
+	public IResponse send(String command ){
 		return shell.send(command);
 	}
 	

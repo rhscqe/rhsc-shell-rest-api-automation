@@ -13,6 +13,7 @@ import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.rest.DatacenterRepository;
+import com.redhat.qe.repository.rest.VolumeRepository;
 
 import dstywho.timeout.Timeout;
 

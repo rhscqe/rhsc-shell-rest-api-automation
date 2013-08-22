@@ -33,6 +33,10 @@ public abstract class SimpleRestRepository<T extends Model> extends Repository<T
 	public ResponseWrapper destroy(T entity) {
 		return delete(entity, getCollectionPath());
 	}
+	
+	public ResponseWrapper _destroy(T entity) {
+		return _delete(entity, getCollectionPath());
+	}
 
 	public ArrayList<T> list() {
 		return list(getCollectionPath());

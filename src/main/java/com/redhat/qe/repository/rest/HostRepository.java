@@ -1,14 +1,20 @@
 package com.redhat.qe.repository.rest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.ws.rs.DELETE;
 
 import org.calgb.test.performance.HttpSession;
 
+import com.redhat.qe.annoations.Alias;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.HostList;
 import com.redhat.qe.repository.IHostRepository;
+import com.redhat.qe.ssh.IResponse;
 
-public class HostRepository extends SimpleRestRepository<Host> implements IHostRepository{
+public class HostRepository extends SimpleRestRepository<Host> implements IHostRepository {
 
 	private static final String API_HOSTS = "/api/hosts";
 
@@ -24,10 +30,15 @@ public class HostRepository extends SimpleRestRepository<Host> implements IHostR
 		return customAction(host, getCollectionPath(), "deactivate");
 	}
 
+	public ResponseWrapper _deactivate(Host host){
+		return _customAction(host, getCollectionPath(), "deactivate");
+	}
+
 	
 	@Override
 	public ArrayList<Host> deserializeCollectionXmlToList(String raw) {
-		return  ((HostList) unmarshal(raw)).getHosts();
+		ArrayList<Host> result = ((HostList) unmarshal(raw)).getHosts();
+		return (result == null) ? new ArrayList<Host>() : result;
 	}
 
 	@Override
@@ -35,4 +46,5 @@ public class HostRepository extends SimpleRestRepository<Host> implements IHostR
 		return API_HOSTS;
 	}
 	
+
 }

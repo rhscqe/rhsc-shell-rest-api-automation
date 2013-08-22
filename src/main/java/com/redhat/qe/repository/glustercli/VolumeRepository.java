@@ -6,6 +6,7 @@ import org.apache.commons.lang.ArrayUtils;
 
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser.BrickClientDetails;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser.BrickMemoryDetails;

@@ -20,12 +20,11 @@ public class Shell {
 		this.inputReader = inputReader;
 	}	
 	
-	public Response clear(){
-		return new ReadInputFactory().getReadInput(inputReader, fromShell, new Duration(TimeUnit.SECONDS, 20)).clear(); 
+	public IResponse clear(){
+		return new ReadInputFactory().getReadInput(inputReader, fromShell, new Duration(TimeUnit.SECONDS, 1)).clear(); 
 	}
 
-	public Response send(String command) {
-		LOG.debug("sending command: " + command );
+	public IResponse send(String command) {
 		__send(command);
 		return read(); 
 	}
@@ -33,7 +32,7 @@ public class Shell {
 	/**
 	 * @return
 	 */
-	public Response read() {
+	public IResponse read() {
 		return inputReader().read();
 	}
 	
@@ -50,6 +49,7 @@ public class Shell {
 	
 
 	private void __send(String command) {
+		LOG.debug("sending command: " + command );
 		toShell.println(command); toShell.flush();
 	}
 

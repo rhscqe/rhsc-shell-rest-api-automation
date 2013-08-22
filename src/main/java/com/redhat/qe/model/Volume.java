@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -22,7 +20,7 @@ import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
 import com.redhat.qe.repository.GlusterOption;
 import com.redhat.qe.repository.GlusterOptionValue;
 import com.redhat.qe.repository.rest.JaxbContext;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
 import com.redhat.qe.utils.MyMarshaller;
 
 @XmlAccessorType( XmlAccessType.FIELD )
@@ -176,7 +174,7 @@ public class Volume extends Model{
 	public void setVolumeOptions(HashMap<GlusterOption, GlusterOptionValue> myvolumeOptions) {
 		this.volumeOptions = myvolumeOptions;
 	}
-	public static Volume fromResponse(Response response) {
+	public static Volume fromResponse(IResponse response) {
 		return fromResponse(response.toString());
 	}
 	

@@ -3,7 +3,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 
 import com.redhat.qe.helpers.StringUtils;
-import com.redhat.qe.ssh.Response;
+import com.redhat.qe.ssh.IResponse;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -48,7 +49,7 @@ public class Cluster extends Model{
 	private Cpu cpu;
 	
 	
-	public static Cluster fromResponse(Response response){
+	public static Cluster fromResponse(IResponse response){
 		return fromKeyValue(response.toString());
 	}
 
