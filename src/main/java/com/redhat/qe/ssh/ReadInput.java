@@ -38,7 +38,6 @@ public abstract class ReadInput {
 			while (!bufferContainsPrompt() && !hasTimedOut(starttime)) {
 				if (reader.ready()) {
 					buffer.append((char) reader.read());
-					LOG.debug("buffer" + buffer.toString());
 				}
 			}
 			if(logoutput)
