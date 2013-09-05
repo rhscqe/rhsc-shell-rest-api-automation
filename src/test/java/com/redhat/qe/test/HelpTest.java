@@ -11,7 +11,7 @@ public class HelpTest extends OpenShellSessionTestBase {
 	@Tcms({"250461"})
 	@Test
 	public void helpTest() {
-		shell.send("help").unexpect("(?i)rhev");
+		rhscSession.send("help").unexpect("(?i)rhev");
 	}
 
 

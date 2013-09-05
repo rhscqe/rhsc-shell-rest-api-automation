@@ -38,10 +38,12 @@ public abstract class ReadInput {
 			while (!bufferContainsPrompt() && !hasTimedOut(starttime)) {
 				if (reader.ready()) {
 					buffer.append((char) reader.read());
+					LOG.debug("buffer" + buffer.toString());
 				}
 			}
 			if(logoutput)
-				LOG.debug("[shell output] " + getBuffer());
+			LOG.debug("finished collecting output");
+			LOG.debug("[shell output] " + getBuffer());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -75,7 +77,7 @@ public abstract class ReadInput {
 		return result;
 	}
 
-	abstract Pattern getPrompt(); 
+	public abstract Pattern getPrompt(); 
 	
 	public Response read() {
 		return call();

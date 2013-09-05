@@ -19,7 +19,7 @@ public class BashShellReadInput  extends ReadInput {
 	}
 
 	@Override
-	Pattern getPrompt() {
+	public Pattern getPrompt() {
 		return Pattern.compile("@.*#");
 	}
 

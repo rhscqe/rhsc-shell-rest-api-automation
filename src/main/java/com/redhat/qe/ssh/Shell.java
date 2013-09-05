@@ -5,9 +5,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 
 public class Shell {
-
+	private static final Logger LOG = Logger.getLogger(Shell.class);
 	protected InputStream fromShell;
 	protected PrintStream toShell;
 	private Class<? extends ReadInput> inputReader;
@@ -19,16 +21,46 @@ public class Shell {
 	}	
 	
 	public Response clear(){
-		return new ReadInputFactory().getReadInput(inputReader, fromShell, new Duration(TimeUnit.SECONDS, 1)).clear(); 
+		return new ReadInputFactory().getReadInput(inputReader, fromShell, new Duration(TimeUnit.SECONDS, 20)).clear(); 
 	}
 
 	public Response send(String command) {
+		LOG.debug("sending command: " + command );
 		__send(command);
-		return new ReadInputFactory().getReadInput(inputReader, fromShell).read(); 
+		return read(); 
 	}
+
+	/**
+	 * @return
+	 */
+	public Response read() {
+		return inputReader().read();
+	}
+	
+	public boolean waitForPrompt(){
+		return inputReader().read().contains(inputReader().getPrompt().toString());
+	}
+
+	/**
+	 * @return
+	 */
+	private ReadInput inputReader() {
+		return new ReadInputFactory().getReadInput(inputReader, fromShell);
+	}
+	
 
 	private void __send(String command) {
 		toShell.println(command); toShell.flush();
 	}
+
+//
+//	public InputStream getInputStream(){
+//		return fromShell;
+//	}
+//	public OutputStream getOutputStream(){
+//		return toShell;
+//	}
+//	
+	
 
 }

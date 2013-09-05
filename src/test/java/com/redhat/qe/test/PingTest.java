@@ -11,7 +11,7 @@ public class PingTest extends OpenShellSessionTestBase {
 	@Tcms({"250541"})
 	@Test
 	public void pingTest() {
-		shell.send("ping").expect("(?i)success:.*could be reached OK.");
+		rhscSession.send("ping").expect("(?i)success:.*could be reached OK.");
 	}
 
 

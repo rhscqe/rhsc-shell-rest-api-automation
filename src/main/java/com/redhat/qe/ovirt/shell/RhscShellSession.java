@@ -50,5 +50,12 @@ public class RhscShellSession {
 	public Response send(String command ){
 		return shell.send(command);
 	}
+	
+	public Shell getShell(){
+		return shell;	
+	}
+
+	
+
 
 }

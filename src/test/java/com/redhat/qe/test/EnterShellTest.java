@@ -11,7 +11,7 @@ public class EnterShellTest extends ShellSessionTestBase{
 	@Test
 	@Tcms("250459")
 	public void test(){
-		shell.send("rhsc-shell || ovirt-shell ").expect(WELCOME_MESSAGE);
+		rhscSession.send("rhsc-shell || ovirt-shell ").expect(WELCOME_MESSAGE);
 	}
 
 	@Test
@@ -31,8 +31,8 @@ public class EnterShellTest extends ShellSessionTestBase{
 		createFileCommand.append("dont_validate_cert_chain = False\n");
 		createFileCommand.append(String.format("password = redhat\n", RhscConfiguration.getConfiguration().getRestApi().getCredentials().getPassword()));
 		createFileCommand.append("EOT\n");
-		shell.send(createFileCommand.toString());
-		shell.send("rhsc-shell -c").expect(WELCOME_MESSAGE);
+		rhscSession.send(createFileCommand.toString());
+		rhscSession.send("rhsc-shell -c").expect(WELCOME_MESSAGE);
 	}
 
 }

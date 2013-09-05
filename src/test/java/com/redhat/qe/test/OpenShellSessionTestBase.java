@@ -1,12 +1,15 @@
 package com.redhat.qe.test;
 
+import junit.framework.Assert;
+
+import org.apache.commons.io.output.NullOutputStream;
 import org.junit.Before;
 
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
-import com.redhat.qe.ssh.ChannelSshSession;
+import com.redhat.qe.ssh.BashShell;
 
 public class OpenShellSessionTestBase extends ShellSessionTestBase{
 
@@ -18,18 +21,19 @@ public class OpenShellSessionTestBase extends ShellSessionTestBase{
 	 * @return the shell
 	 */
 	public RhscShellSession getShell() {
-		return shell;
+		return rhscSession;
 	}
 
 	@Before
 	public void beforeSession() {
-		shell.start();
-		shell.connect();
+		Assert.assertTrue("bash prompt available",BashShell.fromShell(rhscSession.getShell()).waitForPrompt());
+		rhscSession.start();
+		rhscSession.connect();
 	}
 
 	public void clearState() {
-		if (shell != null)
-			shell = null;
+		if (rhscSession != null)
+			rhscSession = null;
 		if (session != null)
 			session = null;
 		if (hostRepository != null)

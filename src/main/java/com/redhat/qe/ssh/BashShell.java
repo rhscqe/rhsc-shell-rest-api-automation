@@ -18,6 +18,10 @@ public class BashShell extends Shell {
 		}
 		return shell;
 	}
+	
+	public static BashShell fromShell(Shell shell){
+		return new BashShell(shell.fromShell, shell.toShell);
+	}
 
 	public BashShell(InputStream fromShell, OutputStream toShell) {
 		super(fromShell, toShell, BashShellReadInput.class);

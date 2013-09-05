@@ -17,7 +17,7 @@ import com.redhat.qe.ssh.ChannelSshSession;
 public class ShellSessionTestBase {
 
 	protected ChannelSshSession session;
-	protected RhscShellSession shell;
+	protected RhscShellSession rhscSession;
 
 
 	@Before
@@ -27,7 +27,7 @@ public class ShellSessionTestBase {
 		session.start();
 		session.openChannel();
 		ChannelShell channel = session.getChannel();
-		shell = RhscShellSession.fromConfiguration(session, config);
+		rhscSession = RhscShellSession.fromConfiguration(session, config);
 	}
 
 	@After

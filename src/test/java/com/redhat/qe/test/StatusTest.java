@@ -11,7 +11,7 @@ public class StatusTest extends OpenShellSessionTestBase {
 	@Tcms({"250544"})
 	@Test
 	public void statusTest() {
-		shell.send("status").expect("last command status:\\s*0.*(OK)");
+		rhscSession.send("status").expect("last command status:\\s*0.*(OK)");
 	}
 
 

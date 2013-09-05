@@ -10,7 +10,7 @@ public class TabCompletionTest extends OpenShellSessionTestBase{
 	@Tcms("250460")
 	public void test(){
 		String[] commands = new String[]{"EOF", "connect", "exit", "help"};
-		shell.send("\t\t").expect(Joiner.on("(\n|\r|.)*").join(commands));
+		rhscSession.send("\t\t").expect(Joiner.on("(\n|\r|.)*").join(commands));
 	}
 
 }

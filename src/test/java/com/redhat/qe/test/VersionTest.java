@@ -28,10 +28,10 @@ public class VersionTest extends ShellSessionTestBase {
 		String sdkversion = getSdkVersion(bash);
 		String pythonversion = getPythonVersion(bash);
 
-		shell = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
-		shell.start();
-		shell.connect();
-		Response info = shell.send("info");
+		rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
+		rhscSession.start();
+		rhscSession.connect();
+		Response info = rhscSession.send("info");
 		HashMap<String, String> infoMap = PropertyListParse.parsePropertyList(info.toString());
 		Asserts.assertContains("python version", infoMap.get("python version"), pythonversion);
 		Asserts.assertContains("entry point", infoMap.get("entry point"),RhscConfiguration.getConfiguration().getRestApi().getUrl());

@@ -8,8 +8,8 @@ public class LoginTest extends ShellSessionTestBase{
 	@Test
 	@Tcms("250537")
 	public void test(){
-		shell.start();
-		shell.connect()
+		rhscSession.start();
+		rhscSession.connect()
 				.expect(">>> connected to (RHSC|OVIRT) manager.*<<<")
 				.expect("\\(connected\\)");
 	}
