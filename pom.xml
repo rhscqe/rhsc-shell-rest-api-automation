@@ -236,7 +236,7 @@
 						<version>1.2.1</version>
 						<configuration>
 							<classpathScope>test</classpathScope>
-							<mainClass>com.redhat.qe.helpers.CleanupTool</mainClass>
+							<mainClass>com.redhat.qe.helpers.cleanup.CleanupTool</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
