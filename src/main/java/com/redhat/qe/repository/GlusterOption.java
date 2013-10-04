@@ -7,6 +7,7 @@ import com.redhat.qe.model.Volume;
 public class GlusterOption {
 	private String name;
 
+	public GlusterOption(){}
 	/**
 	 * @param name
 	 */

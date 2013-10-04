@@ -9,6 +9,7 @@ public class GlusterOptionValue {
 	private String value;
 	
 	
+	public GlusterOptionValue(){}
 	public GlusterOptionValue(String string) {
 		this.value = string;
 	}

@@ -3,6 +3,8 @@ package com.redhat.qe.helpers.cleanup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.calgb.test.performance.HttpSession;
 import org.jclouds.rest.annotations.Credential;
 
@@ -25,6 +27,7 @@ import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.repository.rest.IHostRepositoryExtended;
+import com.redhat.qe.repository.rest.JaxbContext;
 import com.redhat.qe.repository.rest.clibrokers.HostRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.VolumeRepositoryBroker;
 import com.redhat.qe.ssh.Credentials;
@@ -117,7 +120,13 @@ public class RestCleanupTool {
 	}
 
 	// shellhost hostusername hostpassword rhscusername rhscpassword
+
 	public static void main(String[] args) {
+		try {
+			JaxbContext.getContext().createUnmarshaller();
+		} catch (JAXBException e) {
+			throw new RuntimeException(e);
+		}
 		if (args.length == 0) {
 			new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
 		} else if (args.length < 5) {

@@ -47,7 +47,7 @@ public class Cleaner {
 				IVolumeRepositoryExtended volumeRepo) {
 			List<Cluster> clusters = clusterrepo.list();
 			for (Cluster cluster : clusters) {
-				cleanUpVolumes(volumeRepo, cluster);
+				cleanUpVolumes(volumeRepo, clusterrepo.show(cluster));
 			}
 		}
 
