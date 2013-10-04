@@ -147,4 +147,9 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 		return list("--show-all");
 	}
 
+	public List<Host> list() {
+		return null;
+	}
+
+
 }

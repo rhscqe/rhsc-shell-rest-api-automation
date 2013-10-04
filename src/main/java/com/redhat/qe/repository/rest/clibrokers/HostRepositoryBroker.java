@@ -30,7 +30,7 @@ public class HostRepositoryBroker implements IHostRepositoryExtended{
 	}
 
 	public List<Host> listAll() {
-		return repo.list();
+		return list();
 	}
 
 	public ResponseWrapper _deactivate(Host host) {
@@ -43,6 +43,14 @@ public class HostRepositoryBroker implements IHostRepositoryExtended{
 
 	public IResponse destroy(Host host) {
 		return repo.destroy(host);
+	}
+
+	public Host createOrShow(Host host) {
+		return repo.createOrShow(host);
+	}
+
+	public List<Host> list() {
+		return repo.list();
 	}
 
 }

@@ -34,4 +34,8 @@ public class VolumeRepositoryBroker implements IVolumeRepositoryExtended{
 		return getVolumeRepository(volume.getCluster()).delete(volume);
 	}
 
+	public Volume create(Volume volume) {
+		return getVolumeRepository(volume.getCluster()).create(volume);
+	}
+
 }

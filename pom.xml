@@ -186,23 +186,20 @@
 				</dependencies>
 			</plugin>
 
-			<!-- to make a jar with all depends...mvn clean compile assembly:single -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-    <configuration>
-        <descriptors>
-            <descriptor>src/main/resources/assembly-descriptor.xml</descriptor>
-        </descriptors>
-        <archive>
-          <manifest>
-            <mainClass>${project.groupId}.Main</mainClass>
-          </manifest>
-        </archive>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-			</plugin>
+                        <!-- to make a jar with all depends...mvn clean compile assembly:single -->
+                        <plugin>
+                                <artifactId>maven-assembly-plugin</artifactId>
+                                <configuration>
+                                        <archive>
+                                                <manifest>
+                                                        <mainClass>fully.qualified.MainClass</mainClass>
+                                                </manifest>
+                                        </archive>
+                                        <descriptorRefs>
+                                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                                        </descriptorRefs>
+                                </configuration>
+                        </plugin>
 
 		</plugins>
 	</build>
