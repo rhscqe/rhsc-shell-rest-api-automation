@@ -8,13 +8,12 @@ import org.calgb.test.performance.RequestException;
 import org.calgb.test.performance.UseSslException;
 import org.junit.Test;
 
-public class RsdlTest {
+public class RsdlTest extends TestBase{
 	
 	@Test
 	public void test() throws UseSslException, ProcessResponseBodyException, RequestException{
-		HttpSession session = new HttpSession("rhsc-qa9", 443, HttpProtocol.HTTPS);
-		session.useBasicAuthentication("admin@internal", "redhat");
-		session.sendTransaction(new HttpGet("/api?rsdl"));
+		getSession().useBasicAuthentication("admin@internal", "redhat");
+		getSession().sendTransaction(new HttpGet("/api?rsdl"));
 		
 	}
 

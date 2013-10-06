@@ -20,7 +20,7 @@ public class HostCleanup {
 			hostRepo._deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepo, host, "maintenance", 400));
 			IResponse response = hostRepo._destroy(host);
-			if(response.contains("locked")){
+			if(response.contains("locked") || response.contains("Conflict")){
 				Duration.ONE_SECOND.sleep();
 				hostRepo.destroy(host);
 			}else if(response.contains("complete")){

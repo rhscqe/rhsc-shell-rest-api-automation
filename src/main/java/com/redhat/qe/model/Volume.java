@@ -29,7 +29,8 @@ public class Volume extends Model{
 	@XmlAttribute
 	private String id;
 	
-	@XmlTransient
+//	@XmlTransient
+	@XmlElement(name= "cluster")
 	private Cluster cluster;
 	private String name;
 	@XmlElement(name = "volume_type")

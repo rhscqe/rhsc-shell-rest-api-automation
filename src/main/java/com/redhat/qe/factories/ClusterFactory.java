@@ -10,6 +10,7 @@ public class ClusterFactory {
 	
 	public static Cluster cluster(String name, String description){
 		Cluster result = new Cluster();
+		result.setDatacenter(new DatacenterFactory().createDefault());
 		result.setName(name);
 		result.setDescription(description);
 		result.setMajorVersion("3");
