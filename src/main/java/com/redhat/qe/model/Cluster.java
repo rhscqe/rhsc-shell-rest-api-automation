@@ -30,8 +30,6 @@ public class Cluster extends Model{
 	
 	private String name;
 	private String description;
-	private String majorVersion;
-	private String minorVersion;
 	
 	@XmlElement(name="data_center")
 	private Datacenter datacenter;
@@ -59,8 +57,12 @@ public class Cluster extends Model{
 		cluster.setId(attributes.get("id"));
 		cluster.setName(attributes.get("name"));
 		cluster.setDescription(attributes.get("description"));
-		cluster.setMajorVersion(attributes.get("version-major"));
-		cluster.setMinorVersion(attributes.get("version-minor"));
+		String majorVersion = attributes.get("version-major");
+		String minorVersion = attributes.get("version-minor");
+		if(majorVersion != null)
+			cluster.setMajorVersion(Integer.parseInt(majorVersion));
+		if(minorVersion != null)
+			cluster.setMinorVersion(Integer.parseInt(minorVersion));
 		return cluster;
 	}
 	/**
@@ -135,29 +137,33 @@ public class Cluster extends Model{
 	/**
 	 * @return the majorVersion
 	 */
-	public String getMajorVersion() {
-		return majorVersion;
+	public int getMajorVersion() {
+		return (getVersion() != null) ? getVersion().getMajor() : null ;
 	}
 
 	/**
 	 * @param majorVersion the majorVersion to set
 	 */
-	public void setMajorVersion(String majorVersion) {
-		this.majorVersion = majorVersion;
+	public void setMajorVersion(int majorVersion) {
+		if(getVersion() == null)
+			setVersion(new Version());
+		getVersion().setMajor(majorVersion);
 	}
 
 	/**
 	 * @return the minorVersion
 	 */
-	public String getMinorVersion() {
-		return minorVersion;
+	public int getMinorVersion() {
+		return (getVersion() != null) ? getVersion().getMinor() : null ;
 	}
 
 	/**
 	 * @param minorVersion the minorVersion to set
 	 */
-	public void setMinorVersion(String minorVersion) {
-		this.minorVersion = minorVersion;
+	public void setMinorVersion(int minorVersion) {
+		if(getVersion() == null)
+			setVersion(new Version());
+		getVersion().setMinor(minorVersion);
 	}
 //
 //	@Override

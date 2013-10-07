@@ -71,7 +71,7 @@ public class Cleaner {
 		}
 		
 		private void cleanUpVolumes(IVolumeRepositoryExtended volumeRepo, Cluster cluster) {
-			ArrayList<Volume> volumes = volumeRepo.list(cluster); //TODO maybreak
+			ArrayList<Volume> volumes = volumeRepo.listAll(cluster); //TODO maybreak
 			for (Volume volume : volumes) {
 				volumeRepo._stop(volume);
 				volumeRepo.destroy(volume);

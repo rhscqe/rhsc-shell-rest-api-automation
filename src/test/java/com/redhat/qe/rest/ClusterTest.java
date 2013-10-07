@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
+import com.redhat.qe.repository.rest.JaxbContext;
+import com.redhat.qe.utils.MyMarshaller;
 
 public class ClusterTest extends TestBase{
 	
@@ -16,6 +18,8 @@ public class ClusterTest extends TestBase{
 	@Test 
 	public void createDeleteTest() throws JAXBException, ProcessResponseBodyException, RequestException, BuildPostException{
 		Cluster cluster = RhscConfiguration.getConfiguration().getCluster();
+		String boj = MyMarshaller.marshall(JaxbContext.getContext(), cluster );
+		
 		cluster.setDatacenter(defaultDatatcenter());
 		cluster = getClusterRepository().createOrShow(cluster);
 		getClusterRepository().delete(cluster);

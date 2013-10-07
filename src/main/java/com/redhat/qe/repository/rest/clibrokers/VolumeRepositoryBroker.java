@@ -38,4 +38,8 @@ public class VolumeRepositoryBroker implements IVolumeRepositoryExtended{
 		return getVolumeRepository(volume.getCluster()).create(volume);
 	}
 
+	public ArrayList<Volume> listAll(Cluster cluster) {
+		return list(cluster);
+	}
+
 }

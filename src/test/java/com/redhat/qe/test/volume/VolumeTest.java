@@ -19,7 +19,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 	@After 
 	public void cleanup(){
 		if(actual != null){
-			getVolumeRepository().destroy(actual);
+//			getVolumeRepository().destroy(actual);
 			
 		}
 		

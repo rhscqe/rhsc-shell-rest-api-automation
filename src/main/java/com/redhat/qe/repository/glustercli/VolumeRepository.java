@@ -82,5 +82,7 @@ public class VolumeRepository extends Repository {
 		ArrayList<BrickClientDetails> result = new ArrayList<BrickClientDetails>();
 		return getShell().runCommand(String.format("gluster --mode=script volume status '%s' %s", volume.getName(), subcommand)).expectSuccessful();
 	}
+	
+	
 
 }

@@ -10,6 +10,8 @@ public interface IVolumeRepositoryExtended extends IVolumeRepository{
 
 	ArrayList<Volume> list(Cluster cluster);
 
+	ArrayList<Volume> listAll(Cluster cluster);
+
 	IResponse _stop(Volume volume);
 
 	IResponse destroy(Volume volume);

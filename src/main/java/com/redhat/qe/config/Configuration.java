@@ -101,8 +101,8 @@ public class Configuration {
 		ShellHost shell = new ShellHost("10.70.37.112", new Credentials("root", "redhat"),22);
 		Configuration config = new Configuration(api, shell);
 		Cluster clustr = ClusterFactory.cluster("myCluster");
-		clustr.setMajorVersion("3");
-		clustr.setMinorVersion("2");
+		clustr.setMajorVersion(3);
+		clustr.setMinorVersion(2);
 		Datacenter dc = new Datacenter();
 		dc.setName("Default");
 		clustr.setDatacenter(dc);

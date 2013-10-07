@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlRootElement(name="version")
 public class Version {
-	@XmlAttribute
+	@XmlAttribute(name="major")
 	private int major;
-	@XmlAttribute
+	@XmlAttribute(name="minor")
 	private int minor;
 	/**
 	 * @return the major

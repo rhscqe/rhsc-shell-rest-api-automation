@@ -13,8 +13,8 @@ public class ClusterFactory {
 		result.setDatacenter(new DatacenterFactory().createDefault());
 		result.setName(name);
 		result.setDescription(description);
-		result.setMajorVersion("3");
-		result.setMinorVersion("2");
+		result.setMajorVersion(3);
+		result.setMinorVersion(2);
 		return result;
 	}
 

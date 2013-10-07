@@ -1,6 +1,6 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>10.70.37.123</hostname>
+		<hostname>rhsc-cb2</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
@@ -16,8 +16,10 @@
   </shellHost>
   <cluster>
     <name>myCluster</name>
-    <majorVersion>3</majorVersion>
-    <minorVersion>2</minorVersion>
+    <version>
+      <major>3</major>
+      <minor>2</minor>
+    </version>
     <datacenter>
       <name>Default</name>
     </datacenter>
@@ -31,14 +33,14 @@
   <hosts>
     <com.redhat.qe.model.Host>
       <name>node1</name>
-      <address>10.70.35.187</address>
+      <address>latest-a</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
-      <address>10.70.35.9</address>
+      <address>latest-b</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>

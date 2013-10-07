@@ -138,6 +138,9 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	public IResponse _removeBrick(Volume volume, Brick brick) {
 		return new BrickRepository(volume, getShell())._removeBrick(volume, brick);
 	}
+	public ArrayList<Volume> listAll(Cluster cluster) {
+		return list(cluster, "--show-all");
+	}
 
 }
  

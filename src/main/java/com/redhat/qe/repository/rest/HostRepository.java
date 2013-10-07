@@ -40,7 +40,6 @@ public class HostRepository extends SimpleRestRepository<Host> implements IHostR
 		return sendTransaction(new HttpGet(getCollectionPath() + "?name=" + URLEncoder.encode(host.getName()) ));
 	}
 	
-	
 	@Override
 	public ArrayList<Host> deserializeCollectionXmlToList(String raw) {
 		ArrayList<Host> result = ((HostList) unmarshal(raw)).getHosts();
