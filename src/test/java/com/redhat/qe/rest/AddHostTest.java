@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 
@@ -19,6 +20,11 @@ public class AddHostTest extends ClusterTestBase{
 		Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host,"maintenance", 400));
 		getHostRepository().destroy(host);
 		
+	}
+	
+	@Override
+	public Cluster getClusterToBeCreated() {
+		return RhscConfiguration.getConfiguration().getCluster();
 	}
 
 

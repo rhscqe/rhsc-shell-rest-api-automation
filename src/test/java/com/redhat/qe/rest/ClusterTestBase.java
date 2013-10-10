@@ -4,25 +4,28 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.helpers.repository.ClusterHelper;
 import com.redhat.qe.model.Cluster;
 
-public class ClusterTestBase extends TestBase {
+public abstract class ClusterTestBase extends TestBase {
 
 	private Cluster cluster;
 
 	public ClusterTestBase() {
 		super();
 	}
+	protected Cluster getCluster() {
+		return cluster;
+	}
+	public abstract Cluster getClusterToBeCreated();
 
 	@Before
-	public void beforeTest() {
-		cluster = RhscConfiguration.getConfiguration().getCluster();
-		cluster.setDatacenter(defaultDatatcenter());
-		cluster = getClusterRepository().createOrShow(cluster);
+	public void createOrShowCluster() {
+		cluster = new ClusterHelper().create(getClusterToBeCreated(), getClusterRepository(), getDatacenterRepository());
 	}
 
 	@After
-	public void afterTest() {
+	public void cleanupCluster() {
 		getClusterRepository().delete(cluster);
 	}
 

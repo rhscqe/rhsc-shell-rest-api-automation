@@ -5,8 +5,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Test;
 
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
+import com.redhat.qe.model.Cluster;
+import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.repository.rest.SimpleRestRepository;
+import com.redhat.qe.repository.rest.VolumeRepository;
 
 public class VolumeTest extends TwoHostClusterTestBase {
 	private Volume actual;
@@ -30,5 +35,20 @@ public class VolumeTest extends TwoHostClusterTestBase {
 		if (actual != null)
 			getVolumeRepository().delete(actual);
 	}
+
+	private VolumeRepository getVolumeRepository() {
+		return new VolumeRepository(getSession(), getHost1().getCluster());
+	}
+
+	@Override
+	protected Host getHost1ToBeCreated() {
+		return RhscConfiguration.getConfiguration().getHosts().get(0);
+	}
+
+	@Override
+	protected Host getHost2ToBeCreated() {
+		return RhscConfiguration.getConfiguration().getHosts().get(1);
+	}
+
 
 }

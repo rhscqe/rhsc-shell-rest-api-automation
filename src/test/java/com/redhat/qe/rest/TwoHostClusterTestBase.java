@@ -1,93 +1,50 @@
 package com.redhat.qe.rest;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 
-import com.redhat.qe.config.RhscConfiguration;
-import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.model.Host;
-import com.redhat.qe.model.WaitUtil;
-import com.redhat.qe.repository.rest.DatacenterRepository;
-import com.redhat.qe.repository.rest.VolumeRepository;
 
-import dstywho.timeout.Timeout;
+public abstract class TwoHostClusterTestBase extends HostClusterTestBase{
 
-public class TwoHostClusterTestBase extends TestBase {
-
-	Cluster cluster;
+	private static final int HOST2_INDEX = 1;
+	private static final int HOST1_INDEX = 0;
 	Host host1;
 	Host host2;
 
 	@Before
-	public void setupCluster(){
-
-	   this.cluster = createOrShowCluster();
-
-		Iterator<Host> hosts = RhscConfiguration.getConfiguration().getHosts().iterator();
-			host1 = hosts.next();
-			host1 = createAndWaitForUp(host1);
-			host2 = hosts.next();
-			host2 = createAndWaitForUp(host2);
-			
-
-			
+	public void setupTwoHosts(){
+		host1 = getHosts().get(HOST1_INDEX);
+		host2 = getHosts().get(HOST2_INDEX);
 	}
-	@After
-	public void teardownCluster(){
-		deactivateAndDestroy(host1);
-		deactivateAndDestroy(host2);
+	
+	protected abstract Host getHost1ToBeCreated();
+	protected abstract Host getHost2ToBeCreated();
 		
-		
-	   getClusterRepository().delete(cluster);
-		
-	}
-	/**
-	 * @return 
-	 * 
-	 */
-	private Cluster createOrShowCluster() {
-		Cluster result = RhscConfiguration.getConfiguration().getCluster();
-		result = getClusterRepository().createOrShow(result);
+	@Override
+	protected List<Host> getHostsToBeCreated() {
+		ArrayList<Host> result = new ArrayList<Host>();
+		result.add(getHost1ToBeCreated());
+		result.add(getHost2ToBeCreated());
 		return result;
 	}
-	private void deactivateAndDestroy(Host host){
-		getHostRepository().deactivate(host);
-			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host,"maintenance", 400));
-			destroy(host);
-			
-	}
-	
-	private void destroy(Host host){
-		for(int i=0; i < 5; i ++){
-			try{
-				getHostRepository().destroy(host);
-				return;
-			}catch(UnexpectedReponseWrapperException e){
-				if(!e.getResponse().getMessage().contains("locked")){
-					throw e;
-				}else{
-					Timeout.TIMEOUT_ONE_SECOND.sleep();
-				}
-			}
-		}
-		
+
+	/**
+	 * @return the host1
+	 */
+	public Host getHost1() {
+		return host1;
 	}
 
-	private Host createAndWaitForUp(Host host) {
-		host = getHostRepository().createOrShow(host);
-		if(host.getState().equals("maintenance"))
-			getHostRepository().activate(host);
-		WaitUtil.waitForHostStatus(getHostRepository(), host, "up", 30);
-		return host;
+	/**
+	 * @return the host2
+	 */
+	public Host getHost2() {
+		return host2;
 	}
-	
-	VolumeRepository getVolumeRepository() {
-		return new VolumeRepository(getSession(), cluster);
-	}
+
 
 }

@@ -38,8 +38,12 @@ public class TestBase {
 		return new ClusterRepository(getSession());
 	}
 	
-	Datacenter defaultDatatcenter() {
-		return new DatacenterRepository(getSession()).list().get(0);
+
+	/**
+	 * @return
+	 */
+	protected DatacenterRepository getDatacenterRepository() {
+		return new DatacenterRepository(getSession());
 	}
 	
 
