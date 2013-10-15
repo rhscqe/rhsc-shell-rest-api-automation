@@ -12,16 +12,16 @@ import com.redhat.qe.repository.IClusterRepository;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.rest.IHostRepositoryExtended;
 
-public class Cleaner {
+public abstract class Cleaner {
 
 		/**
 		 * @param clusterreCleanerpo
 		 * @param volumeRepo
 		 * @param hostRepo
 		 */
-		public void destroyAll(IClusterRepository clusterrepo, IVolumeRepositoryExtended volumeRepo, IHostRepositoryExtended hostRepo) {
+		public void destroyAll(IClusterRepository clusterrepo,  IHostRepositoryExtended hostRepo) {
 			activateHostsIfNotUp(hostRepo);
-			destroyAllVolumes(clusterrepo, volumeRepo);
+			destroyAllVolumes(clusterrepo );
 			destroyAllHosts(hostRepo);
 			destroyAllClusters(clusterrepo);
 		}
@@ -43,13 +43,14 @@ public class Cleaner {
 		 * @param volumeRepo
 		 * @return
 		 */
-		private void destroyAllVolumes(IClusterRepository clusterrepo,
-				IVolumeRepositoryExtended volumeRepo) {
+		private void destroyAllVolumes(IClusterRepository clusterrepo ) {
 			List<Cluster> clusters = clusterrepo.list();
 			for (Cluster cluster : clusters) {
-				cleanUpVolumes(volumeRepo, clusterrepo.show(cluster));
+				cleanUpVolumes(getVolumeRepo(cluster), clusterrepo.show(cluster));
 			}
 		}
+
+		abstract IVolumeRepositoryExtended getVolumeRepo(Cluster cluster);
 
 		/**
 		 * @param hostRepo
@@ -71,7 +72,7 @@ public class Cleaner {
 		}
 		
 		private void cleanUpVolumes(IVolumeRepositoryExtended volumeRepo, Cluster cluster) {
-			ArrayList<Volume> volumes = volumeRepo.listAll(cluster); //TODO maybreak
+			List<Volume> volumes = volumeRepo.listAll(); //TODO maybreak
 			for (Volume volume : volumes) {
 				volumeRepo._stop(volume);
 				volumeRepo.destroy(volume);

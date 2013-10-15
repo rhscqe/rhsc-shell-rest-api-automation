@@ -15,7 +15,7 @@ import com.redhat.qe.repository.rest.DatacenterRepository;
 import com.redhat.qe.repository.rest.HostRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 
-public abstract class TestBase implements ITestBase {
+public class RestTestBase extends TestBase {
 	private HttpSession session;
 
 	@Before
@@ -35,23 +35,31 @@ public abstract class TestBase implements ITestBase {
 	/* (non-Javadoc)
 	 * @see com.redhat.qe.rest.ITestBase#getClusterRepository()
 	 */
-	public abstract IClusterRepository getClusterRepository() ;
+	public IClusterRepository getClusterRepository() {
+		return new ClusterRepository(getSession());
+	}
 	
 
 	/**
 	 * @return
 	 */
-	protected abstract DatacenterRepository getDatacenterRepository() ;
+	protected DatacenterRepository getDatacenterRepository() {
+		return new DatacenterRepository(getSession());
+	}
 	
 
 	/* (non-Javadoc)
 	 * @see com.redhat.qe.rest.ITestBase#getHostRepository()
 	 */
-	public abstract IHostRepository getHostRepository() ;
+	public IHostRepository getHostRepository() {
+		return new HostRepository(getSession());
+	}
 
 	/* (non-Javadoc)
 	 * @see com.redhat.qe.rest.ITestBase#getVolumeRepository(com.redhat.qe.model.Cluster)
 	 */
-	public abstract VolumeRepository getVolumeRepository(Cluster cluster) ;
+	public VolumeRepository getVolumeRepository(Cluster cluster) {
+		return new VolumeRepository(getSession(), cluster);
+	}
 
 }

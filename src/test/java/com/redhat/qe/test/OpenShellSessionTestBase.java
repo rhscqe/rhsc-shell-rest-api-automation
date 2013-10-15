@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.apache.commons.io.output.NullOutputStream;
 import org.junit.Before;
 
+import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
@@ -51,9 +52,9 @@ public class OpenShellSessionTestBase extends ShellSessionTestBase{
 		return hostRepository;
 	}
 
-	public VolumeRepository getVolumeRepository() {
+	public VolumeRepository getVolumeRepository(Cluster cluster) {
 		if (volumeRepository == null) {
-			volumeRepository = new VolumeRepository(getShell());
+			volumeRepository = new VolumeRepository(getShell(),cluster);
 		}
 		return volumeRepository;
 	}

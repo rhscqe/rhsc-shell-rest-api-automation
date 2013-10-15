@@ -10,6 +10,7 @@ import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.rest.SimpleRestRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 
@@ -33,11 +34,11 @@ public class VolumeTest extends TwoHostClusterTestBase {
 	@After
 	public void cleanupVolumeTest() {
 		if (actual != null)
-			getVolumeRepository().delete(actual);
+			getVolumeRepository().destroy(actual);
 	}
 
-	private VolumeRepository getVolumeRepository() {
-		return new VolumeRepository(getSession(), getHost1().getCluster());
+	private IVolumeRepository getVolumeRepository() {
+		return getVolumeRepository(getHost1().getCluster());
 	}
 
 	@Override

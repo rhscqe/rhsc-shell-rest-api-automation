@@ -8,7 +8,7 @@ import org.calgb.test.performance.RequestException;
 import org.calgb.test.performance.UseSslException;
 import org.junit.Test;
 
-public class RsdlTest extends TestBase{
+public class RsdlTest extends RestTestBase{
 	
 	@Test
 	public void test() throws UseSslException, ProcessResponseBodyException, RequestException{

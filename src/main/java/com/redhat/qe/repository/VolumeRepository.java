@@ -13,8 +13,11 @@ import com.redhat.qe.ssh.IResponse;
 
 public class VolumeRepository extends Repository<Volume> implements IVolumeRepository,IVolumeRepositoryExtended{
 	
-	public VolumeRepository(RhscShellSession shell) {
+	private Cluster cluster;
+
+	public VolumeRepository(RhscShellSession shell, Cluster cluster) {
 		super(shell);
+		this.cluster = cluster;
 	}
 	public IResponse _create(Volume volume){
 		String command = String.format("add glustervolume --cluster-identifier %s --name %s --volume_type %s --stripe_count %s --replica_count %s %s"
@@ -27,7 +30,14 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 	
 	public Volume show(Volume volume){
-		return Volume.fromResponse(getShell().send(String.format("show glustervolume %s --cluster-identifier %s", volume.getId(), volume.getCluster().getId())).unexpect("error"));
+		return Volume.fromResponse(_show(volume).unexpect("error"));
+	}
+	/**
+	 * @param volume
+	 * @return
+	 */
+	private IResponse _show(Volume volume) {
+		return getShell().send(String.format("show glustervolume %s --cluster-identifier %s", volume.getId(), volume.getCluster().getId()));
 	}
 	
 	
@@ -49,7 +59,14 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 
 	public IResponse destroy(Volume volume) {
-		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId())).expect("complete");	
+		return _destroy(volume).expect("complete");	
+	}
+	/**
+	 * @param volume
+	 * @return
+	 */
+	public IResponse _destroy(Volume volume) {
+		return getShell().send(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId()));
 	}
 
 	public Volume update(Volume entity) {
@@ -80,22 +97,18 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	public IResponse stop(Volume entity){
 		return _stop(entity).expect("complete");
 	}
+
 	public IResponse _stop(Volume entity){
 		return getShell().send(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()));
 	}
 
-	public boolean isExist(Volume entity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public IResponse _list(Cluster cluster,String options){
+	IResponse _list(Cluster cluster,String options){
 		String formatedOptions = (options == null) ? "" : options;
 		String cmd = String.format("list glustervolumes --cluster-identifier %s %s", cluster.getId(), formatedOptions);
 		return getShell().send(cmd);
 	}
 
-	public ArrayList<Volume> list(Cluster cluster){
+	private ArrayList<Volume> list(Cluster cluster){
 		return list(cluster, null);
 	}
 	
@@ -138,9 +151,39 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	public IResponse _removeBrick(Volume volume, Brick brick) {
 		return new BrickRepository(volume, getShell())._removeBrick(volume, brick);
 	}
-	public ArrayList<Volume> listAll(Cluster cluster) {
+
+	private ArrayList<Volume> listAll(Cluster cluster) {
 		return list(cluster, "--show-all");
 	}
+
+	public ArrayList<Volume> listAll() {
+		return listAll(cluster);
+	}
+	public Volume createOrShow(Volume entity) {
+		return null;
+	}
+	public boolean isExist(Volume entity) {
+		return entity.getId() != null || isVolumeExistWithSameName(entity);
+	}
+	/**
+	 * @param entity
+	 * @return
+	 */
+	private boolean isVolumeExistWithSameName(Volume entity) {
+		ArrayList<Volume> existingVolumes = list(entity.getCluster());
+		for(Volume existingVol: existingVolumes){
+			if(existingVol.getName().equals(entity.getName()))
+				return true;
+		}
+		return false;
+	}
+	public List<Volume> list() {
+		return list(cluster);
+	}
+	public IResponse _listAll() {
+		return _list(cluster, "--show-all");
+	}
+
 
 }
  

@@ -1,6 +1,7 @@
 package com.redhat.qe.repository.rest.clibrokers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.calgb.test.performance.HttpSession;
 
@@ -12,34 +13,58 @@ import com.redhat.qe.ssh.IResponse;
 
 public class VolumeRepositoryBroker implements IVolumeRepositoryExtended{
 	
-	private HttpSession session;
+	private VolumeRepository repo;
 
-	public VolumeRepositoryBroker(HttpSession session){
-		this.session = session;
+	public VolumeRepositoryBroker(HttpSession session, Cluster cluster){
+		this.repo = getVolumeRepository(session,cluster);
 	}
 	
 	public ArrayList<com.redhat.qe.model.Volume> list(Cluster cluster) {
-		return getVolumeRepository(cluster).list();
+		return repo.list();
 	}
 
-	private VolumeRepository getVolumeRepository(Cluster cluster) {
+	private VolumeRepository getVolumeRepository(HttpSession session, Cluster cluster) {
 		return new VolumeRepository(session, cluster);
 	}
 
 	public IResponse _stop(Volume volume) {
-		return getVolumeRepository(volume.getCluster())._stop(volume);
+		return repo._stop(volume);
 	}
 
 	public IResponse destroy(Volume volume) {
-		return getVolumeRepository(volume.getCluster()).delete(volume);
+		return repo.destroy(volume);
 	}
 
 	public Volume create(Volume volume) {
-		return getVolumeRepository(volume.getCluster()).create(volume);
+		return repo.create(volume);
 	}
 
-	public ArrayList<Volume> listAll(Cluster cluster) {
-		return list(cluster);
+	public Volume createOrShow(Volume entity) {
+		return repo.createOrShow(entity);
+	}
+
+	public Volume show(Volume entity) {
+		return repo.show(entity);
+	}
+
+	public boolean isExist(Volume entity) {
+		return repo.isExist(entity);
+	}
+
+	public IResponse _destroy(Volume entity) {
+		return repo._destroy(entity);
+	}
+
+	public List<Volume> list() {
+		return repo.list();
+	}
+
+	public ArrayList<Volume> listAll() {
+		return repo.list();
+	}
+
+	public IResponse _listAll() {
+		return repo._list();
 	}
 
 }

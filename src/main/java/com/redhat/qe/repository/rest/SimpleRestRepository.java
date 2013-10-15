@@ -42,6 +42,10 @@ public abstract class SimpleRestRepository<T extends Model> extends Repository<T
 		return list(getCollectionPath());
 	}
 
+	public ResponseWrapper _list() {
+		return _list(getCollectionPath());
+	}
+
 	public ResponseWrapper delete(T entity) {
 		return delete(entity, getCollectionPath());
 	}

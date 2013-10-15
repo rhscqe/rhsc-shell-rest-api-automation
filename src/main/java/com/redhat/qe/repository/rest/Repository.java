@@ -163,7 +163,7 @@ public abstract class Repository<T extends Model> {
 
 	ResponseWrapper _show(T entity, String collectionPath) {
 		String memberPath = memberPath(entity, collectionPath);
-		ResponseWrapper response = sendTransaction(new HttpGet(memberPath));
+		ResponseWrapper response = _list(memberPath);
 		return response;
 	}
 
@@ -177,8 +177,16 @@ public abstract class Repository<T extends Model> {
 	protected abstract ArrayList<T> deserializeCollectionXmlToList(String raw);
 
 	ArrayList<T> list(String collectionPath) {
-		ResponseWrapper response = sendTransaction(new HttpGet(collectionPath));
+		ResponseWrapper response = _list(collectionPath);
 		return deserializeCollectionXmlToList(response.getBody());
+	}
+
+	/**
+	 * @param collectionPath
+	 * @return
+	 */
+	ResponseWrapper _list(String collectionPath) {
+		return sendTransaction(new HttpGet(collectionPath));
 	}
 
 	boolean isExist(T entity, String collectionPath) {

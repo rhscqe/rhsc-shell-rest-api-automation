@@ -1,14 +1,9 @@
 package com.redhat.qe.helpers.cleanup;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.JAXBException;
 
 import org.calgb.test.performance.HttpSession;
-import org.jclouds.rest.annotations.Credential;
 
-import com.jcraft.jsch.ChannelShell;
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RestApi;
 import com.redhat.qe.config.RhscConfiguration;
@@ -17,23 +12,15 @@ import com.redhat.qe.helpers.HttpSessionFactory;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
-import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.repository.HostRepository;
-import com.redhat.qe.repository.IClusterRepository;
-import com.redhat.qe.repository.IHostRepository;
-import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
-import com.redhat.qe.repository.VolumeRepository;
-import com.redhat.qe.repository.rest.IHostRepositoryExtended;
 import com.redhat.qe.repository.rest.JaxbContext;
+import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.repository.rest.clibrokers.HostRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.VolumeRepositoryBroker;
-import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.ChannelSshSession;
+import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.ExecSshSession;
-import com.redhat.qe.ssh.ExecSshSession.Response;
 
 import dstywho.functional.Closure2;
 
@@ -41,10 +28,16 @@ public class RestCleanupTool {
 
 
 	public void cleanup(final Configuration config) {
-		HttpSession session = new HttpSessionFactory().createHttpSession(config.getRestApi());
+		final HttpSession session = new HttpSessionFactory().createHttpSession(config.getRestApi());
 		try{
-		new Cleaner().destroyAll(new com.redhat.qe.repository.rest.ClusterRepository(session), new VolumeRepositoryBroker(session)
-		, new HostRepositoryBroker(new com.redhat.qe.repository.rest.HostRepository(session)));
+			new Cleaner(){
+	
+				@Override
+				IVolumeRepositoryExtended getVolumeRepo(Cluster cluster) {
+					return new VolumeRepositoryBroker(session, cluster);
+				}
+	
+			}.destroyAll(new com.redhat.qe.repository.rest.ClusterRepository(session), new HostRepositoryBroker(new com.redhat.qe.repository.rest.HostRepository(session)));
 		}finally{
 			session.stop();
 		}

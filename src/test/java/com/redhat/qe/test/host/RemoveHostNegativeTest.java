@@ -24,13 +24,13 @@ public class RemoveHostNegativeTest extends TwoHostClusterTestBase{
 	@Before
 	public void setupThis(){
 		volume = VolumeFactory.distributed("mydistvolume", host1, host2);
-		volume = getVolumeRepository().create(volume);
+		volume = getVolumeRepository(cluster).create(volume);
 	}
 	
 	@After
 	public void afterThis(){
 		if( volume != null)
-			getVolumeRepository().destroy(volume);
+			getVolumeRepository(cluster).destroy(volume);
 		
 	}
 	@Rule
@@ -40,12 +40,11 @@ public class RemoveHostNegativeTest extends TwoHostClusterTestBase{
 	@Tcms(value = { "261779" })	
 	@Test
 	public void test(){
-		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("cannot remove host having gluster volume"));
+		String expectedMessage = "cannot remove host having gluster volume";
 		getHostRepository().deactivate(host1);
 		Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host1, "maintenance", 400));
 		assertEquals("maintenance", getHostRepository().show(host1).getState());
-		getHostRepository().destroy(host1);
+		getHostRepository()._destroy(host1).expect(expectedMessage);
 	}
 
 }

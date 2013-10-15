@@ -7,6 +7,7 @@ public interface IHostRepository extends IGenericRepository<Host> {
 
 	public IResponse activate(Host entity);
 
+	public IResponse deactivate(Host entity);
 	public IResponse _deactivate(Host entity);
 
 }

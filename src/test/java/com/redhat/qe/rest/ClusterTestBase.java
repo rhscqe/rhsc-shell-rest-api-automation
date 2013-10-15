@@ -7,7 +7,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.repository.ClusterHelper;
 import com.redhat.qe.model.Cluster;
 
-public abstract class ClusterTestBase extends TestBase {
+public abstract class ClusterTestBase extends RestTestBase {
 
 	private Cluster cluster;
 
@@ -26,7 +26,7 @@ public abstract class ClusterTestBase extends TestBase {
 
 	@After
 	public void cleanupCluster() {
-		getClusterRepository().delete(cluster);
+		getClusterRepository().destroy(cluster);
 	}
 
 }

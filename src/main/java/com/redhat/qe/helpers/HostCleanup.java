@@ -17,7 +17,7 @@ public class HostCleanup {
 	 */
 	public static void destroyHost(Host host, IHostRepositoryExtended hostRepo) {
 		if (host != null) {
-			hostRepo._deactivate(host);
+			hostRepo.deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(hostRepo, host, "maintenance", 400));
 			IResponse response = hostRepo._destroy(host);
 			if(response.contains("locked") || response.contains("Conflict")){

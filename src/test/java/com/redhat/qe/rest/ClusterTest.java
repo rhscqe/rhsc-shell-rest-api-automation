@@ -6,7 +6,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.repository.DatacenterHelper;
 import com.redhat.qe.model.Cluster;
 
-public class ClusterTest extends TestBase{
+public class ClusterTest extends RestTestBase{
 	
 	
 	@Test 
@@ -15,7 +15,7 @@ public class ClusterTest extends TestBase{
 		
 		cluster.setDatacenter(new DatacenterHelper().getDefault(getDatacenterRepository()));
 		cluster = getClusterRepository().createOrShow(cluster);
-		getClusterRepository().delete(cluster);
+		getClusterRepository().destroy(cluster);
 	}
 
 

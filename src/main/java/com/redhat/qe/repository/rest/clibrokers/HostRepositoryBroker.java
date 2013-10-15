@@ -33,10 +33,6 @@ public class HostRepositoryBroker implements IHostRepositoryExtended{
 		return list();
 	}
 
-	public ResponseWrapper _deactivate(Host host) {
-		return repo.deactivate(host);
-	}
-
 	public IResponse _destroy(Host host) {
 		return repo._destroy(host);
 	}
@@ -51,6 +47,18 @@ public class HostRepositoryBroker implements IHostRepositoryExtended{
 
 	public List<Host> list() {
 		return repo.list();
+	}
+
+	public IResponse deactivate(Host entity) {
+		return repo.deactivate(entity);
+	}
+
+	public IResponse _deactivate(Host entity) {
+		return repo._deactivate(entity);
+	}
+
+	public boolean isExist(Host entity) {
+		return repo.isExist(entity);
 	}
 
 }

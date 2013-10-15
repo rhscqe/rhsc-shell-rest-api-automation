@@ -15,6 +15,7 @@ import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
+import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.ssh.Response;
 
 import dstywho.timeout.Duration;
@@ -54,5 +55,10 @@ public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
 	public TwoHostClusterTestBase() {
 		super();
 	}
+	
+	protected VolumeRepository getVolumeRepository() {
+		return getVolumeRepository(cluster);
+	}
+	
 
 }

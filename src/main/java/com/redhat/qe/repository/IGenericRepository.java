@@ -14,7 +14,7 @@ public interface IGenericRepository<T extends Model> {
 
 	public abstract T show(T entity);
 
-	
+	public abstract boolean isExist(T entity);
 
 	public IResponse _destroy(T entity);
 	

@@ -16,10 +16,10 @@ import org.junit.Test;
 import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.repository.rest.DatacenterRepository;
 
-public class DatacenteTest extends TestBase{
+public class DatacenteTest extends RestTestBase{
 	@Test
 	public void list() throws ProcessResponseBodyException, RequestException, JAXBException, XMLStreamException, FactoryConfigurationError, BuildPostException{
-		ArrayList<Datacenter> datacenters = new DatacenterRepository(getSession()).list();
+		ArrayList<Datacenter> datacenters = getDatacenterRepository().list();
 		Assert.assertTrue(datacenters.size() > 0);
 	}
 

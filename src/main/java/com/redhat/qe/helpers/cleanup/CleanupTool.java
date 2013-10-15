@@ -4,11 +4,13 @@ import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RestApi;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.config.ShellHost;
+import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
 import com.redhat.qe.repository.HostRepository;
+import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.ssh.ChannelSshSession;
 import com.redhat.qe.ssh.Credentials;
@@ -75,13 +77,17 @@ public class CleanupTool {
 		startSession(config, new Closure2<Boolean, RhscShellSession>() {
 
 			@Override
-			public Boolean act(RhscShellSession shell) {
+			public Boolean act(final RhscShellSession shell) {
 				final HostRepository hostRepository = new HostRepository(shell);
-				final VolumeRepository volumeRepository = new VolumeRepository(
-						shell);
 				final ClusterRepository clusterRepository = new ClusterRepository(
 						shell);
-				new Cleaner().destroyAll(clusterRepository, volumeRepository, hostRepository);
+				new Cleaner(){
+
+					@Override
+					IVolumeRepositoryExtended getVolumeRepo(Cluster cluster) {
+						return new VolumeRepository(shell, cluster);
+					}
+				}.destroyAll(clusterRepository,  hostRepository);
 				return null;
 			}
 		});

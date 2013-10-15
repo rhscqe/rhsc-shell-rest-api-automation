@@ -20,7 +20,7 @@ import com.redhat.qe.repository.rest.VolumeRepository;
 
 import dstywho.timeout.Timeout;
 
-public abstract class HostClusterTestBase extends TestBase{
+public abstract class HostClusterTestBase extends RestTestBase{
 
 	private ArrayList<Host> hosts;
 
@@ -64,7 +64,7 @@ public abstract class HostClusterTestBase extends TestBase{
 		}
 		for(Host host: hosts){
 			if(getClusterRepository().isExist(host.getCluster())){
-				getClusterRepository().delete(host.getCluster());
+				getClusterRepository().destroy(host.getCluster());
 			};
 		}
 		
@@ -100,8 +100,6 @@ public abstract class HostClusterTestBase extends TestBase{
 		return host;
 	}
 	
-	VolumeRepository getVolumeRepository(Cluster cluster) {
-		return new VolumeRepository(getSession(), cluster);
-	}
+
 
 }

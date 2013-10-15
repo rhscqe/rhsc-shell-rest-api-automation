@@ -27,8 +27,7 @@ public abstract class VolumeTestBase extends HostClusterTestBase{
 		ArrayList<Volume> result = new ArrayList<Volume>();
 		for(final Volume volume: getVolumesToBeCreated()){
 			Cluster cluster = new ClusterHelper().getClusterBasedOnName(getClusterRepository(), volume.getCluster());
-			VolumeRepository repo = new VolumeRepository(getSession(), cluster);
-			result.add(repo.createOrShow(volume));
+			result.add(getVolumeRepository(cluster).createOrShow(volume));
 			this.volumes = result;
 		}
 			

@@ -5,6 +5,7 @@ import org.junit.Before;
 
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
 public class SingleVolumeTestBase extends TwoHostClusterTestBase {
@@ -21,6 +22,7 @@ public class SingleVolumeTestBase extends TwoHostClusterTestBase {
 		volume= getVolumeRepository().create(volume);
 		
 	}
+
 
 	@After
 	public void cleanup() {

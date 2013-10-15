@@ -26,13 +26,13 @@ public class AddVolumeBrickBelongsToExistingVolumeNegativeTest extends TwoHostCl
 	public void _before(){
 		this.volume = VolumeFactory.distributed("blah", host1, host2);
 		 existingBricks = volume.getBricks();
-		this.volume = getVolumeRepository().create(volume);
+		this.volume = getVolumeRepository(cluster).create(volume);
 		
 	}
 	@After
 	public void _after(){
 		if(volume != null)
-			getVolumeRepository().destroy(volume);
+			getVolumeRepository(cluster).destroy(volume);
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class AddVolumeBrickBelongsToExistingVolumeNegativeTest extends TwoHostCl
 		
 		Volume volumeToAdd = VolumeFactory.distributed("failvolume", host1, host2);
 		replaceBrickFromExistingVolume(volumeToAdd);
-		getVolumeRepository().create(volumeToAdd);
+		getVolumeRepository(cluster).create(volumeToAdd);
 	}
 
 	/**

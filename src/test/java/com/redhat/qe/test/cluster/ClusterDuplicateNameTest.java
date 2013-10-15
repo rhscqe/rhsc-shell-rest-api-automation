@@ -33,7 +33,7 @@ public class ClusterDuplicateNameTest extends OpenShellSessionTestBase{
 	@Tcms("212942")
 	public void createClusterNegative() {
 		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("name in use"));
+		expectedEx.expect(new ResponseMessageMatcher("name.*in use"));
 		cluster = getClusterRepository().create(cluster);
 	}
 }
