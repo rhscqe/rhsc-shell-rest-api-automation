@@ -41,16 +41,6 @@ public class ListHostTest extends TwoHostClusterTestBase{
 		assertEquals(host1.getName(), hosts.get(0).getName());
 	}
 
-	@Test
-	@Tcms("250985")
-	public void listGlobQueryTest(){
-		String firstChar = host1.getName().substring(0, 1);
-		String lastChar = host1.getName().substring(host1.getName().length() -1);
-		String query = "--query \"" + firstChar + "*"+ lastChar + "\"";
-		List<Host> hosts = getHostRepository().list(query);
-		assertEquals(1, hosts.size());
-		assertEquals(host1.getName(), hosts.get(0).getName());
-	}
 	
 	@Test
 	@Tcms("250981")
@@ -64,22 +54,22 @@ public class ListHostTest extends TwoHostClusterTestBase{
 			Asserts.assertContains(  "certificate-subject"                                                           , hostProperties.keySet() , "certificate-subject"                  );
 			Asserts.assertContains(  "cluster-id"                                                                    , hostProperties.keySet() , "cluster-id"                           );
 			Asserts.assertContains(  "cpu-name"                                                                      , hostProperties.keySet() , "cpu-name"                             );
-			Asserts.assertContains(  "cpu-mode"                                                                      , hostProperties.keySet() , "cpu-mode"                             );
+//			Asserts.assertContains(  "cpu-mode"                                                                      , hostProperties.keySet() , "cpu-mode"                             );
 			Asserts.assertContains(  "cpu-speed"                                                                     , hostProperties.keySet() , "cpu-speed"                            );
-			Asserts.assertContains(  "cpu-topology-cores"                                                            , hostProperties.keySet() , "cpu-topology-cores"                   );
-			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
-			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
-			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
-			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
-			Asserts.assertContains(  "cpu-topology-cores"                                                            , hostProperties.keySet() , "cpu-topology-cores"                   );
-			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
-			Asserts.assertContains(  "hardware_information-family"                                                   , hostProperties.keySet() , "hardware_information-family"          );
-			Asserts.assertContains(  "hardware_information-manufacturer"                                             , hostProperties.keySet() , "hardware_information-manufacturer"    );
-			Asserts.assertContains(  "hardware_information-product_name"                                             , hostProperties.keySet() , "hardware_information-product_name"    );
-			Asserts.assertContains(  "hardware_information-serial_number"                                            , hostProperties.keySet() , "hardware_information-serial_number"   );
-			Asserts.assertContains(  "hardware_information-uuid"                                                     , hostProperties.keySet() , "hardware_information-uuid"            );
-			Asserts.assertContains(  "hardware_information-version"                                                  , hostProperties.keySet() , "hardware_information-version"         );
-			Asserts.assertContains(  "iscsi-initiator"                                                               , hostProperties.keySet() , "iscsi-initiator"                      );
+//			Asserts.assertContains(  "cpu-topology-cores"                                                            , hostProperties.keySet() , "cpu-topology-cores"                   );
+//			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
+//			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
+//			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
+//			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
+//			Asserts.assertContains(  "cpu-topology-cores"                                                            , hostProperties.keySet() , "cpu-topology-cores"                   );
+//			Asserts.assertContains(  "cpu-topology-sockets"                                                          , hostProperties.keySet() , "cpu-topology-sockets"                 );
+//			Asserts.assertContains(  "hardware_information-family"                                                   , hostProperties.keySet() , "hardware_information-family"          );
+//			Asserts.assertContains(  "hardware_information-manufacturer"                                             , hostProperties.keySet() , "hardware_information-manufacturer"    );
+//			Asserts.assertContains(  "hardware_information-product_name"                                             , hostProperties.keySet() , "hardware_information-product_name"    );
+//			Asserts.assertContains(  "hardware_information-serial_number"                                            , hostProperties.keySet() , "hardware_information-serial_number"   );
+//			Asserts.assertContains(  "hardware_information-uuid"                                                     , hostProperties.keySet() , "hardware_information-uuid"            );
+//			Asserts.assertContains(  "hardware_information-version"                                                  , hostProperties.keySet() , "hardware_information-version"         );
+//			Asserts.assertContains(  "iscsi-initiator"                                                               , hostProperties.keySet() , "iscsi-initiator"                      );
 			Asserts.assertContains(  "ksm-enabled"                                                                   , hostProperties.keySet() , "ksm-enabled"                          );
 			Asserts.assertContains(  "libvirt_version-build"                                                         , hostProperties.keySet() , "libvirt_version-build"                );
 			Asserts.assertContains(  "libvirt_version-full_version"                                                  , hostProperties.keySet() , "libvirt_version-full_version"         );

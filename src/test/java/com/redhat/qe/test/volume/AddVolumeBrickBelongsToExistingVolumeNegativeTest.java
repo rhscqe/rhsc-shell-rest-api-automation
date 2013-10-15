@@ -38,12 +38,11 @@ public class AddVolumeBrickBelongsToExistingVolumeNegativeTest extends TwoHostCl
 	@Test
 	@Tcms("261783")
 	public void test(){
-		expectedEx.expect(UnexpectedReponseException.class);
-		expectedEx.expect(new ResponseMessageMatcher("brick already exists in volume"));
+		String expectedError = "already used by.*volume";
 		
 		Volume volumeToAdd = VolumeFactory.distributed("failvolume", host1, host2);
 		replaceBrickFromExistingVolume(volumeToAdd);
-		getVolumeRepository(cluster).create(volumeToAdd);
+		getVolumeRepository(cluster)._create(volumeToAdd).expect(expectedError);
 	}
 
 	/**

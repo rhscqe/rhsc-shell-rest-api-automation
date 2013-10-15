@@ -3,9 +3,11 @@ package com.redhat.qe.repository.glustercli;
 import java.util.ArrayList;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.log4j.Logger;
 
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser.BrickClientDetails;
@@ -14,7 +16,7 @@ import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
 public class VolumeRepository extends Repository {
-	
+	private static Logger LOG = Logger.getLogger(VolumeRepository.class);
 	public VolumeRepository(ExecSshSession shell) {
 		super(shell);
 	}
@@ -63,6 +65,8 @@ public class VolumeRepository extends Repository {
 	public ArrayList<BrickMemoryDetails> memStatus(Volume volume) {
 		ArrayList<BrickMemoryDetails> result = new ArrayList<BrickMemoryDetails>();
 		Response response = statusSubcommand(volume, "mem");
+		LOG.debug("gluster memory stats for volume: " + volume.getName());
+		LOG.debug(response.getStdout());
 		String[] rawBrickDataForEachBrick = response.getStdout().split("---------------------------------------+");
 		rawBrickDataForEachBrick = removeFirstAndLast(rawBrickDataForEachBrick);
 		for(String rawBrickData : rawBrickDataForEachBrick){

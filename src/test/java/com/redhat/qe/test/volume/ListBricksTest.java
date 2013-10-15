@@ -208,7 +208,7 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 				new Predicate<Brick>() {
 
 					public boolean apply(Brick arg0) {
-						return arg0.getDir().equals(
+						return  arg0.getDir().equals(
 								glusterBrick.getBrick().getDir());
 					}
 				});

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BrickList {
 
 	@XmlElement(name = "brick")
-	List<Brick> bricks;
+	List<Brick> bricks = new ArrayList<Brick>();
 
 	public List<Brick> getBricks() {
 		return bricks;
