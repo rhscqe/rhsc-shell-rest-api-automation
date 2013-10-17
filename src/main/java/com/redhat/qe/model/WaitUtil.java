@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.IHostRepository;
+import com.redhat.qe.repository.rhscshell.HostRepository;
 
 import dstywho.functional.Closure;
 import dstywho.functional.Predicate;

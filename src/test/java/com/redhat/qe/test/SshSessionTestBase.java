@@ -9,9 +9,9 @@ import com.jcraft.jsch.ChannelShell;
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
-import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.repository.HostRepository;
-import com.redhat.qe.repository.VolumeRepository;
+import com.redhat.qe.repository.rhscshell.ClusterRepository;
+import com.redhat.qe.repository.rhscshell.HostRepository;
+import com.redhat.qe.repository.rhscshell.VolumeRepository;
 import com.redhat.qe.ssh.ChannelSshSession;
 
 public class SshSessionTestBase {

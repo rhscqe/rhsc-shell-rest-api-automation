@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.repository.rhscshell;
 
 import java.util.ArrayList;
 

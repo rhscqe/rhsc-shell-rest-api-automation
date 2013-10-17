@@ -8,9 +8,9 @@ import org.junit.Before;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
-import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.repository.HostRepository;
-import com.redhat.qe.repository.VolumeRepository;
+import com.redhat.qe.repository.rhscshell.ClusterRepository;
+import com.redhat.qe.repository.rhscshell.HostRepository;
+import com.redhat.qe.repository.rhscshell.VolumeRepository;
 import com.redhat.qe.ssh.BashShell;
 
 public class RhscShellSessionTestBase extends SshSessionTestBase{

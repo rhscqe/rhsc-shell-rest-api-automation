@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.repository.rhscshell;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 

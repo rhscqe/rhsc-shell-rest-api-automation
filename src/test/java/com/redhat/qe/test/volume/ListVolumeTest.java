@@ -17,7 +17,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.repository.VolumeRepository;
+import com.redhat.qe.repository.rhscshell.VolumeRepository;
 import com.redhat.qe.ssh.IResponse;
 
 public class ListVolumeTest extends ThreeVolumeTestBase{

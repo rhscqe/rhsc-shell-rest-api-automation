@@ -5,8 +5,8 @@ import org.junit.Assert;
 import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
-import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.rest.IHostRepositoryExtended;
+import com.redhat.qe.repository.rhscshell.HostRepository;
 import com.redhat.qe.ssh.IResponse;
 
 import dstywho.timeout.Duration;

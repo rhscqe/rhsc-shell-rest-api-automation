@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Before;
 
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 
@@ -20,9 +21,14 @@ public abstract class TwoHostClusterTestBase extends HostClusterTestBase{
 		host1 = getHosts().get(HOST1_INDEX);
 		host2 = getHosts().get(HOST2_INDEX);
 	}
-	
-	protected abstract Host getHost1ToBeCreated();
-	protected abstract Host getHost2ToBeCreated();
+
+	protected Host getHost1ToBeCreated() {
+		return RhscConfiguration.getConfiguration().getHosts().get(0);
+	}
+
+	protected Host getHost2ToBeCreated() {
+		return RhscConfiguration.getConfiguration().getHosts().get(1);
+	}
 		
 	@Override
 	protected List<Host> getHostsToBeCreated() {

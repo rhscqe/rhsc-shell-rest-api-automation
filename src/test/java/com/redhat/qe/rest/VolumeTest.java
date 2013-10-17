@@ -41,15 +41,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 		return getVolumeRepository(getHost1().getCluster());
 	}
 
-	@Override
-	protected Host getHost1ToBeCreated() {
-		return RhscConfiguration.getConfiguration().getHosts().get(0);
-	}
 
-	@Override
-	protected Host getHost2ToBeCreated() {
-		return RhscConfiguration.getConfiguration().getHosts().get(1);
-	}
 
 
 }

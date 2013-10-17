@@ -17,9 +17,9 @@ import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.ListUtil;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
-import com.redhat.qe.repository.GlusterOption;
-import com.redhat.qe.repository.GlusterOptionValue;
 import com.redhat.qe.repository.rest.JaxbContext;
+import com.redhat.qe.repository.rhscshell.GlusterOption;
+import com.redhat.qe.repository.rhscshell.GlusterOptionValue;
 import com.redhat.qe.ssh.IResponse;
 import com.redhat.qe.utils.MyMarshaller;
 

@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.repository.rhscshell;
 
 import groovy.lang.Writable;
 import groovy.text.SimpleTemplateEngine;

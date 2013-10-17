@@ -7,7 +7,7 @@ import org.calgb.test.performance.HttpSession;
 
 import com.redhat.qe.model.Datacenter;
 import com.redhat.qe.model.DatacenterList;
-import com.redhat.qe.repository.DatacenterXmlParser;
+import com.redhat.qe.repository.rhscshell.DatacenterXmlParser;
 
 public class DatacenterRepository extends Repository<Datacenter> {
 

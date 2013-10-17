@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.repository.rhscshell;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,7 @@ import java.util.List;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
+import com.redhat.qe.repository.IClusterRepository;
 import com.redhat.qe.ssh.IResponse;
 
 public class ClusterRepository extends Repository<Cluster>implements IClusterRepository {

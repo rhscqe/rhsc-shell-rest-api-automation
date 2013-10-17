@@ -1,4 +1,4 @@
-package com.redhat.qe.repository;
+package com.redhat.qe.repository.rhscshell;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +9,8 @@ import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
+import com.redhat.qe.repository.IVolumeRepository;
+import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.ssh.IResponse;
 
 public class VolumeRepository extends Repository<Volume> implements IVolumeRepository,IVolumeRepositoryExtended{

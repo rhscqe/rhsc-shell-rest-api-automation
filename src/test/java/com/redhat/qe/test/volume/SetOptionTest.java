@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.repository.GlusterOption;
-import com.redhat.qe.repository.GlusterOptionValue;
+import com.redhat.qe.repository.rhscshell.GlusterOption;
+import com.redhat.qe.repository.rhscshell.GlusterOptionValue;
 
 public class SetOptionTest extends SingleVolumeTestBase {
 

@@ -14,8 +14,8 @@ import com.redhat.qe.helpers.cleanup.CleanupTool;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
-import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.repository.VolumeRepository;
+import com.redhat.qe.repository.rhscshell.ClusterRepository;
+import com.redhat.qe.repository.rhscshell.VolumeRepository;
 import com.redhat.qe.ssh.Response;
 
 import dstywho.timeout.Duration;
