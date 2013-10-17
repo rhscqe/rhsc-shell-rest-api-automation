@@ -127,29 +127,29 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 	
 	public ArrayList<Brick> listBricks(Volume volume,String options){
-		return new BrickRepository(volume, getShell()).list(volume,options);
+		return new BrickRepository(volume, getShell()).list(options);
 	}
 	
 	public ArrayList<Brick> listBricksAllContent(Volume volume){
-		return new BrickRepository(volume, getShell()).listAllContentTrue(volume);
+		return new BrickRepository(volume, getShell()).listAllContentTrue();
 	}
 	
 	public IResponse _listBricks(Volume volume,String options){
-		return new BrickRepository(volume, getShell())._list(volume,options);
+		return new BrickRepository(volume, getShell())._list(options);
 	}
 	
 	public IResponse addBrick(Volume volume, Brick brick){
-		return new BrickRepository(volume, getShell()).addBrick(volume, brick);
+		return new BrickRepository(volume, getShell()).addBrick(brick);
 	}
 	public IResponse removeBrick(Volume volume, Brick brick){
-		return new BrickRepository(volume, getShell()).removeBrick(volume, brick);
+		return new BrickRepository(volume, getShell()).removeBrick( brick);
 	}
 	
 	public Brick showBrick(Volume volume, Brick brick){
-		return new BrickRepository(volume, getShell()).show(volume, brick);
+		return new BrickRepository(volume, getShell()).show(brick);
 	}
 	public IResponse _removeBrick(Volume volume, Brick brick) {
-		return new BrickRepository(volume, getShell())._removeBrick(volume, brick);
+		return new BrickRepository(volume, getShell())._removeBrick( brick);
 	}
 
 	private ArrayList<Volume> listAll(Cluster cluster) {

@@ -20,23 +20,23 @@ public class BrickRepository  {
 		this.volume = volume;
 	}
 	
-	public IResponse addBrick(Volume volume, Brick brick){
+	public IResponse addBrick(Brick brick){
 		String command = String.format("add brick --cluster-identifier %s --glustervolume-identifier %s --brick \"brick.server_id=%s,brick.brick_dir=%s\"",
 				volume.getCluster().getId(), volume.getId(), brick.getHost().getId(), brick.getDir());
 		return this.shell.send(command);
 	}
 
-	public IResponse removeBrick(Volume volume, Brick brick){
-		return _removeBrick(volume,brick).expect("complete");
+	public IResponse removeBrick(Brick brick){
+		return _removeBrick(brick).expect("complete");
 	}
 
-	public IResponse _removeBrick(Volume volume, Brick brick){
+	public IResponse _removeBrick( Brick brick){
 		String command = String.format("remove brick %s --cluster-identifier %s --glustervolume-identifier %s",brick.getId(),
 				volume.getCluster().getId(), volume.getId());
 		return this.shell.send(command);
 	}
 	
-	public Brick show(Volume volume, Brick brick){
+	public Brick show( Brick brick){
 		String command = String.format("show brick \"%s\" --cluster-identifier %s --glustervolume-identifier %s",brick.getName(),
 				volume.getCluster().getId(), volume.getId());
 		IResponse response = this.shell.send(command);
@@ -44,14 +44,14 @@ public class BrickRepository  {
 		return Brick.fromAttrs(attrs);
 	}
 
-	public ArrayList<Brick> list(Volume volume, String options){
+	public ArrayList<Brick> list( String options){
 		options  = (options == null) ? "" : options;
-		IResponse response = _list(volume, options).expect("id");
+		IResponse response = _list( options).expect("id");
 		return Brick.listFromReponse(response.toString());
 	}
 	
-	public ArrayList<Brick> listAllContentTrue(Volume volume){
-		IResponse response = _list(volume, "--show-all --all_content True").unexpect("error");
+	public ArrayList<Brick> listAllContentTrue(){
+		IResponse response = _list( "--show-all --all_content True").unexpect("error");
 		return Brick.allContentlistFromReponse(response.toString());
 	}
 
@@ -60,7 +60,7 @@ public class BrickRepository  {
 	 * @param options
 	 * @return
 	 */
-	IResponse _list(Volume volume, String options) {
+	IResponse _list( String options) {
 		String command = String.format("list bricks --cluster-identifier %s --glustervolume-identifier %s %s", volume.getCluster().getId(), volume.getId(), options);
 		IResponse response = this.shell.send(command);
 		return response;
