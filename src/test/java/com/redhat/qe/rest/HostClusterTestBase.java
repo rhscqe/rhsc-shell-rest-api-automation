@@ -35,6 +35,11 @@ public abstract class HostClusterTestBase extends RestTestBase{
 		}
 		hosts = results;
 	}
+	
+	@After
+	public void teardown(){
+		new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
+	}
 
 	/**
 	 * @param host

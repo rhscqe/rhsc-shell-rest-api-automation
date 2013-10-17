@@ -23,10 +23,10 @@ import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.ClusterRepository;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
-public class AddVolumeHostsNotOnSameServerNegativeTest extends OpenShellSessionTestBase {
+public class AddVolumeHostsNotOnSameServerNegativeTest extends RhscShellSessionTestBase {
 	
 	private Host host2;
 	private Host host1;

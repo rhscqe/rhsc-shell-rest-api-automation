@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.apache.commons.io.output.NullOutputStream;
 import org.junit.Before;
 
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.ClusterRepository;
@@ -12,11 +13,12 @@ import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.ssh.BashShell;
 
-public class OpenShellSessionTestBase extends ShellSessionTestBase{
+public class RhscShellSessionTestBase extends SshSessionTestBase{
 
 	private HostRepository hostRepository;
 	private VolumeRepository volumeRepository;
 	private ClusterRepository clusterRepository;
+	private RhscShellSession rhscSession;
 
 	/**
 	 * @return the shell
@@ -27,6 +29,7 @@ public class OpenShellSessionTestBase extends ShellSessionTestBase{
 
 	@Before
 	public void beforeSession() {
+		rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
 		Assert.assertTrue("bash prompt available",BashShell.fromShell(rhscSession.getShell()).waitForPrompt());
 		rhscSession.start();
 		rhscSession.connect();

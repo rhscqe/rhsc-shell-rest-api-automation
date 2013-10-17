@@ -5,13 +5,13 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 
-public class StatusTest extends OpenShellSessionTestBase {
+public class StatusTest extends RhscShellSessionTestBase {
 
 
 	@Tcms({"250544"})
 	@Test
 	public void statusTest() {
-		rhscSession.send("status").expect("last command status:\\s*0.*(OK)");
+		getShell().send("status").expect("last command status:\\s*0.*(OK)");
 	}
 
 

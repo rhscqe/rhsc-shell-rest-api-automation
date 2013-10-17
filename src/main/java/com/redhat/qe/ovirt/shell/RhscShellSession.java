@@ -3,6 +3,7 @@ package com.redhat.qe.ovirt.shell;
 import java.io.IOException;
 
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
 import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.IResponse;
@@ -14,6 +15,10 @@ public class RhscShellSession {
 	private String url;
 	private Credentials credentials;
 	private Shell shell;
+	
+	public static RhscShellSession fromConfiguration(ChannelSshSession ssh){
+		return fromConfiguration(ssh, RhscConfiguration.getConfiguration());
+	}
 	
 	public static  RhscShellSession fromConfiguration(ChannelSshSession ssh, Configuration config){
 		RhscShell _shell;

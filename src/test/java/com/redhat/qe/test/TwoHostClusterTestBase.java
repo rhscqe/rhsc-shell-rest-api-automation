@@ -20,7 +20,7 @@ import com.redhat.qe.ssh.Response;
 
 import dstywho.timeout.Duration;
 
-public class TwoHostClusterTestBase extends OpenShellSessionTestBase {
+public class TwoHostClusterTestBase extends RhscShellSessionTestBase {
 
 	protected Host host1;
 	protected Host host2;

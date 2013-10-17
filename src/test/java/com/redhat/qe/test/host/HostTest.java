@@ -8,9 +8,9 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 
-public class HostTest extends OpenShellSessionTestBase{
+public class HostTest extends RhscShellSessionTestBase{
 	
 	private Host host;
 	

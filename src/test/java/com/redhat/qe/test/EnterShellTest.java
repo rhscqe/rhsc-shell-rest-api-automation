@@ -4,13 +4,15 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.ovirt.shell.RhscShellSession;
 
-public class EnterShellTest extends ShellSessionTestBase{
+public class EnterShellTest extends SshSessionTestBase{
 	private static final String WELCOME_MESSAGE = "Welcome to (RHSC|OVIRT) shell";
 
 	@Test
 	@Tcms("250459")
 	public void test(){
+		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session);
 		rhscSession.send("rhsc-shell || ovirt-shell ").expect(WELCOME_MESSAGE);
 	}
 
@@ -31,6 +33,8 @@ public class EnterShellTest extends ShellSessionTestBase{
 		createFileCommand.append("dont_validate_cert_chain = False\n");
 		createFileCommand.append(String.format("password = redhat\n", RhscConfiguration.getConfiguration().getRestApi().getCredentials().getPassword()));
 		createFileCommand.append("EOT\n");
+		
+		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session);
 		rhscSession.send(createFileCommand.toString());
 		rhscSession.send("rhsc-shell -c").expect(WELCOME_MESSAGE);
 	}

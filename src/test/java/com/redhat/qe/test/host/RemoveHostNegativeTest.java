@@ -40,7 +40,7 @@ public class RemoveHostNegativeTest extends TwoHostClusterTestBase{
 	@Tcms(value = { "261779" })	
 	@Test
 	public void test(){
-		String expectedMessage = "cannot remove host having gluster volume";
+		String expectedMessage = "[Cc]annot remove.*having [Gg]luster volume";
 		getHostRepository().deactivate(host1);
 		Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host1, "maintenance", 400));
 		assertEquals("maintenance", getHostRepository().show(host1).getState());

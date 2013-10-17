@@ -12,9 +12,9 @@ import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 
-public class ShowClusterTest extends OpenShellSessionTestBase {
+public class ShowClusterTest extends RhscShellSessionTestBase {
 
 	private Cluster cluster;
 	private Cluster actual;

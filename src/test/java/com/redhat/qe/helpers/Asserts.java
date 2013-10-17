@@ -25,9 +25,13 @@ public class Asserts {
 	}
 
 	public static void assertFuzzy(int fuzz, int expected , int actual) {
+		assertFuzzy("", fuzz, expected, actual);
+	}
+
+	public static void assertFuzzy(String subject, int fuzz, int expected , int actual) {
 		int upperbound = expected + fuzz;
 		int lowerbound = expected - fuzz;
-		Assert.assertTrue(String.format("actual[%s] fell outside expected[%s] +/- %s (%s to %s)", actual, expected, fuzz, lowerbound, upperbound), 
+		Assert.assertTrue(String.format(subject + " actual[%s] fell outside expected[%s] +/- %s (%s to %s)", actual, expected, fuzz, lowerbound, upperbound), 
 				actual <= upperbound && actual >= lowerbound);		
 	}
 

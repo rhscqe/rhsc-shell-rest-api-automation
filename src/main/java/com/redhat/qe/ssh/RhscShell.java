@@ -9,6 +9,4 @@ public class RhscShell extends Shell {
 	public RhscShell(InputStream fromShell, OutputStream toShell) {
 		super(fromShell, toShell, RhscShellReadInput.class);
 	}
-
-
 }

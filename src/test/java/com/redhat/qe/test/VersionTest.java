@@ -15,7 +15,7 @@ import com.redhat.qe.ssh.IResponse;
 
 import dstywho.regexp.RegexMatch;
 
-public class VersionTest extends ShellSessionTestBase {
+public class VersionTest extends SshSessionTestBase {
 //	private static final String VERSION_PATTERN = "(\\d+\\.?)+-?.*[^.noarch]";
 	private static final String VERSION_PATTERN = "\\d+\\.\\d+";
 
@@ -28,7 +28,7 @@ public class VersionTest extends ShellSessionTestBase {
 		String sdkversion = getSdkVersion(bash);
 		String pythonversion = getPythonVersion(bash);
 
-		rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
+		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
 		rhscSession.start();
 		rhscSession.connect();
 		IResponse info = rhscSession.send("info");

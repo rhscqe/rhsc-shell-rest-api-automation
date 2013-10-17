@@ -13,9 +13,9 @@ import com.redhat.qe.exceptions.UnexpectedReponseException;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.helpers.ResponseMessageMatcher;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 
-public class UpdateClusterTest extends OpenShellSessionTestBase {
+public class UpdateClusterTest extends RhscShellSessionTestBase {
 	
 	private Cluster c1;
 	private Cluster c2;

@@ -22,4 +22,5 @@ public class RhscShellReadInput extends ReadInput implements Callable<IResponse>
 	public Pattern getPrompt() {
 		return RHSC_PROMPT;
 	}
+	
 }

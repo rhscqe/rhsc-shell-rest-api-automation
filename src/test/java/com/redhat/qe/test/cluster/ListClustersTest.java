@@ -15,9 +15,9 @@ import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 
-public class ListClustersTest extends OpenShellSessionTestBase{
+public class ListClustersTest extends RhscShellSessionTestBase{
 	private Cluster c1;
 	private Cluster c2;
 	private Cluster c3;

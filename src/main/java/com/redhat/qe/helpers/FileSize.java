@@ -5,6 +5,7 @@ public class FileSize {
 	private static final int CONVERSION_FACTOR = 1024;
 	public long bytes;
 	
+	
 	private FileSize(int bytes){
 		this.bytes = bytes;
 	}

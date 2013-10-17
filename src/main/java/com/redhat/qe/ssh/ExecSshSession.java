@@ -130,6 +130,12 @@ public class ExecSshSession extends SshSession {
 		LOG.debug("stdout:" + stdOut);
 		return response;
 	}
+	
+	public Response runCommandAndAssertSuccess(String command){
+		Response result = runCommand(command);
+		result.expectSuccessful();
+		return result;
+	}
 
 	/**
 	 * @param channel

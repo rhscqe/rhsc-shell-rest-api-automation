@@ -13,10 +13,10 @@ import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.WaitUtil;
-import com.redhat.qe.test.OpenShellSessionTestBase;
+import com.redhat.qe.test.RhscShellSessionTestBase;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
-public class ForceRemovalTest extends OpenShellSessionTestBase{
+public class ForceRemovalTest extends RhscShellSessionTestBase{
 	
 	private Host host;
 	

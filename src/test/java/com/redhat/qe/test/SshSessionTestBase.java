@@ -14,10 +14,9 @@ import com.redhat.qe.repository.HostRepository;
 import com.redhat.qe.repository.VolumeRepository;
 import com.redhat.qe.ssh.ChannelSshSession;
 
-public class ShellSessionTestBase {
+public class SshSessionTestBase {
 
 	protected ChannelSshSession session;
-	protected RhscShellSession rhscSession;
 
 
 	@Before
@@ -27,7 +26,6 @@ public class ShellSessionTestBase {
 		session.start();
 		session.openChannel();
 		ChannelShell channel = session.getChannel();
-		rhscSession = RhscShellSession.fromConfiguration(session, config);
 	}
 
 	@After

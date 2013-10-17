@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
@@ -23,10 +22,8 @@ import com.redhat.qe.helpers.CollectionUtils;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.repository.glustercli.VolumeRepository;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser.BrickClientDetails;
 import com.redhat.qe.repository.glustercli.transformer.VolumeParser.BrickMemoryDetails;
-import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.test.TwoHostClusterTestBase;
 
@@ -164,7 +161,7 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 			final BrickClientDetails glusterBrick = memDetails.get(0);
 			
 			Brick rhscBrick = getMatchingRhscBrick(bricks, glusterBrick);
-
+			
 			ArrayList<String> names = rhscBrick.getMixedAttributes().get("memory_pools-memory_pool-name");
 			ArrayList<String> allocCounts = rhscBrick.getMixedAttributes().get("memory_pools-memory_pool-alloc_count");
 			ArrayList<String> coldCounts = rhscBrick.getMixedAttributes().get("memory_pools-memory_pool-cold_count");
@@ -184,12 +181,12 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 					}
 				});
 				
-				Asserts.assertFuzzy(FUZZ_FACTOR, Integer.parseInt(glusterData.get("HotCount")), Integer.parseInt(hotCounts.get(h)));
+				Asserts.assertFuzzy(hostname   ,FUZZ_FACTOR, Integer.parseInt(glusterData.get("HotCount")), Integer.parseInt(hotCounts.get(h)));
 				Asserts.assertFuzzy(FUZZ_FACTOR, Integer.parseInt(glusterData.get("ColdCount")), Integer.parseInt(coldCounts.get(h)));
 				Assert.assertEquals(glusterData.get("Name"), names.get(h));
 				Assert.assertEquals(glusterData.get("PaddedSizeof"), paddedSize.get(h));
 				Asserts.assertFuzzy(HUGE_FUZZ_FACTOR, Integer.parseInt(glusterData.get("AllocCount")), Integer.parseInt(allocCounts.get(h)));
-				Assert.assertEquals(glusterData.get("MaxAlloc"), maxAllocs.get(h));
+				Assert.assertEquals(rhscBrick.getDir() +":" + hostname, glusterData.get("MaxAlloc"), maxAllocs.get(h));
 				Assert.assertEquals(glusterData.get("Misses"), poolMisses.get(h));
 				Assert.assertEquals(glusterData.get("Max-StdAlloc"), maxStdAllocs.get(h));
 			}
