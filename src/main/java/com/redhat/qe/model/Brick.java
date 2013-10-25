@@ -11,10 +11,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.calgb.test.performance.HttpSession;
 
+import com.google.common.base.Predicate;
+import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.helpers.CollectionUtils;
 import com.redhat.qe.helpers.StringUtils;
 import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
 import com.redhat.qe.helpers.jaxb.BrickHostToServerIdXmlAdapter;
+import com.redhat.qe.repository.rest.HostRepository;
 
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlRootElement(name="brick")
@@ -191,6 +196,17 @@ public class Brick extends Model {
 
 	public void setAttributes(RepeatingHashMap<String, String> attrs) {
 		this.mixedAttributes = attrs;
+	}
+	
+	public Host getConfiguredHostFromBrickHost(HttpSession session) {
+		final Host host = new HostRepository(session).show(getHost());
+		Host configuredHost = CollectionUtils.findFirst(RhscConfiguration.getConfiguration().getHosts(), new Predicate<Host>() {
+
+				public boolean apply(Host configHost) {
+					return configHost.getName().equals(host.getName());
+				}
+		});
+		return configuredHost;
 	}
 
 }

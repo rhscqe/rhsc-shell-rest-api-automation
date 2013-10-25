@@ -132,7 +132,9 @@ public class WaitUtil {
 		int attempt = 0;
 		while(attempt < numAttempts){
 			try{Thread.sleep(1000);}catch(Exception e){throw new RuntimeException(e);}
-			if(repo.show(host).getState().equals(status))
+			Host hostRefreshed = repo.show(host);
+			LOG.debug("host " + host.getName() +" status: "  + host.getState());
+			if(hostRefreshed.getState().equals(status))
 				return true;
 		}
 		return false;

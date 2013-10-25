@@ -23,11 +23,11 @@ public class CleanupTool {
 	public void cleanup(final Configuration config) {
 		try {
 			setupReposAndUseCleaner(config);
+			cleanupWithGlusterCli(config);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		cleanupWithGlusterCli(config);
 	}
 
 	/**

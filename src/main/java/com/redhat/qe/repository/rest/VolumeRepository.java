@@ -31,12 +31,19 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return ( result == null ) ? new ArrayList<Volume>() : result;
 	}
 	
+	public ResponseWrapper start(Volume volume){
+		return customAction(volume, getCollectionPath(), "start");
+	}
+
 	public ResponseWrapper stop(Volume volume){
 		return customAction(volume, getCollectionPath(), "stop");
 	}
 
 	public ResponseWrapper _stop(Volume volume){
 		return _customAction(volume, getCollectionPath(), "stop");
+	}
+	public ResponseWrapper _start(Volume volume){
+		return _customAction(volume, getCollectionPath(), "start");
 	}
 
 

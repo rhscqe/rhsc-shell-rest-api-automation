@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
+import com.google.common.base.Function;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import com.redhat.qe.config.Configuration;
@@ -16,6 +17,7 @@ import com.redhat.qe.model.Host;
 import dstywho.timeout.Timeout;
 
 public class ExecSshSession extends SshSession {
+	private static final int SESSION_TIMEOUT = 1020000;
 	private static final Logger LOG = Logger.getLogger(ExecSshSession.class);
 	private static final int MAX_ATTEMPTS = 15;
 
@@ -25,6 +27,16 @@ public class ExecSshSession extends SshSession {
 		
 	}
 	
+	public Response withSession(Function<ExecSshSession, Response> toBeExecuted){
+		start();
+		Response result = null;
+		try{
+			result = toBeExecuted.apply(this);
+		}finally{
+			stop();
+		}
+		return result;
+	}
 	
 	public static ExecSshSession fromConfiguration(Configuration config) {
 		return new ExecSshSession(config.getShellHost().getCredentials(), config.getShellHost().getHostname(), config.getShellHost().getPort());
@@ -37,7 +49,6 @@ public class ExecSshSession extends SshSession {
 	public ExecSshSession(Credentials credentials, String hostname, int port) {
 		super(credentials, hostname, port);
 	}
-
 
 	public static class Response {
 		int exitCode;
@@ -168,6 +179,7 @@ public class ExecSshSession extends SshSession {
 
 	private void connectChannel(ChannelExec channel) {
 		try {
+			channel.getSession().setTimeout(SESSION_TIMEOUT);
 			channel.connect();
 		} catch (JSchException e) {
 			throw new RuntimeException("can not start channel", e);

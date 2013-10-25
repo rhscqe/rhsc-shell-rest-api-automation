@@ -23,15 +23,15 @@ public class FileSize {
 	}
 	
 	public long toKilobytes(){
-		return bytes * CONVERSION_FACTOR;
+		return bytes / CONVERSION_FACTOR;
 	}
 
 	public long toMegabytes(){
-		return toKilobytes() * CONVERSION_FACTOR;
+		return toKilobytes() / CONVERSION_FACTOR;
 	}
 	
 	public long toGigabytes(){
-		return toMegabytes() * CONVERSION_FACTOR;
+		return toMegabytes() / CONVERSION_FACTOR;
 	}
 
 }

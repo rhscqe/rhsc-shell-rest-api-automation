@@ -38,12 +38,12 @@ public class RestCleanupTool {
 				}
 	
 			}.destroyAll(new com.redhat.qe.repository.rest.ClusterRepository(session), new HostRepositoryBroker(new com.redhat.qe.repository.rest.HostRepository(session)));
+			cleanupWithGlusterCli(config);
 		}finally{
 			session.stop();
 		}
 
 
-		cleanupWithGlusterCli(config);
 	}
 
 	/**

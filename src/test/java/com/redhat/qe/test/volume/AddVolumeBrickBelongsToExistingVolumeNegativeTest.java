@@ -1,5 +1,6 @@
 package com.redhat.qe.test.volume;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -49,7 +50,7 @@ public class AddVolumeBrickBelongsToExistingVolumeNegativeTest extends TwoHostCl
 	 * @param volumeToAdd
 	 */
 	private void replaceBrickFromExistingVolume(Volume volumeToAdd) {
-		List<Brick> bricks = volumeToAdd.getBricks();
+		ArrayList<Brick> bricks = volumeToAdd.getBricks();
 		Brick replacementBrick = existingBricks.get(0);
 		bricks.add(replacementBrick);
 		bricks.remove(0);

@@ -13,6 +13,7 @@ import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.helpers.cleanup.CleanupTool;
 import com.redhat.qe.helpers.cleanup.RestCleanupTool;
 import com.redhat.qe.helpers.repository.ClusterHelper;
+import com.redhat.qe.helpers.repository.HostHelper;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.WaitUtil;
@@ -62,18 +63,18 @@ public abstract class HostClusterTestBase extends RestTestBase{
 	 */
 	protected abstract List<Host> getHostsToBeCreated();
 	
-	@After
-	public void teardownHosts(){
-		for(Host host: hosts){
-			deactivateAndDestroy(host);
-		}
-		for(Host host: hosts){
-			if(getClusterRepository().isExist(host.getCluster())){
-				getClusterRepository().destroy(host.getCluster());
-			};
-		}
-		
-	}
+//	@After
+//	public void teardownHosts(){
+//		for(Host host: hosts){
+//			deactivateAndDestroy(host);
+//		}
+//		for(Host host: hosts){
+//			if(getClusterRepository().isExist(host.getCluster())){
+//				getClusterRepository().destroy(host.getCluster());
+//			};
+//		}
+//		
+//	}
 	private void deactivateAndDestroy(Host host){
 		getHostRepository().deactivate(host);
 			Assert.assertTrue(WaitUtil.waitForHostStatus(getHostRepository(), host,"maintenance", 400));
@@ -98,11 +99,7 @@ public abstract class HostClusterTestBase extends RestTestBase{
 	}
 
 	private Host createAndWaitForUp(Host host) {
-		host = getHostRepository().createOrShow(host);
-		if(host.getState().equals("maintenance"))
-			getHostRepository().activate(host);
-		WaitUtil.waitForHostStatus(getHostRepository(), host, "up", 30);
-		return host;
+		return new HostHelper().createAndWaitForUp(getHostRepository(), host);
 	}
 	
 

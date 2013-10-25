@@ -1,5 +1,6 @@
 package com.redhat.qe.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -82,13 +83,13 @@ public class Volume extends Model{
 	/**
 	 * @return the bricks
 	 */
-	public List<Brick> getBricks() {
+	public ArrayList<Brick> getBricks() {
 		return bricks.getBricks();
 	}
 	/**
 	 * @param bricks the bricks to set
 	 */
-	public void setBricks(List<Brick> bricks) {
+	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks.setBricks(bricks);
 	}
 	

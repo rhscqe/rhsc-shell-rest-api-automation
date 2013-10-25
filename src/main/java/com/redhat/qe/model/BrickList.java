@@ -13,13 +13,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BrickList {
 
 	@XmlElement(name = "brick")
-	List<Brick> bricks = new ArrayList<Brick>();
+	ArrayList<Brick> bricks = new ArrayList<Brick>();
 
-	public List<Brick> getBricks() {
+	public ArrayList<Brick> getBricks() {
 		return bricks;
 	}
 
-	public void setBricks(List<Brick> bricks) {
+	public void setBricks(ArrayList<Brick> bricks) {
 		this.bricks = bricks;
 	}
 

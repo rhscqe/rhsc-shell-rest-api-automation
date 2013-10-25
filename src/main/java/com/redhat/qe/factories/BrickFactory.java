@@ -5,12 +5,14 @@ import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import com.redhat.qe.helpers.RandomIntGenerator;
+import com.redhat.qe.helpers.TimestampHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 
 public class BrickFactory {
 	
-	public final static Random rand = new Random(200000L);
+
 	
 	public static Brick brick(Host host, String dir){
 		Brick b = new Brick();
@@ -28,16 +30,9 @@ public class BrickFactory {
 	 * 
 	 */
 	private static String generateBrickDir() {
-		return String.format("/tmp/%s", timestamp()  + Math.abs(rand.nextInt()));
+		return String.format("/tmp/%s", TimestampHelper.timestamp()  + RandomIntGenerator.positive());
 	}
 
-	/**
-	 * @return 
-	 * 
-	 */
-	private static String timestamp() {
-		DateTime time = new DateTime();
-		return time.toString(DateTimeFormat.forPattern("YYYYMMddHHmmssSSS"));
-	}
+
 
 }
