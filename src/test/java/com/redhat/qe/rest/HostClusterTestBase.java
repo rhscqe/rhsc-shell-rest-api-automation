@@ -39,7 +39,7 @@ public abstract class HostClusterTestBase extends RestTestBase{
 	
 	@After
 	public void teardown(){
-		new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
+		//new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
 	}
 
 	/**

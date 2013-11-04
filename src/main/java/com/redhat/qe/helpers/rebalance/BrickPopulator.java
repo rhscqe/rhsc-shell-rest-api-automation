@@ -67,7 +67,7 @@ public class BrickPopulator {
 	}
 
 	private static Path writeRandomFile(Path mountPoint, Host mounter, Volume volume) {
-		Path file = mountPoint.addDir(TimestampHelper.timestamp() + "" + (RandomIntGenerator.positive() + "").substring(0, 5));
+		Path file = mountPoint.addDir(randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
@@ -77,6 +77,11 @@ public class BrickPopulator {
 			sshSession.stop();
  		}
 		return file;
+	}
+
+
+	private static String randomFileName() {
+		return TimestampHelper.timestamp() + "" + (RandomIntGenerator.positive() + "").substring(0, 5);
 	}
 
 
