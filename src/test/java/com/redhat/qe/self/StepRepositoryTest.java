@@ -7,10 +7,12 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.redhat.qe.model.Job;
+import com.redhat.qe.model.Step;
 import com.redhat.qe.repository.JobRepository;
+import com.redhat.qe.repository.rest.StepRepository;
 import com.redhat.qe.rest.TwoHostClusterTestBase;
 
-public class JobRepositoryTest extends TwoHostClusterTestBase{
+public class StepRepositoryTest extends TwoHostClusterTestBase{
 	
 	@Test
 	public void testList(){
@@ -18,8 +20,9 @@ public class JobRepositoryTest extends TwoHostClusterTestBase{
 		getHostRepository().activate(getHost1());
 		
 		ArrayList<Job> jobs = new JobRepository(getSession()).list();
-		for(Job job: jobs){
-			System.out.println(String.format("%s %s %s %s", job.getId(), job.getDescription(), job.getStatus().getState(), job.getStartTime().toString()));
+		ArrayList<Step> steps = new StepRepository(getSession(), jobs.get(0)).list();
+		for(Step step: steps){
+			System.out.println(String.format("%s %s %s %s", step.getId(), step.getDescription(), step.getStatus().getState(), step.getStartTime().toString()));
 		}
 		Assert.assertTrue(jobs.size() >= 1);
 	}

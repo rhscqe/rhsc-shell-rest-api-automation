@@ -1,7 +1,5 @@
 package com.redhat.qe.repository.rest;
 
-import java.util.ArrayList;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -16,6 +14,8 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.model.HostList;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.JobList;
+import com.redhat.qe.model.Step;
+import com.redhat.qe.model.StepList;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.VolumeList;
 
@@ -28,7 +28,12 @@ public class JaxbContext {
 			context = JAXBContext.newInstance(Cluster.class, Datacenter.class,
 					DatacenterList.class, ClusterList.class,
 					Host.class, HostList.class,
-					Volume.class, Brick.class, VolumeList.class, GlusterHookList.class, Hook.class, Job.class, JobList.class);
+					Volume.class, 
+					Brick.class, 
+					VolumeList.class, GlusterHookList.class, 
+					Hook.class, Job.class, JobList.class,
+					
+					Step.class, StepList.class);
 		}
 		return context;
 

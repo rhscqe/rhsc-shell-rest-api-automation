@@ -8,11 +8,15 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlAccessorType( XmlAccessType.FIELD )
-@XmlRootElement(name="gluster_volume")
-public class Job extends Model{
+@XmlRootElement(name="step")
+public class Step extends Model{
+	
 	@XmlAttribute
 	private String id;
+	private String type;
+	private int number;
 	private String description;
 	private Status status;
 	
@@ -21,58 +25,47 @@ public class Job extends Model{
 
 	@XmlElement(name = "end_time")
 	private Date endTime;
-
-	@XmlElement(name = "latest_update")
-	private Date latestUpdate;
-
-	@Override
 	public String getId() {
 		return id;
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public Date getStartTime() {
 		return startTime;
 	}
-
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-
 	public Date getEndTime() {
 		return endTime;
 	}
-
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-
-	public Date getLatestUpdate() {
-		return latestUpdate;
-	}
-
-	public void setLatestUpdate(Date latestUpdate) {
-		this.latestUpdate = latestUpdate;
+	public String getDescription() {
+		return description;
 	}
 	
 	
+
+
 }
