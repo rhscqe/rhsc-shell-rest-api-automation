@@ -71,7 +71,11 @@ public abstract class ReadInput {
 	}
 
 	private boolean bufferContainsPrompt() {
-		boolean result = getPrompt().matcher(buffer.toString()).find();
+		return bufferContainsContent(getPrompt());
+	}
+
+	private boolean bufferContainsContent(Pattern content) {
+		boolean result = content.matcher(buffer.toString()).find();
 		LOG.trace(String.format("bufferContainsShell() = %s", result));
 		return result;
 	}
@@ -79,6 +83,10 @@ public abstract class ReadInput {
 	public abstract Pattern getPrompt(); 
 	
 	public IResponse read() {
+		return call();
+	}
+
+	public IResponse read(String expect) {
 		return call();
 	}
 
