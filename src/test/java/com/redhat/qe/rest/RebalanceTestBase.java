@@ -2,6 +2,8 @@ package com.redhat.qe.rest;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,27 +25,35 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 
 
 public class RebalanceTestBase extends TwoHostClusterTestBase {
+	private static final Logger LOG = Logger.getLogger(RebalanceTestBase.class);
 
 	private Path mountPoint;
 	private Host mounter;
-	private Volume volume;
+	protected Volume volume;
 
 	@Before
 	public void setupVolume(){
+		LOG.info("creating volume");
 		VolumeRepository volumeRepo = getVolumeRepository();
-		volume = volumeRepo.createOrShow(VolumeFactory.distributed("red", getHost1(), getHost2()));
+		volume = volumeRepo.createOrShow(VolumeFactory.distributed("purplehat", getHost1(), getHost2()));
 		volumeRepo._start(volume);
+		LOG.info("volume created:" + volume.getName());
+
+
 
 		mountPoint = Path.fromDirs("mnt", volume.getName());
 		mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
+		LOG.info("volume mounted");
 		
 		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
+		LOG.info("populating volume");
 		
 		
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
-		
+		LOG.info("2 bricks added");
+		LOG.info("end of RebalanceTestBase fixture");
 	}
 
 	/**
@@ -76,11 +86,6 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 		}
 	}
 	
-	@Test
-	public void stopReblanceWhenNoRebalanceInProgress(){
-		getVolumeRepository().stopRebalance(volume).expectCode(400);
-
-	}
 
 	/**
 	 * @return
