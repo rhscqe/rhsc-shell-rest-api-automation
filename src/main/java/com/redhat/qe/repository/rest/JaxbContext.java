@@ -3,6 +3,7 @@ package com.redhat.qe.repository.rest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.ClusterList;
@@ -32,8 +33,7 @@ public class JaxbContext {
 					Brick.class, 
 					VolumeList.class, GlusterHookList.class, 
 					Hook.class, Job.class, JobList.class,
-					
-					Step.class, StepList.class);
+					Step.class, StepList.class, Action.class);
 		}
 		return context;
 

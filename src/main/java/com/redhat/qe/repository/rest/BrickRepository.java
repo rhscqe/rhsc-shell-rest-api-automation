@@ -2,7 +2,6 @@ package com.redhat.qe.repository.rest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.http.client.methods.HttpPost;
 import org.calgb.test.performance.HttpSession;
@@ -11,7 +10,6 @@ import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickList;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
-import com.redhat.qe.model.VolumeList;
 
 public class BrickRepository extends SimpleRestRepository<Brick> {
 

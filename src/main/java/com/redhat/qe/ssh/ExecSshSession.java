@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import com.redhat.qe.config.Configuration;
@@ -112,6 +113,10 @@ public class ExecSshSession extends SshSession {
 			this.stdout = stdout;
 		}
 		
+		public boolean isSuccessful(){
+			return getExitCode() == 0;
+		}
+
 		public Response expectSuccessful(){
 			Assert.assertEquals(0, getExitCode());
 			return this;
@@ -119,7 +124,9 @@ public class ExecSshSession extends SshSession {
 
 	}
 
-	public Response runCommand(String command) {
+	public Response runCommand(String... commands) {
+		String command = Joiner.on(" ").join(commands);
+		
 		ChannelExec channel = createChannel();
 		
 		 InputStream stdout = getInputStream(channel );
@@ -142,8 +149,8 @@ public class ExecSshSession extends SshSession {
 		return response;
 	}
 	
-	public Response runCommandAndAssertSuccess(String command){
-		Response result = runCommand(command);
+	public Response runCommandAndAssertSuccess(String... commands){
+		Response result = runCommand(commands);
 		result.expectSuccessful();
 		return result;
 	}

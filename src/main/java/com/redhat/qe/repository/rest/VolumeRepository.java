@@ -46,6 +46,15 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return _customAction(volume, getCollectionPath(), "start");
 	}
 
+	public ResponseWrapper rebalance(Volume volume){
+		return _customAction(volume, getCollectionPath(), "rebalance");
+	}
+
+	public ResponseWrapper stopRebalance(Volume volume){
+		return _customAction(volume, getCollectionPath(), "stoprebalance");
+	}
+	
+
 
 
 

@@ -20,11 +20,25 @@ public class MountHelper {
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
 			public Response apply(ExecSshSession session) {
-				session.runCommandAndAssertSuccess("mkdir -p " + mountPoint);
+				createMountPoint(mountPoint, session);
+				Response result = mountVolume(mounter, mountPoint, volume, session);
+				return result;
+			}
+
+			private Response mountVolume(final Host mounter, final Path mountPoint, final Volume volume, ExecSshSession session) {
+			
+				Response result = null;
 				if(!session.runCommandAndAssertSuccess("mount").getStdout().contains(mountPoint.toString())){
-					session.runCommandAndAssertSuccess(new Mount("glusterfs", String.format("%s:%s", mounter.getAddress(), volume.getName()), mountPoint.toString()).toString());
+					result = session.runCommandAndAssertSuccess(new Mount("glusterfs", String.format("%s:%s", mounter.getAddress(), volume.getName()), mountPoint.toString()).toString());
 				}
-				return null;
+				return result;
+			}
+
+			private void createMountPoint(final Path mountPoint,
+					ExecSshSession session) {
+				if ( ! session.runCommand("stat" , mountPoint.toString() ).isSuccessful()){
+					session.runCommandAndAssertSuccess("mkdir -p " + mountPoint);
+				}
 			}
 		});
 	}
