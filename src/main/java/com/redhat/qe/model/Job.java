@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType( XmlAccessType.FIELD )
-@XmlRootElement(name="gluster_volume")
+@XmlRootElement(name="job")
 public class Job extends Model{
 	@XmlAttribute
 	private String id;
