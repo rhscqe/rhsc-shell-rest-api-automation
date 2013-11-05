@@ -34,6 +34,10 @@ public class Asserts {
 		Assert.assertTrue(String.format(subject + " actual[%s] fell outside expected[%s] +/- %s (%s to %s)", actual, expected, fuzz, lowerbound, upperbound), 
 				actual <= upperbound && actual >= lowerbound);		
 	}
+	
+	public static void asertCodeIsInRangeInclusive(int actual, int expectedLow, int expectedHigh) {
+		Assert.assertTrue( expectedHigh <= 500 || expectedLow >= 400 );
+	}
 
 
 

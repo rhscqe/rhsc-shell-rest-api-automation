@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.jaxb.ActionUnmarshaller;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.rest.JaxbContext;
@@ -44,23 +45,13 @@ public class StopRebalanceWhenNoRebalenceInProgressTest extends TwoHostClusterTe
 	public void stopReblanceWhenNoRebalanceInProgress(){
 		ResponseWrapper result = getVolumeRepository().stopRebalance(volume);
 		int code = result.getCode();
-		ensureMethodIsA4xxMethod(code);
-		Action actionResponse = (Action)unmarshalResult(result);
+		Asserts.asertCodeIsInRangeInclusive(code, 400, 499);
+		Action actionResponse = (Action)new ActionUnmarshaller().unmarshalResult(result);
 		Assert.assertEquals("failed", actionResponse.getStatus().getState());
 		Assert.assertTrue(actionResponse.getFault().getDetail().toLowerCase().contains("rebalance is not running"));
 	}
 
-	private void ensureMethodIsA4xxMethod(int code) {
-		Assert.assertTrue(code < 500 || code >= 400 );
-	}
 
-	private Action unmarshalResult(ResponseWrapper result) {
-		try {
-			return (Action) JaxbContext.getContext().createUnmarshaller().unmarshal(new StringReader(result.getBody()));
-		} catch (JAXBException e) {
-			throw new RuntimeException("failed to unmarshal the request body");
-		}
-	}
 
 	/**
 	 * @return
