@@ -1,4 +1,4 @@
-package com.redhat.qe.rebalance;
+package com.redhat.qe.rest.rebalance;
 
 import junit.framework.Assert;
 
