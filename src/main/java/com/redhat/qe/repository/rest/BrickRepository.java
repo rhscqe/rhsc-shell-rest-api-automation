@@ -27,7 +27,7 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		return String.format("/api/clusters/%s/glustervolumes/%s/bricks",
 				cluster.getId(), volume.getId());
 	}
-
+	
 	@Override
 	protected ArrayList<Brick> deserializeCollectionXmlToList(String raw) {
 		ArrayList<Brick> result = ((BrickList) unmarshal(raw)).getBricks();
