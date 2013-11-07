@@ -13,7 +13,7 @@ import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.helpers.utils.FileSize;
-import com.redhat.qe.helpers.utils.Path;
+import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.helpers.utils.RandomIntGenerator;
 import com.redhat.qe.helpers.utils.TimestampHelper;
 import com.redhat.qe.model.Brick;
@@ -41,7 +41,7 @@ public class BrickPopulator {
 		VolumeRepository volumeRepository = new VolumeRepository(session, cluster);
 		Volume volume = volumeRepository.createOrShow(VolumeFactory.distributed("red", h1, h2));
 		volumeRepository._start(volume);
-		Path mountPoint = Path.fromDirs("mnt", volume.getName());
+		AbsolutePath mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
 		Host mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
 		new BrickPopulator().createDataForEachBrick(session, cluster,volume, mounter, mountPoint);
@@ -54,7 +54,7 @@ public class BrickPopulator {
 	 * @param mounter
 	 * @param volume
 	 */
-	public void createDataForEachBrick(HttpSession session, Cluster cluster,  Volume volume,Host mounter, Path mountPoint) {
+	public void createDataForEachBrick(HttpSession session, Cluster cluster,  Volume volume,Host mounter, AbsolutePath mountPoint) {
 		ArrayList<Brick> bricks = new com.redhat.qe.repository.rest.BrickRepository(session, cluster, volume).list();
 		for(final Brick brick: bricks){
 			Host host = brick.getConfiguredHostFromBrickHost(session);
@@ -66,8 +66,8 @@ public class BrickPopulator {
 		}
 	}
 
-	private static Path writeRandomFile(Path mountPoint, Host mounter, Volume volume) {
-		Path file = mountPoint.addDir(randomFileName());
+	private static AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {
+		AbsolutePath file = mountPoint.add(randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {

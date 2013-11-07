@@ -14,7 +14,7 @@ import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
-import com.redhat.qe.helpers.utils.Path;
+import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
@@ -27,7 +27,7 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 public class RebalanceTestBase extends TwoHostClusterTestBase {
 	private static final Logger LOG = Logger.getLogger(RebalanceTestBase.class);
 
-	private Path mountPoint;
+	private AbsolutePath mountPoint;
 	private Host mounter;
 	protected Volume volume;
 
@@ -41,7 +41,7 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 
 
 
-		mountPoint = Path.fromDirs("mnt", volume.getName());
+		mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
 		mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
 		LOG.info("volume mounted");

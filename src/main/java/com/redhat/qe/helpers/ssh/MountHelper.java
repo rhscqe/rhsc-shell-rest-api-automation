@@ -1,7 +1,7 @@
 package com.redhat.qe.helpers.ssh;
 
 import com.google.common.base.Function;
-import com.redhat.qe.helpers.utils.Path;
+import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.sh.Mount;
@@ -16,7 +16,7 @@ public class MountHelper {
 	 * @param sshSession
 	 * @param mountPoint
 	 */
-	public static void mountVolume(final Host mounter, final Path mountPoint, final Volume volume) {
+	public static void mountVolume(final Host mounter, final AbsolutePath mountPoint, final Volume volume) {
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
@@ -26,7 +26,7 @@ public class MountHelper {
 				return result;
 			}
 
-			private Response mountVolume(final Host mounter, final Path mountPoint, final Volume volume, ExecSshSession session) {
+			private Response mountVolume(final Host mounter, final AbsolutePath mountPoint, final Volume volume, ExecSshSession session) {
 			
 				Response result = null;
 				if(!session.runCommandAndAssertSuccess("mount").getStdout().contains(mountPoint.toString())){
@@ -35,7 +35,7 @@ public class MountHelper {
 				return result;
 			}
 
-			private void createMountPoint(final Path mountPoint,
+			private void createMountPoint(final AbsolutePath mountPoint,
 					ExecSshSession session) {
 				if ( ! session.runCommand("stat" , mountPoint.toString() ).isSuccessful()){
 					session.runCommandAndAssertSuccess("mkdir -p " + mountPoint);
@@ -45,7 +45,7 @@ public class MountHelper {
 	}
 	
 	
-	public static void unmount(final Host mounter, final Path mountPoint){
+	public static void unmount(final Host mounter, final AbsolutePath mountPoint){
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			

@@ -9,7 +9,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
-import com.redhat.qe.helpers.utils.Path;
+import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.rest.VolumeRepository;
@@ -20,7 +20,7 @@ import com.twitter.mustache.TwitterObjectHandler;
 
 public class BrickPopulatorTest extends TwoHostClusterTestBase{
 	private Volume volume;
-	private Path mountPoint;
+	private AbsolutePath mountPoint;
 	private Host mounter;
 
 	@Before
@@ -29,7 +29,7 @@ public class BrickPopulatorTest extends TwoHostClusterTestBase{
 		volume = volumeRepo.createOrShow(VolumeFactory.distributed("red", getHost1(), getHost2()));
 		volumeRepo._start(volume);
 
-		mountPoint = Path.fromDirs("mnt", volume.getName());
+		mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
 		mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
 		
@@ -38,11 +38,11 @@ public class BrickPopulatorTest extends TwoHostClusterTestBase{
 	
 	@After
 	public void afterme(){
-		mountPoint.addDir("*");
+		mountPoint.add("*");
 		ExecSshSession.fromHost(mounter).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
 			public Response apply(ExecSshSession session) {
-				return session.runCommandAndAssertSuccess("rm -rf " + mountPoint.addDir("*").toString());
+				return session.runCommandAndAssertSuccess("rm -rf " + mountPoint.add("*").toString());
 			}
 		});
 		MountHelper.unmount(mounter, mountPoint);
