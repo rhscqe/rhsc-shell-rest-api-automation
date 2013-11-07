@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 

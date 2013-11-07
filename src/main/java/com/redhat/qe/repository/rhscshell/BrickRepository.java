@@ -3,7 +3,7 @@ package com.redhat.qe.repository.rhscshell;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;

@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.ClusterFactory;
 import com.redhat.qe.helpers.Asserts;
-import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.test.ovirtshell.RhscShellSessionTestBase;
 

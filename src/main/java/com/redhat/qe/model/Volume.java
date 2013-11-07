@@ -15,14 +15,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
-import com.redhat.qe.helpers.ListUtil;
-import com.redhat.qe.helpers.StringUtils;
-import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
+import com.redhat.qe.helpers.jaxb.MyMarshaller;
+import com.redhat.qe.helpers.utils.ListUtil;
+import com.redhat.qe.helpers.utils.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils.RepeatingHashMap;
 import com.redhat.qe.repository.rest.JaxbContext;
 import com.redhat.qe.repository.rhscshell.GlusterOption;
 import com.redhat.qe.repository.rhscshell.GlusterOptionValue;
 import com.redhat.qe.ssh.IResponse;
-import com.redhat.qe.utils.MyMarshaller;
 
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlRootElement(name="gluster_volume")

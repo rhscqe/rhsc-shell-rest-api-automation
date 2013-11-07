@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.Asserts;
-import com.redhat.qe.helpers.PropertyListParse;
+import com.redhat.qe.helpers.ovirtshell.PropertyListParse;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.ssh.BashShell;
 import com.redhat.qe.ssh.IResponse;

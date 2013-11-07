@@ -14,11 +14,11 @@ import org.calgb.test.performance.HttpSession;
 import org.calgb.test.performance.ProcessResponseBodyException;
 import org.calgb.test.performance.RequestException;
 
+import com.redhat.qe.helpers.jaxb.MyMarshaller;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.ClusterList;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Model;
-import com.redhat.qe.utils.MyMarshaller;
 
 public abstract class Repository<T extends Model> {
 	public HttpSession session;

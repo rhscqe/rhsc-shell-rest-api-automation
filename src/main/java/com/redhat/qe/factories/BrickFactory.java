@@ -5,8 +5,8 @@ import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import com.redhat.qe.helpers.RandomIntGenerator;
-import com.redhat.qe.helpers.TimestampHelper;
+import com.redhat.qe.helpers.utils.RandomIntGenerator;
+import com.redhat.qe.helpers.utils.TimestampHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 

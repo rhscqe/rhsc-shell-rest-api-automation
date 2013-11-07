@@ -1,6 +1,7 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.ssh;
 
 import com.google.common.base.Function;
+import com.redhat.qe.helpers.utils.Path;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.sh.Mount;

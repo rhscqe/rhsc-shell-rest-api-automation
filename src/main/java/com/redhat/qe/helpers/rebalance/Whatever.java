@@ -6,7 +6,7 @@ import org.calgb.test.performance.HttpSession;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
-import com.redhat.qe.helpers.HttpSessionFactory;
+import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.rest.ClusterRepository;

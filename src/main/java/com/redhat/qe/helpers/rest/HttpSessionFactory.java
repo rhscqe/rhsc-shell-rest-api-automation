@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.rest;
 
 import org.calgb.test.performance.HttpSession;
 import org.calgb.test.performance.HttpSession.HttpProtocol;

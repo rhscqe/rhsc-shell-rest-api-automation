@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

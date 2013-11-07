@@ -15,7 +15,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.Asserts;
-import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.rhscshell.VolumeRepository;
 import com.redhat.qe.ssh.IResponse;

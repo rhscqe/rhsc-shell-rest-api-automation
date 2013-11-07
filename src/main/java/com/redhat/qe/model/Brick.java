@@ -15,10 +15,10 @@ import org.calgb.test.performance.HttpSession;
 
 import com.google.common.base.Predicate;
 import com.redhat.qe.config.RhscConfiguration;
-import com.redhat.qe.helpers.CollectionUtils;
-import com.redhat.qe.helpers.StringUtils;
-import com.redhat.qe.helpers.StringUtils.RepeatingHashMap;
 import com.redhat.qe.helpers.jaxb.BrickHostToServerIdXmlAdapter;
+import com.redhat.qe.helpers.utils.CollectionUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils.RepeatingHashMap;
 import com.redhat.qe.repository.rest.HostRepository;
 
 @XmlAccessorType( XmlAccessType.FIELD )

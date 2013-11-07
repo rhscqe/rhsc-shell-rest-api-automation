@@ -2,8 +2,8 @@ package com.redhat.qe.repository.sh;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.redhat.qe.helpers.FileSize;
 
+import com.redhat.qe.helpers.utils.FileSize;
 import com.google.common.base.Joiner;
 
 public class DD {

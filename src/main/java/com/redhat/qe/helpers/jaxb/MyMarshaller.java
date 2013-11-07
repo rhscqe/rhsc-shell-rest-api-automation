@@ -1,4 +1,4 @@
-package com.redhat.qe.utils;
+package com.redhat.qe.helpers.jaxb;
 
 import java.io.StringWriter;
 

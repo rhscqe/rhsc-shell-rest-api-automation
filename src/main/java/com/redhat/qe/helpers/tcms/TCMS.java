@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.tcms;
 
 import java.net.MalformedURLException;
 import java.net.URL;

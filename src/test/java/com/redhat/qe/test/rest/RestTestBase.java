@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.redhat.qe.config.RhscConfiguration;
-import com.redhat.qe.helpers.HttpSessionFactory;
+import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.repository.IClusterRepository;
 import com.redhat.qe.repository.IHostRepository;

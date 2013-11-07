@@ -10,7 +10,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.redhat.qe.helpers.StringUtils;
+import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
 

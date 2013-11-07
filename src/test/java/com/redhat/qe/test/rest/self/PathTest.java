@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.redhat.qe.helpers.Path;
+import com.redhat.qe.helpers.utils.Path;
 
 public class PathTest {
 	@Test

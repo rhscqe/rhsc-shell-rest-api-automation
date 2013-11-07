@@ -8,7 +8,7 @@ import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RestApi;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.config.ShellHost;
-import com.redhat.qe.helpers.HttpSessionFactory;
+import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;

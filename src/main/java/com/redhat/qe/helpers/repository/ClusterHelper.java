@@ -4,7 +4,7 @@ package com.redhat.qe.helpers.repository;
 import junit.framework.Assert;
 
 import com.google.common.base.Predicate;
-import com.redhat.qe.helpers.CollectionUtils;
+import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.repository.IClusterRepository;
 import com.redhat.qe.repository.rest.DatacenterRepository;

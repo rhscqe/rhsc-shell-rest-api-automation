@@ -3,7 +3,6 @@ package com.redhat.qe.helpers.cleanup;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.redhat.qe.helpers.HostCleanup;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;

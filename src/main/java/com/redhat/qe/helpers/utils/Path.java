@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.utils;
 
 import java.util.ArrayList;
 import java.util.List;

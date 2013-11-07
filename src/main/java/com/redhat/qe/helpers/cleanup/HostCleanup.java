@@ -1,4 +1,4 @@
-package com.redhat.qe.helpers;
+package com.redhat.qe.helpers.cleanup;
 
 import org.junit.Assert;
 
