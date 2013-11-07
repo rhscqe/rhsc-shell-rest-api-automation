@@ -23,7 +23,7 @@ public abstract class ReadInput {
 	}
 
 	public ReadInput(InputStream inputStream) {
-		this(inputStream, new Duration(TimeUnit.SECONDS, 60));
+		this(inputStream, new Duration(TimeUnit.SECONDS, 220));
 	}
 	
 	public IResponse call() {

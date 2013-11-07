@@ -188,7 +188,7 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 				Asserts.assertFuzzy(HUGE_FUZZ_FACTOR, Integer.parseInt(glusterData.get("AllocCount")), Integer.parseInt(allocCounts.get(h)));
 				Assert.assertEquals(rhscBrick.getDir() +":" + hostname, glusterData.get("MaxAlloc"), maxAllocs.get(h));
 				Assert.assertEquals(glusterData.get("Misses"), poolMisses.get(h));
-				Assert.assertEquals(glusterData.get("Max-StdAlloc"), maxStdAllocs.get(h));
+				Assert.assertEquals("Max-StdAlloc", glusterData.get("Max-StdAlloc"), maxStdAllocs.get(h) );
 			}
 			
 			

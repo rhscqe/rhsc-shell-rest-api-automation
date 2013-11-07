@@ -15,7 +15,7 @@ public class RemoveLastBrickTest extends SingleVolumeTestBase{
 		
 		//test
 		Brick brickToRemove = getVolumeRepository().listBricks(volume).get(0);
-		getVolumeRepository()._removeBrick(volume, brickToRemove).expect("[Cc]annot remove all the bricks from a [vV]olume");
+		getVolumeRepository()._removeBrick(volume, brickToRemove).expect("[Cc]an not remove all the bricks from a [vV]olume");
 		
 	}
 
