@@ -12,8 +12,7 @@ public class HooksHelper {
 	private static AbsolutePath HOOK_DIR = AbsolutePath.fromDirs("var","lib", "glusterd", "hooks");
 	
 	
-	public HookPath createAsciiHook(ExecSshSession session,String version, String event, String lifecycle, String filename, String content){
-		HookPath hook = new HookPath(HOOK_DIR.add(version).add(event).add(lifecycle).add(filename));
+	public HookPath createAsciiHook(ExecSshSession session, HookPath hook, String content){
 		hook.getDirectories();
 		new DirectoryHelper().createDirectory(session, new AbsolutePath(hook.getDirectories()));
 		new FileHelper().createFile(session, new AbsolutePath(hook.getPath()), content);

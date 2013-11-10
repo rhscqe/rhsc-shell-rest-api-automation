@@ -4,34 +4,39 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
-import org.jclouds.util.Predicates2;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.base.Predicate;
+import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.helpers.ssh.HookPath;
 import com.redhat.qe.helpers.ssh.HooksHelper;
-import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.helpers.utils.Path;
-import com.redhat.qe.model.GlusterHookList;
 import com.redhat.qe.model.Hook;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.repository.rest.HookRepository;
 import com.redhat.qe.ssh.ExecSshSession;
-import com.redhat.qe.test.rest.TwoHostClusterTestBase;
 
-public class EnableHookTest extends TwoHostClusterTestBase{
+public class EnableHookTest extends HooksTestBase{
 	
 	private HookPath script1;
 
 	@Before
 	public void before(){
-		script1 = createHookScript(getHost1());
-		HookPath script2 = createHookScript(getHost2());
+		String filename = "K90test.sh";
+		script1 = createHookScript(getHost1(),filename);
+		HookPath script2 = createHookScript(getHost2(),filename);
 		
 		//Sync the scripts 
 		getHooksRepo().sync();
+	}
+	
+	@After
+	public void after(){
+		getHooksRepo().delete(new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script1));
+		
 	}
 
 	private HookRepository getHooksRepo() {
@@ -39,26 +44,15 @@ public class EnableHookTest extends TwoHostClusterTestBase{
 		return hooksRepo;
 	}
 
-	private HookPath createHookScript(Host host) {
-		HookPath hook;
-		ExecSshSession host1session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), host));
-		host1session.start();
-		try{
-			hook = new HooksHelper().createAsciiHook(host1session, "1", "test", "pre", "K90test.sh", "echo 'test'");
-		}finally{
-			host1session.stop();
-		}
-		return hook;
-	}
-	
+	@Tcms("322495")
 	@Test
 	public void test(){
-		Hook hookUnderTest = getHookFromHooksList();
+		Hook hookUnderTest = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script1);
 		Assert.assertTrue(hookUnderTest.getStatus().getState().toLowerCase().equals("disabled"));
 		getHooksRepo().enable(hookUnderTest);
 		
 		
-		Hook enabledHook = getHookFromHooksList();
+		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script1);
 		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
 		
 		assertScriptNameHasChanged(getHost1());
@@ -78,14 +72,5 @@ public class EnableHookTest extends TwoHostClusterTestBase{
 		}
 	}
 
-	private Hook getHookFromHooksList() {
-		ArrayList<Hook> hooks = getHooksRepo().list();
-		Hook hookUnderTest = CollectionUtils.findFirst(hooks, new Predicate<Hook>(){
-
-			public boolean apply(Hook hook) {
-				return hook.getName().equals(script1.getRestApiCannonicalName());
-			}});
-		return hookUnderTest;
-	}
 
 }

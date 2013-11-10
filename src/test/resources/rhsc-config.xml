@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>rhsc-cb2</hostname>
+		<hostname>latest</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>10.70.37.123</hostname>
+		<hostname>latest</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>
@@ -18,7 +18,7 @@
     <name>myCluster</name>
     <version>
       <major>3</major>
-      <minor>2</minor>
+      <minor>3</minor>
     </version>
     <datacenter>
       <name>Default</name>

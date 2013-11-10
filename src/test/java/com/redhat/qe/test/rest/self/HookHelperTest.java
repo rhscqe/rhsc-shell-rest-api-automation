@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.ssh.FileHelper;
 import com.redhat.qe.helpers.ssh.HookPath;
+import com.redhat.qe.helpers.ssh.HookPathFactory;
 import com.redhat.qe.helpers.ssh.HooksHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Host;
@@ -35,7 +36,7 @@ public class HookHelperTest {
 	public void createAndDelete(){
 		HookPath hook = null;
 		try{
-			hook = new HooksHelper().createAsciiHook(session, "1", "test", "pre", "S90test.sh", "happy_birthday=1");
+			hook = new HooksHelper().createAsciiHook(session, new HookPathFactory().create("S90test.sh"), "happy_birthday=1");
 			Assert.assertTrue(new HooksHelper().listHooks(session).contains(hook));
 		}finally{
 			new FileHelper().removeFile(session, new AbsolutePath(hook.getPath()));
