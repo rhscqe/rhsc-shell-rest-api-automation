@@ -5,6 +5,7 @@ import java.util.List;
 import org.calgb.test.performance.HttpSession;
 
 import com.google.common.base.Function;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.utils.Null;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
@@ -19,7 +20,7 @@ public class WithEachBrick {
 	//need session to refresh host information
 	public static void withEachBrick(List<Brick> bricks, HttpSession session, Function<WithEachBrick, Null> eachBrick ) {
 		for (final Brick brick : bricks) {
-			Host host = brick.getConfiguredHostFromBrickHost(session);
+			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(session, brick.getHost()); 
 			eachBrick.apply(new WithEachBrick(brick, host));
 		}
 	}

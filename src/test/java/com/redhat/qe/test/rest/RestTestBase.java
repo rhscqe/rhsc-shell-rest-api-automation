@@ -16,7 +16,7 @@ import com.redhat.qe.repository.rest.HostRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 
 public class RestTestBase extends TestBase {
-	private HttpSession session;
+	 HttpSession session;
 
 	@Before
 	public void setup() throws UseSslException{ 

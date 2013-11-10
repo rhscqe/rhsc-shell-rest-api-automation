@@ -17,6 +17,7 @@ public class HooksHelper {
 		hook.getDirectories();
 		new DirectoryHelper().createDirectory(session, new AbsolutePath(hook.getDirectories()));
 		new FileHelper().createFile(session, new AbsolutePath(hook.getPath()), content);
+		new FileHelper().changePermissions(session, "777",  new AbsolutePath(hook.getPath()));
 		return hook;
 	}
 

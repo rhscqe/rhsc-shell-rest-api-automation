@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>dustin-utils</groupId>
 			<artifactId>dustin-utils</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>

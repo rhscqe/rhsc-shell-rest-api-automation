@@ -14,6 +14,10 @@ public class FileHelper {
 		command.append("ENDOFFILE");
 		return session.runCommandAndAssertSuccess( command.toString() );
 	}
+	
+	public Response changePermissions(ExecSshSession session, String octet, AbsolutePath path){
+		return session.runCommandAndAssertSuccess("chmod " + octet + " " + path); //TODO make object
+	}
 
 	
 	public Response removeFile(ExecSshSession session, AbsolutePath path){

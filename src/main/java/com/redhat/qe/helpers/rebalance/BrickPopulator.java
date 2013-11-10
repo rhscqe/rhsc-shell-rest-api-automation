@@ -91,7 +91,7 @@ public class BrickPopulator {
 
 
 	private static Response getListofFilesForBrick(final Brick brick, Host host, HttpSession session) {
-		Host configuredhost = brick.getConfiguredHostFromBrickHost(session);
+		Host configuredhost = RhscConfiguration.getConfiguredHostFromBrickHost(session, brick.getHost()); 
 		ExecSshSession hostSshSession = ExecSshSession.fromHost(configuredhost);
 		return hostSshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() { public Response apply(ExecSshSession s) { return  s.runCommandAndAssertSuccess("ls " + brick.getDir()); } });
 	}

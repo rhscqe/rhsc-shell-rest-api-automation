@@ -31,5 +31,18 @@ public class HookRepository extends SimpleRestRepository<Hook>{
 		return (result == null) ? new ArrayList<Hook>() : result; 
 	}
 	
+	public ResponseWrapper enable(Hook hook){
+		return customAction(hook, getCollectionPath(), "enable");
+	}
+	public ResponseWrapper disable(Hook hook){
+		return customAction(hook, getCollectionPath(), "disable");
+	}
+
+	public void sync() {
+		// TODO Auto-generated method stub
+		// FIXME
+		System.out.println("sync not implemented.");		
+	}
+	
 
 }

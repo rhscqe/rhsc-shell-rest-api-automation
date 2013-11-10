@@ -198,15 +198,6 @@ public class Brick extends Model {
 		this.mixedAttributes = attrs;
 	}
 	
-	public Host getConfiguredHostFromBrickHost(HttpSession session) {
-		final Host host = new HostRepository(session).show(getHost());
-		Host configuredHost = CollectionUtils.findFirst(RhscConfiguration.getConfiguration().getHosts(), new Predicate<Host>() {
-
-				public boolean apply(Host configHost) {
-					return configHost.getName().equals(host.getName());
-				}
-		});
-		return configuredHost;
-	}
+	
 
 }

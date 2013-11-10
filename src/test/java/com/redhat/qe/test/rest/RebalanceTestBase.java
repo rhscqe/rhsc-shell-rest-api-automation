@@ -76,7 +76,7 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 	 */
 	private void cleanUpBrickData(ArrayList<Brick> bricks) {
 		for(final Brick brick: bricks){
-			Host host = brick.getConfiguredHostFromBrickHost(getSession());
+			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), brick.getHost()); 
 			ExecSshSession.fromHost(host).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 				
 				public Response apply(ExecSshSession arg0) {
