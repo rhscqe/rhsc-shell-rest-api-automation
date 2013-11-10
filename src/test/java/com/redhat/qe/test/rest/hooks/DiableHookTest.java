@@ -10,7 +10,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class DiableHookTest extends HooksTestBase{
+public class DiableHookTest extends NoConflictHooksTestBase{
 	
 
 
@@ -26,8 +26,8 @@ public class DiableHookTest extends HooksTestBase{
 		Hook disabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(disabledHook.getStatus().getState().toLowerCase().equals("disabled"));
 		
-		assertScriptFilenameIsDisabled(getHost1());
-		assertScriptFilenameIsDisabled(getHost2());
+		assertScriptFilenameIsDisabled(getHost1(),script);
+		assertScriptFilenameIsDisabled(getHost2(),script);
 	}
 
 

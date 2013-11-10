@@ -10,7 +10,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class EnableHookTest extends HooksTestBase{
+public class EnableHookTest extends NoConflictHooksTestBase{
 	
 
 
@@ -27,8 +27,8 @@ public class EnableHookTest extends HooksTestBase{
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
 		
-		assertScriptFilenameIsEnabled(getHost1());
-		assertScriptFilenameIsEnabled(getHost2());
+		assertScriptFilenameIsEnabled(getHost1(), script);
+		assertScriptFilenameIsEnabled(getHost2(), script);
 	}
 
 

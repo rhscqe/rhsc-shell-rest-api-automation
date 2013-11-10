@@ -8,13 +8,10 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class DisableAlreadyDisabledTest extends HooksTestBase{
+public class DisableAlreadyDisabledTest extends NoConflictHooksTestBase{
 	
 	
-	
-
-
-	@Tcms("322495")
+	@Tcms("322498")
 	@Test
 	public void test(){
 		Hook hookUnderTest = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
@@ -25,8 +22,8 @@ public class DisableAlreadyDisabledTest extends HooksTestBase{
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
 		
-		assertScriptFilenameIsDisabled(getHost1());
-		assertScriptFilenameIsDisabled(getHost2());
+		assertScriptFilenameIsDisabled(getHost1(),script);
+		assertScriptFilenameIsDisabled(getHost2(),script);
 	}
 
 

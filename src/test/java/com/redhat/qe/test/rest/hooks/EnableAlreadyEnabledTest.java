@@ -8,7 +8,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class EnableAlreadyEnabledTest extends HooksTestBase{
+public class EnableAlreadyEnabledTest extends NoConflictHooksTestBase{
 	
 	
 	
@@ -25,8 +25,8 @@ public class EnableAlreadyEnabledTest extends HooksTestBase{
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
 		
-		assertScriptFilenameIsEnabled(getHost1());
-		assertScriptFilenameIsEnabled(getHost2());
+		assertScriptFilenameIsEnabled(getHost1(),script);
+		assertScriptFilenameIsEnabled(getHost2(),script);
 	}
 
 

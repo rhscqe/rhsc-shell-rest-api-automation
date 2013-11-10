@@ -22,6 +22,7 @@ public class Hook extends Model {
 	private String content;
 	private Status status;
 	private String conflictStatus;
+	private String conflicts;
 	
 	public String getName() {
 		return name;
@@ -82,6 +83,12 @@ public class Hook extends Model {
 	}
 	public void setConflictStatus(String conflictStatus) {
 		this.conflictStatus = conflictStatus;
+	}
+	public String getConflicts() {
+		return conflicts;
+	}
+	public void setConflicts(String conflicts) {
+		this.conflicts = conflicts;
 	} 
 
 	
