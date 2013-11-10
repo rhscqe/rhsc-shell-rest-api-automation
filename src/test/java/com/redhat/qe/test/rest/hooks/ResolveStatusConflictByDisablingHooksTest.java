@@ -8,22 +8,21 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class ResolveStatusConflictByEnablingHooksTest extends StatusConflictHooksTestBase{
+public class ResolveStatusConflictByDisablingHooksTest extends StatusConflictHooksTestBase{
 
 
 	@Test
-	@Tcms("322499")
+	@Tcms("322500")
 	public void test(){
 		Hook conflictedHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script1);
-		getHooksRepo().enable(conflictedHook);
+		getHooksRepo().disable(conflictedHook);
 		
 		
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script1);
-		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
+		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("disabled"));
 		
-		assertScriptFilenameIsEnabled(getHost1(), script1);
-		assertScriptFilenameIsEnabled(getHost2(), script2);
-	
+		assertScriptFilenameIsDisabled(getHost1(), script1);
+		assertScriptFilenameIsDisabled(getHost1(), script2);
 		
 	}
 
