@@ -10,10 +10,12 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.repository.HostHelper;
 import com.redhat.qe.helpers.rest.HttpSessionFactory;
+import com.redhat.qe.helpers.rest.WithEachBrick;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.helpers.utils.AbsolutePath;
+import com.redhat.qe.helpers.utils.Null;
 import com.redhat.qe.helpers.utils.RandomIntGenerator;
 import com.redhat.qe.helpers.utils.TimestampHelper;
 import com.redhat.qe.model.Brick;
@@ -54,16 +56,18 @@ public class BrickPopulator {
 	 * @param mounter
 	 * @param volume
 	 */
-	public void createDataForEachBrick(HttpSession session, Cluster cluster,  Volume volume,Host mounter, AbsolutePath mountPoint) {
+	public void createDataForEachBrick(final HttpSession session, Cluster cluster,  final Volume volume,final Host mounter, final AbsolutePath mountPoint) {
 		ArrayList<Brick> bricks = new com.redhat.qe.repository.rest.BrickRepository(session, cluster, volume).list();
-		for(final Brick brick: bricks){
-			Host host = brick.getConfiguredHostFromBrickHost(session);
-
-			while(getListofFilesForBrick(brick, host, session).getStdout().isEmpty()){
-				writeRandomFile(mountPoint, mounter, volume);
+		
+		WithEachBrick.withEachBrick(bricks, session, new Function<WithEachBrick, Null>() {
+			
+			public Null apply(WithEachBrick brickinfo) {
+				while (getListofFilesForBrick(brickinfo.getBrick(), brickinfo.getHost(), session).getStdout().isEmpty()) {
+					writeRandomFile(mountPoint, mounter, volume);
+				}
+				return Null.NULL;
 			}
-
-		}
+		});
 	}
 
 	private static AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {

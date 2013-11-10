@@ -61,6 +61,7 @@ public class BrickPopulatorTest extends TwoHostClusterTestBase{
 	@Test
 	public void test(){
 		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster() ,volume, mounter, mountPoint);
+		
 	}
 
 }

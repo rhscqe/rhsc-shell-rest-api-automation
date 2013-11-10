@@ -35,11 +35,8 @@ public class MountHelper {
 				return result;
 			}
 
-			private void createMountPoint(final AbsolutePath mountPoint,
-					ExecSshSession session) {
-				if ( ! session.runCommand("stat" , mountPoint.toString() ).isSuccessful()){
-					session.runCommandAndAssertSuccess("mkdir -p " + mountPoint);
-				}
+			private void createMountPoint(final AbsolutePath mountPoint, ExecSshSession session) {
+				new DirectoryHelper().createDirectory(session, mountPoint);
 			}
 		});
 	}

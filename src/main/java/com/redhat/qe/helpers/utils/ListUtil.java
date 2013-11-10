@@ -1,5 +1,6 @@
 package com.redhat.qe.helpers.utils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,5 @@ public class ListUtil {
 	public static <T> HashMap<T, T> joinHashMap(List<T> a,List<T> b) {
 		return new HashMap<T,T>(join(a,b));
 	}
+
 }
