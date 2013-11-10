@@ -2,18 +2,16 @@ package com.redhat.qe.test.rest.hooks;
 
 import junit.framework.Assert;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class EnableHookTest extends HooksTestBase{
+public class DisableAlreadyDisabledTest extends HooksTestBase{
 	
-
-
+	
+	
 
 
 	@Tcms("322495")
@@ -27,10 +25,9 @@ public class EnableHookTest extends HooksTestBase{
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
 		
-		assertScriptFilenameIsEnabled(getHost1());
-		assertScriptFilenameIsEnabled(getHost2());
+		assertScriptFilenameIsDisabled(getHost1());
+		assertScriptFilenameIsDisabled(getHost2());
 	}
-
 
 
 	@Override

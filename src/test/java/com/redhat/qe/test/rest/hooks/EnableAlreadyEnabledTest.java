@@ -2,25 +2,23 @@ package com.redhat.qe.test.rest.hooks;
 
 import junit.framework.Assert;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.helpers.repository.HookRepoHelper;
 import com.redhat.qe.model.Hook;
 
-public class EnableHookTest extends HooksTestBase{
+public class EnableAlreadyEnabledTest extends HooksTestBase{
+	
+	
 	
 
 
-
-
-	@Tcms("322495")
+	@Tcms("322497")
 	@Test
 	public void test(){
 		Hook hookUnderTest = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
-		Assert.assertTrue(hookUnderTest.getStatus().getState().toLowerCase().equals("disabled"));
+		Assert.assertTrue(hookUnderTest.getStatus().getState().toLowerCase().equals("enabled"));
 		getHooksRepo().enable(hookUnderTest);
 		
 		
@@ -32,10 +30,9 @@ public class EnableHookTest extends HooksTestBase{
 	}
 
 
-
 	@Override
 	protected String getFilename() {
-		return "K90test.sh";
+		return "S90test.sh";
 	}
 
 
