@@ -17,7 +17,7 @@ public abstract class NoConflictHooksTestBase extends HookTestBase {
 	
 	@Before
 	public void before(){
-		script = createHookScripts(getFilename());
+		script = createHookScripts(getFilename(), "echo 'hi'");
 	}
 
 	protected abstract String getFilename();

@@ -14,10 +14,6 @@ import org.calgb.test.performance.HttpSession;
 import org.calgb.test.performance.ProcessResponseBodyException;
 import org.calgb.test.performance.RequestException;
 
-import com.redhat.qe.helpers.jaxb.MyMarshaller;
-import com.redhat.qe.model.Cluster;
-import com.redhat.qe.model.ClusterList;
-import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Model;
 
 public abstract class Repository<T extends Model> {
@@ -82,7 +78,7 @@ public abstract class Repository<T extends Model> {
 
 	public String marshall(Object object) {
 		try {
-			return MyMarshaller.marshall(JaxbContext.getContext(), object);
+			return com.redhat.qe.helpers.jaxb.MyMarshaller.marshall(JaxbContext.getContext(), object);
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		}
@@ -126,8 +122,7 @@ public abstract class Repository<T extends Model> {
 	 * @param action
 	 * @return
 	 */
-	protected ResponseWrapper _customAction(T entity, String collectionPath,
-			String action) {
+	protected ResponseWrapper _customAction(T entity, String collectionPath, String action) {
 		return sendTransaction(new PostRequestFactory()
 				.createPost(customActionPath(entity, collectionPath, action),
 						"<action />"));
@@ -139,9 +134,14 @@ public abstract class Repository<T extends Model> {
 	 * @param action
 	 * @return
 	 */
-	private String customActionPath(T entity, String collectionPath,
+	protected String customActionPath(T entity, String collectionPath,
 			String action) {
 		return memberPath(entity, collectionPath) + "/" + action;
+	}
+
+	public ResponseWrapper customAction(T entity, String collectionPath, String actionName,Marshallable action) {
+		return sendTransaction(new PostRequestFactory()
+				.createPost(customActionPath(entity, collectionPath, actionName), marshall(action)));
 	}
 
 	/**

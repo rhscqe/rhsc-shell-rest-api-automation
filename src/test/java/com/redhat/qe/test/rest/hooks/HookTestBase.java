@@ -20,9 +20,9 @@ public abstract class HookTestBase extends TwoHostClusterTestBase {
 		super();
 	}
 
-	protected HookPath createHookScripts(String filename) {
-		HookPath script = createHookScript(getHost1(), filename);
-		createHookScript(getHost2(), filename);
+	protected HookPath createHookScripts(String filename, String content) {
+		HookPath script = createHookScript(getHost1(), filename, content);
+		createHookScript(getHost2(), filename, content);
 		
 		//Sync the scripts 
 		getHooksRepo().sync();
@@ -35,12 +35,12 @@ public abstract class HookTestBase extends TwoHostClusterTestBase {
 	}
 
 
-	protected HookPath createHookScript(Host host, String filename) {
+	protected HookPath createHookScript(Host host, String filename, String content) {
 		HookPath hook;
 		ExecSshSession host1session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), host));
 		host1session.start();
 		try{
-			hook = new HooksHelper().createAsciiHook(host1session, new HookPathFactory().create(filename), "echo 'test'");
+			hook = new HooksHelper().createAsciiHook(host1session, new HookPathFactory().create(filename), content);
 		}finally{
 			host1session.stop();
 		}

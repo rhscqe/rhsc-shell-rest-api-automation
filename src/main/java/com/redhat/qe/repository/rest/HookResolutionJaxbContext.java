@@ -22,20 +22,13 @@ import com.redhat.qe.model.StepList;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.VolumeList;
 
-public class JaxbContext {
+public class HookResolutionJaxbContext {
 	//singleton
 	private static JAXBContext context;
 
 	public static JAXBContext getContext() throws JAXBException {
 		if (context == null) {
-			context = JAXBContext.newInstance(Cluster.class, Datacenter.class,
-					DatacenterList.class, ClusterList.class,
-					Host.class, HostList.class,
-					Volume.class, 
-					Brick.class, 
-					VolumeList.class, GlusterHookList.class, 
-					Hook.class, Job.class, JobList.class,
-					Step.class, StepList.class, Action.class);
+			context = JAXBContext.newInstance(HookResolutionAction.class, HookResolutionActionHost.class);
 		}
 		return context;
 

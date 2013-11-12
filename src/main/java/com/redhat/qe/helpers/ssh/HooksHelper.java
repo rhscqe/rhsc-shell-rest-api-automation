@@ -2,12 +2,8 @@ package com.redhat.qe.helpers.ssh;
 
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
-import com.redhat.qe.config.RhscConfiguration;
-import com.redhat.qe.helpers.utils.Path;
 import com.redhat.qe.helpers.utils.AbsolutePath;
-import com.redhat.qe.model.Host;
+import com.redhat.qe.helpers.utils.Path;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 

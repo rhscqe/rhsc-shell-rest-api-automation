@@ -23,4 +23,8 @@ public class FileHelper {
 	public Response removeFile(ExecSshSession session, AbsolutePath path){
 		return session.runCommandAndAssertSuccess("rm -f "+ path.toString());
 	}
+
+	public Response getFilecontents(ExecSshSession session, AbsolutePath path){
+		return session.runCommandAndAssertSuccess("cat "+ path.toString());
+	}
 }
