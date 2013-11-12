@@ -24,7 +24,7 @@ import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
 
-public class RebalanceTestBase extends TwoHostClusterTestBase {
+public abstract class RebalanceTestBase extends TwoHostClusterTestBase {
 	private static final Logger LOG = Logger.getLogger(RebalanceTestBase.class);
 
 	private AbsolutePath mountPoint;
@@ -35,7 +35,7 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 	public void setupVolume(){
 		LOG.info("creating volume");
 		VolumeRepository volumeRepo = getVolumeRepository();
-		volume = volumeRepo.createOrShow(VolumeFactory.distributed("purplehat", getHost1(), getHost2()));
+		volume = volumeRepo.createOrShow(getVolumeToBeCreated());
 		volumeRepo._start(volume);
 		LOG.info("volume created:" + volume.getName());
 
@@ -52,9 +52,13 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 		
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
+		getBrickRepo().create(BrickFactory.brick(getHost2()));
+		getBrickRepo().create(BrickFactory.brick(getHost2()));
 		LOG.info("2 bricks added");
 		LOG.info("end of RebalanceTestBase fixture");
 	}
+
+	 protected abstract Volume getVolumeToBeCreated() ;
 
 	/**
 	 * @return
@@ -67,6 +71,7 @@ public class RebalanceTestBase extends TwoHostClusterTestBase {
 	public void afterme(){
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
+		getVolumeRepository().stopRebalance(volume);
 		getVolumeRepository().stop(volume);
 		getVolumeRepository().destroy(volume);
 		cleanUpBrickData(bricks);

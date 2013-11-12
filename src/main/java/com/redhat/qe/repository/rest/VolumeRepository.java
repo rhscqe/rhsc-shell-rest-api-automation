@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.calgb.test.performance.HttpSession;
 
+import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.VolumeList;
@@ -46,8 +47,14 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return _customAction(volume, getCollectionPath(), "start");
 	}
 
-	public ResponseWrapper rebalance(Volume volume){
+	public ResponseWrapper _rebalance(Volume volume){
 		return _customAction(volume, getCollectionPath(), "rebalance");
+	}
+
+	public Action rebalance(Volume volume){
+		ResponseWrapper response = _rebalance(volume);
+		response.expectCode(200);
+		return (Action) unmarshal(response.getBody());
 	}
 
 	public ResponseWrapper stopRebalance(Volume volume){

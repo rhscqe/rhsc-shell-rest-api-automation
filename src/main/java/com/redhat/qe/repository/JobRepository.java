@@ -16,7 +16,7 @@ public class JobRepository extends SimpleRestRepository<Job>{
 
 	@Override
 	public String getCollectionPath() {
-		return "/api/jobs/";
+		return "/api/jobs";
 	}
 
 	@Override

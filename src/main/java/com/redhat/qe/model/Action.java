@@ -13,6 +13,7 @@ import com.redhat.qe.helpers.jaxb.BrickHostToServerIdXmlAdapter;
 public class Action {
 	private Status status;
 	private Fault fault;
+	private Job job;
 	public Status getStatus() {
 		return status;
 	}
@@ -24,6 +25,12 @@ public class Action {
 	}
 	public void setFault(Fault fault) {
 		this.fault = fault;
+	}
+	public Job getJob() {
+		return job;
+	}
+	public void setJob(Job job) {
+		this.job = job;
 	}
 	
 	
