@@ -60,6 +60,15 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 	public ResponseWrapper stopRebalance(Volume volume){
 		return _customAction(volume, getCollectionPath(), "stoprebalance");
 	}
+
+	public ResponseWrapper resetAllOptions(Volume volume){
+		ResponseWrapper response = _resetAllOptions(volume); 
+		response.expectCode(200);
+		return response;
+	}
+	public ResponseWrapper _resetAllOptions(Volume volume){
+		return _customAction(volume, getCollectionPath(), "resetalloptions");
+	}
 	
 
 

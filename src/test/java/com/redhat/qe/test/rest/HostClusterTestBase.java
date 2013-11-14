@@ -29,8 +29,7 @@ public abstract class HostClusterTestBase extends RestTestBase{
 	public void setupHosts(){
 		ArrayList<Host> results = new ArrayList<Host>();
 		for(Host host: getHostsToBeCreated()){
-			Cluster cluster = getCluster(host);
-			host.setCluster(cluster);
+			Cluster cluster = createCluster(host);
 			host = createAndWaitForUp(host);
 			results.add(host);
 		}
@@ -39,19 +38,20 @@ public abstract class HostClusterTestBase extends RestTestBase{
 	
 	@After
 	public void teardown(){
-		//new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
+		new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
 	}
 
 	/**
 	 * @param host
 	 * @return
 	 */
-	private Cluster getCluster(Host host) {
-		Cluster cluster = new ClusterHelper()._getClusterBasedOnName(getClusterRepository(), host.getCluster());
-		if(cluster == null){
-			cluster = new ClusterHelper().create(host.getCluster(), getClusterRepository(), getDatacenterRepository());
-		}
-		return cluster;
+	private Cluster createCluster(Host host) {
+		return getClusterRepository().createOrShow(host.getCluster());
+//		Cluster cluster = new ClusterHelper()._getClusterBasedOnName(getClusterRepository(), host.getCluster());
+//		if(cluster == null){
+//			cluster = new ClusterHelper().create(host.getCluster(), getClusterRepository(), getDatacenterRepository());
+//		}
+//		return cluster;
 	}
 	
 	public ArrayList<Host> getHosts(){

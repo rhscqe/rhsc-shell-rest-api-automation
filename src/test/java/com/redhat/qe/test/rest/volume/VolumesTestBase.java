@@ -1,22 +1,24 @@
-package com.redhat.qe.test.rest;
+package com.redhat.qe.test.rest.volume;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.repository.ClusterHelper;
 import com.redhat.qe.model.Cluster;
+import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.rest.VolumeRepository;
+import com.redhat.qe.test.rest.HostClusterTestBase;
 
-public abstract class VolumeTestBase extends HostClusterTestBase{
+public abstract class VolumesTestBase extends HostClusterTestBase{
 	
 
 	private ArrayList<Volume> volumes;
 
 
-	protected abstract Volume getVolumeToBeCreated();
 	
 	protected ArrayList<Volume> getVolumes(){
 		return volumes;
@@ -26,8 +28,7 @@ public abstract class VolumeTestBase extends HostClusterTestBase{
 	public void createVolume(){
 		ArrayList<Volume> result = new ArrayList<Volume>();
 		for(final Volume volume: getVolumesToBeCreated()){
-			Cluster cluster = new ClusterHelper().getClusterBasedOnName(getClusterRepository(), volume.getCluster());
-			result.add(getVolumeRepository(cluster).createOrShow(volume));
+			result.add(getVolumeRepository(volume.getCluster()).createOrShow(volume));
 			this.volumes = result;
 		}
 			

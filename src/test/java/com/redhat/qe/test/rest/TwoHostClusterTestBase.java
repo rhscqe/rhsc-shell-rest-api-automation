@@ -13,8 +13,8 @@ public abstract class TwoHostClusterTestBase extends HostClusterTestBase{
 
 	private static final int HOST2_INDEX = 1;
 	private static final int HOST1_INDEX = 0;
-	Host host1;
-	Host host2;
+	protected Host host1;
+	protected Host host2;
 
 	@Before
 	public void setupTwoHosts(){

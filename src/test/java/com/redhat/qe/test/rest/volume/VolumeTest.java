@@ -1,4 +1,4 @@
-package com.redhat.qe.test.rest;
+package com.redhat.qe.test.rest.volume;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,6 +13,7 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.rest.SimpleRestRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
+import com.redhat.qe.test.rest.TwoHostClusterTestBase;
 
 public class VolumeTest extends TwoHostClusterTestBase {
 	private Volume actual;
