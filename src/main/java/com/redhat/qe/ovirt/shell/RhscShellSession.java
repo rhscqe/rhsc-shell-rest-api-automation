@@ -7,7 +7,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
 import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.IResponse;
-import com.redhat.qe.ssh.ReadInput;
+import com.redhat.qe.ssh.InputStreamCollector;
 import com.redhat.qe.ssh.RhscOrOvirtShell;
 import com.redhat.qe.ssh.RhscOrOvirtShell;
 import com.redhat.qe.ssh.Shell;
@@ -42,22 +42,22 @@ public class RhscShellSession {
 	}
 	
 	public void start(){
-		sendAndRead("rhsc-shell || ovirt-shell").expect("Welcome");
+		sendAndCollect("rhsc-shell || ovirt-shell").expect("Welcome");
 	}
 	
 	public void stop(){
-		sendAndRead("exit");
+		sendAndCollect("exit");
 	}
 
 	public IResponse connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
 		return shell.send(command).read().expect("connected to \\w+ manager");
 	}
-	public IResponse sendAndRead(String command){
+	public IResponse sendAndCollect(String command){
 		return shell.send(command).read();
 	}
 	
-	public ReadInput send(String command ){
+	public InputStreamCollector send(String command ){
 		return shell.send(command);
 	}
 	

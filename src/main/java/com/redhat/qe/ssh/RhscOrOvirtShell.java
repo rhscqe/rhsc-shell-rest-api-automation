@@ -27,12 +27,12 @@ public class RhscOrOvirtShell extends Shell {
 		super(fromShell, toShell );
 	}
 
-	public ReadInput send(String command) {
-		return send(command, new RhscOrOvirtShellReadInputFactory());
+	public InputStreamCollector send(String command) {
+		return send(command, new RhscOrOvirtShellInputStreamCollectorFactory());
 	}
 
 	public boolean waitForPrompt() {
-		return waitForPrompt(new RhscOrOvirtShellReadInputFactory());
+		return waitForPrompt(new RhscOrOvirtShellInputStreamCollectorFactory());
 	}
 	
 

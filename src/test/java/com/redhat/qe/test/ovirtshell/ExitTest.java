@@ -10,7 +10,7 @@ public class ExitTest extends RhscShellSessionTestBase{
 	@Test
 	@Tcms("250536")
 	public void test(){
-		BashShell.fromSsh(session).send("exit").call().expect("#");
+		BashShell.fromSsh(session).send("exit").collect().expect("#");
 	}
 
 

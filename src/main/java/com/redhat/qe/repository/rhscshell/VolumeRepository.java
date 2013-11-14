@@ -24,7 +24,7 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	public IResponse _create(Volume volume){
 		String command = String.format("add glustervolume --cluster-identifier %s --name %s --volume_type %s --stripe_count %s --replica_count %s %s"
 				, volume.getCluster().getId(), volume.getName(), volume.getType(), volume.getStripe_count(), volume.getReplica_count(), bricksOptionsOnCreate(volume.getBricks()));
-		return getShell().sendAndRead(command);
+		return getShell().sendAndCollect(command);
 	}
 
 	public Volume create(Volume volume){
@@ -39,12 +39,12 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	 * @return
 	 */
 	private IResponse _show(Volume volume) {
-		return getShell().sendAndRead(String.format("show glustervolume %s --cluster-identifier %s", volume.getId(), volume.getCluster().getId()));
+		return getShell().sendAndCollect(String.format("show glustervolume %s --cluster-identifier %s", volume.getId(), volume.getCluster().getId()));
 	}
 	
 	
 	public Volume showOrCreate(Volume volume){
-		Volume show = Volume.fromResponse(getShell().sendAndRead(String.format("show glustervolume %s --cluster-identifier %s", volume.getName(), volume.getCluster().getName())));
+		Volume show = Volume.fromResponse(getShell().sendAndCollect(String.format("show glustervolume %s --cluster-identifier %s", volume.getName(), volume.getCluster().getName())));
 		if(show.getId() != null){
 			return show;
 		}else{
@@ -68,7 +68,7 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	 * @return
 	 */
 	public IResponse _destroy(Volume volume) {
-		return getShell().sendAndRead(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId()));
+		return getShell().sendAndCollect(String.format("remove glustervolume %s --cluster-identifier %s", volume.getId(),volume.getCluster().getId()));
 	}
 
 	public Volume update(Volume entity) {
@@ -77,22 +77,22 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 	
 	public IResponse start(Volume entity){
-		return getShell().sendAndRead(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
+		return getShell().sendAndCollect(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
 				.expect("complete");
 	}
 	
 	public IResponse setOption(Volume entity, GlusterOption option, GlusterOptionValue value){
-		return getShell().sendAndRead(String.format("action glustervolume %s setoption --cluster-identifier %s %s %s", entity.getId(), entity.getCluster().getId(), option, value ))		
+		return getShell().sendAndCollect(String.format("action glustervolume %s setoption --cluster-identifier %s %s %s", entity.getId(), entity.getCluster().getId(), option, value ))		
 				.expect("complete");
 	}
 	
 	public IResponse resetOption(Volume entity, GlusterOption option){
-		return getShell().sendAndRead(String.format("action glustervolume %s resetoption --cluster-identifier %s %s", entity.getId(), entity.getCluster().getId(), option ))		
+		return getShell().sendAndCollect(String.format("action glustervolume %s resetoption --cluster-identifier %s %s", entity.getId(), entity.getCluster().getId(), option ))		
 				.expect("complete");
 	}
 	
 	public IResponse resetAllOptions(Volume entity ){
-		return getShell().sendAndRead(String.format("action glustervolume %s resetalloptions --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
+		return getShell().sendAndCollect(String.format("action glustervolume %s resetalloptions --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
 				.expect("complete");
 	}
 	
@@ -101,13 +101,13 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 
 	public IResponse _stop(Volume entity){
-		return getShell().sendAndRead(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()));
+		return getShell().sendAndCollect(String.format("action glustervolume %s stop --cluster-identifier %s", entity.getId(), entity.getCluster().getId()));
 	}
 
 	IResponse _list(Cluster cluster,String options){
 		String formatedOptions = (options == null) ? "" : options;
 		String cmd = String.format("list glustervolumes --cluster-identifier %s %s", cluster.getId(), formatedOptions);
-		return getShell().sendAndRead(cmd);
+		return getShell().sendAndCollect(cmd);
 	}
 
 	private ArrayList<Volume> list(Cluster cluster){

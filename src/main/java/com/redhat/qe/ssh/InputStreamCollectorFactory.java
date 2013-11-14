@@ -3,17 +3,10 @@ package com.redhat.qe.ssh;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.regex.Pattern;
 
-public class BashShellReadInputFactory implements ReadInputFactory<ReadInput> {
+public interface InputStreamCollectorFactory<T extends InputStreamCollector> {
 	
-	public ReadInput  create(InputStream stream) {
-		return new ReadInput(getPrompt(), stream);
-	}
-	
-	public Pattern getPrompt() {
-		return Pattern.compile("@.*#");
-	}
+	public T create(InputStream stream);
 //	public ReadInput getReadInput(Class<? extends ReadInput> clazz, InputStream inputStream) {
 //		Constructor<? extends ReadInput> constructor = getConstructor(clazz);
 //		return getInstance(inputStream, constructor); 

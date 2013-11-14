@@ -31,7 +31,7 @@ public class VersionTest extends SshSessionTestBase {
 		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session, RhscConfiguration.getConfiguration());
 		rhscSession.start();
 		rhscSession.connect();
-		IResponse info = rhscSession.sendAndRead("info");
+		IResponse info = rhscSession.sendAndCollect("info");
 		HashMap<String, String> infoMap = PropertyListParse.parsePropertyList(info.toString());
 		Asserts.assertContains("python version", infoMap.get("python version"), pythonversion);
 		Asserts.assertContains("entry point", infoMap.get("entry point"),RhscConfiguration.getConfiguration().getRestApi().getUrl());

@@ -27,12 +27,12 @@ public class BashShell extends Shell {
 		super(fromShell, toShell );
 	}
 
-	public ReadInput send(String command) {
-		return send(command, new BashShellReadInputFactory());
+	public InputStreamCollector send(String command) {
+		return send(command, new BashShellInputStreamCollectorFactory());
 	}
 
 	public boolean waitForPrompt() {
-		return waitForPrompt(new BashShellReadInputFactory());
+		return waitForPrompt(new BashShellInputStreamCollectorFactory());
 	}
 	
 

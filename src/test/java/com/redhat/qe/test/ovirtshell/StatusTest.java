@@ -11,7 +11,7 @@ public class StatusTest extends RhscShellSessionTestBase {
 	@Tcms({"250544"})
 	@Test
 	public void statusTest() {
-		getShell().sendAndRead("status").expect("last command status:\\s*0.*(OK)");
+		getShell().sendAndCollect("status").expect("last command status:\\s*0.*(OK)");
 	}
 
 

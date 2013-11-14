@@ -11,7 +11,7 @@ public class HelpTest extends RhscShellSessionTestBase {
 	@Tcms({"250461"})
 	@Test
 	public void helpTest() {
-		getShell().sendAndRead("help").unexpect("(?i)rhev");
+		getShell().sendAndCollect("help").unexpect("(?i)rhev");
 	}
 
 

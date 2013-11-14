@@ -20,16 +20,16 @@ public class Shell {
 	}	
 	
 	public IResponse clear(){
-		return new ReadInput(null,fromShell).clear();
+		return new InputStreamCollector(null,fromShell).clear();
 	}
 
 
-	public <T extends ReadInput> T send(String command, ReadInputFactory<T> factory ) {
+	public <T extends InputStreamCollector> T send(String command, InputStreamCollectorFactory<T> factory ) {
 		__send(command);
 		return createReader(factory);
 	}
 	
-	public <T extends ReadInput> T createReader(ReadInputFactory<T> factory){
+	public <T extends InputStreamCollector> T createReader(InputStreamCollectorFactory<T> factory){
 		return factory.create(fromShell);
 	}
 	
@@ -39,7 +39,7 @@ public class Shell {
 		toShell.println(command); toShell.flush();
 	}
 
-	public <T extends ReadInput> boolean waitForPrompt(ReadInputFactory<T> factory ){
+	public <T extends InputStreamCollector> boolean waitForPrompt(InputStreamCollectorFactory<T> factory ){
 		T input = createReader(factory);
 		return input.getPrompt().matcher(input.read().getRaw()).find();
 	}
