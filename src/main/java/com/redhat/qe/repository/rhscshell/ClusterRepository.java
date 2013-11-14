@@ -19,7 +19,7 @@ public class ClusterRepository extends Repository<Cluster>implements IClusterRep
 	}
 
 	public Cluster create(Cluster cluster){
-		return Cluster.fromResponse(getShell().send(createCommand(cluster)).unexpect("error:"));
+		return Cluster.fromResponse(getShell().sendAndRead(createCommand(cluster)).unexpect("error:"));
 	}
 	
 	public Cluster createOrShow(Cluster cluster){
@@ -53,7 +53,7 @@ public class ClusterRepository extends Repository<Cluster>implements IClusterRep
 	}
 	
 	private IResponse _show(String nameorId){
-		return getShell().send(String.format("show cluster %s",nameorId));
+		return getShell().sendAndRead(String.format("show cluster %s",nameorId));
 	}
 	
 	public IResponse destroy(Cluster cluster){
@@ -69,7 +69,7 @@ public class ClusterRepository extends Repository<Cluster>implements IClusterRep
 	}
 	
 	public IResponse _destroy(String nameOrId){
-		 return getShell().send(String.format("remove cluster %s", nameOrId));
+		 return getShell().sendAndRead(String.format("remove cluster %s", nameOrId));
 	}
 
 	public Cluster update(Cluster entity) {
@@ -77,7 +77,7 @@ public class ClusterRepository extends Repository<Cluster>implements IClusterRep
 	}
 	
 	private IResponse _update( Cluster entity) {
-		return getShell().send(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
+		return getShell().sendAndRead(String.format("update cluster %s --name %s", entity.getId(), entity.getName()));
 	}
 	
 	public List<Cluster> list(String options){
@@ -95,7 +95,7 @@ public class ClusterRepository extends Repository<Cluster>implements IClusterRep
 	
 	public IResponse _list(String options){
 		String command = "list clusters";
-		return ( options == null) ? getShell().send(command) :	getShell().send(command +" " + options);
+		return ( options == null) ? getShell().sendAndRead(command) :	getShell().sendAndRead(command +" " + options);
 	}
 
 	

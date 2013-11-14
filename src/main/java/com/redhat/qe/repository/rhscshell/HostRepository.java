@@ -18,7 +18,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	}
 	
 	public Host create(Host host){
-		return Host.fromResponse(getShell().send(createCommand(host)).unexpect("error:"));
+		return Host.fromResponse(getShell().sendAndRead(createCommand(host)).unexpect("error:"));
 	}
 	
 	public Host show(Host host){
@@ -34,7 +34,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	}
 	
 	private IResponse _show(String nameOrId){
-		return getShell().send(String.format("show host \"%s\"", nameOrId));
+		return getShell().sendAndRead(String.format("show host \"%s\"", nameOrId));
 	}
 	
 	public Host createOrShow(Host host){
@@ -70,7 +70,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	 * @return
 	 */
 	private IResponse _deactivate(String nameOrId) {
-		return getShell().send(String.format("action host %s deactivate", nameOrId));
+		return getShell().sendAndRead(String.format("action host %s deactivate", nameOrId));
 	}
 	
 	public IResponse _deactivate(Host host) {
@@ -78,7 +78,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	}
 	
 	public IResponse activate(String nameOrId){
-		return getShell().send(String.format("action host %s activate", nameOrId)).expect("status-state: complete");
+		return getShell().sendAndRead(String.format("action host %s activate", nameOrId)).expect("status-state: complete");
 	}
 
 	public IResponse destroy(Host host) {
@@ -95,7 +95,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	 */
 	public IResponse _destroy(Host host, String options) {
 		StringBuilder command = destroyCommand(host, options);
-		return getShell().send(command.toString());
+		return getShell().sendAndRead(command.toString());
 	}
 	
 	public IResponse _destroy(Host host){
@@ -124,7 +124,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 	}
 	
 	public IResponse _list(String options){
-		return (options == null) ? getShell().send("list hosts") : getShell().send("list hosts" + " " + options);
+		return (options == null) ? getShell().sendAndRead("list hosts") : getShell().sendAndRead("list hosts" + " " + options);
 	}
 	
 
@@ -141,7 +141,7 @@ public class HostRepository extends Repository<Host> implements IHostRepository,
 		StringBuilder command = new StringBuilder();
 		command.append(String.format("update host %s", entity.getIdOrName()));
 		if(entity.getName() != null) command.append("--name " + entity.getName());
-		return getShell().send(command.toString()).unexpect("error");
+		return getShell().sendAndRead(command.toString()).unexpect("error");
 	}
 
 	public List<Host> listAll() {

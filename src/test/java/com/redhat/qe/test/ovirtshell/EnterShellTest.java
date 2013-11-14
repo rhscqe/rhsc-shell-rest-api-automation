@@ -13,7 +13,7 @@ public class EnterShellTest extends SshSessionTestBase{
 	@Tcms("250459")
 	public void test(){
 		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session);
-		rhscSession.send("rhsc-shell || ovirt-shell ").expect(WELCOME_MESSAGE);
+		rhscSession.sendAndRead("rhsc-shell || ovirt-shell ").expect(WELCOME_MESSAGE);
 	}
 
 	@Test
@@ -35,8 +35,8 @@ public class EnterShellTest extends SshSessionTestBase{
 		createFileCommand.append("EOT\n");
 		
 		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session);
-		rhscSession.send(createFileCommand.toString());
-		rhscSession.send("rhsc-shell -c").expect(WELCOME_MESSAGE);
+		rhscSession.sendAndRead(createFileCommand.toString());
+		rhscSession.sendAndRead("rhsc-shell -c").expect(WELCOME_MESSAGE);
 	}
 
 }

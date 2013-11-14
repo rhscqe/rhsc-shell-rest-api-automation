@@ -42,22 +42,22 @@ public class RhscShellSession {
 	}
 	
 	public void start(){
-		send("rhsc-shell || ovirt-shell").expect("Welcome");
+		sendAndRead("rhsc-shell || ovirt-shell").expect("Welcome");
 	}
 	
 	public void stop(){
-		send("exit");
+		sendAndRead("exit");
 	}
 
 	public IResponse connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
 		return shell.send(command).read().expect("connected to \\w+ manager");
 	}
-	public IResponse send(String command){
+	public IResponse sendAndRead(String command){
 		return shell.send(command).read();
 	}
 	
-	public ReadInput sendOnly(String command ){
+	public ReadInput send(String command ){
 		return shell.send(command);
 	}
 	

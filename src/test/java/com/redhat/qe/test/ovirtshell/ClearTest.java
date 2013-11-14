@@ -16,7 +16,7 @@ public class ClearTest extends RhscShellSessionTestBase {
 	@Tcms({"250540"})
 	@Test
 	public void clearTest() {
-		Assert.assertTrue("screen was not cleared",new RegexMatch(getShell().send("clear").getRaw()).find("\\033\\[J").size() > 0);
+		Assert.assertTrue("screen was not cleared",new RegexMatch(getShell().sendAndRead("clear").getRaw()).find("\\033\\[J").size() > 0);
 	}
 
 
