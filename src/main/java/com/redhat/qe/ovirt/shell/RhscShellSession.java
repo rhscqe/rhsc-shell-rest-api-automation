@@ -1,11 +1,13 @@
 package com.redhat.qe.ovirt.shell;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import com.redhat.qe.config.Configuration;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnableToObtainInputOrOutputStreamFromChannel;
 import com.redhat.qe.ssh.Credentials;
+import com.redhat.qe.ssh.Duration;
 import com.redhat.qe.ssh.IResponse;
 import com.redhat.qe.ssh.InputStreamCollector;
 import com.redhat.qe.ssh.RhscOrOvirtShell;
@@ -42,7 +44,10 @@ public class RhscShellSession {
 	}
 	
 	public void start(){
-		sendAndCollect("rhsc-shell || ovirt-shell").expect("Welcome");
+		String args = String.format("--url '%s' --username '%s' -I", url, credentials.getUsername() );
+		IResponse passwordPrompt = shell.send(String.format("ovirt-shell %s || rhsc-shell %s", args,args)).collect(Pattern.compile("Password"), true,  Duration.SECONDS_60);
+		passwordPrompt.expect("Password");
+		send(credentials.getPassword()).read().expect("Welcome");
 	}
 	
 	public void stop(){
@@ -51,7 +56,7 @@ public class RhscShellSession {
 
 	public IResponse connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
-		return shell.send(command).read().expect("connected to \\w+ manager");
+		return shell.send(command).read().expect("connected");
 	}
 	public IResponse sendAndCollect(String command){
 		return shell.send(command).read();

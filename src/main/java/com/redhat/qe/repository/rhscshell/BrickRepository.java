@@ -7,7 +7,10 @@ import com.redhat.qe.helpers.utils.StringUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
+import com.redhat.qe.ssh.Duration;
 import com.redhat.qe.ssh.IResponse;
+import com.redhat.qe.ssh.InputStreamCollector;
+
 
 public class BrickRepository  {
 	
@@ -46,12 +49,12 @@ public class BrickRepository  {
 
 	public ArrayList<Brick> list( String options){
 		options  = (options == null) ? "" : options;
-		IResponse response = _list( options).expect("id");
+		IResponse response = _list( options).collect().expect("id");
 		return Brick.listFromReponse(response.toString());
 	}
 	
 	public ArrayList<Brick> listAllContentTrue(){
-		IResponse response = _list( "--show-all --all_content True").unexpect("error");
+		IResponse response = _list( "--show-all --all_content True").collect(Duration.MINUTES_THREE).unexpect("error");
 		return Brick.allContentlistFromReponse(response.toString());
 	}
 
@@ -60,9 +63,8 @@ public class BrickRepository  {
 	 * @param options
 	 * @return
 	 */
-	IResponse _list( String options) {
+	InputStreamCollector _list( String options) {
 		String command = String.format("list bricks --cluster-identifier %s --glustervolume-identifier %s %s", volume.getCluster().getId(), volume.getId(), options);
-		IResponse response = this.shell.sendAndCollect(command);
-		return response;
+		return this.shell.send(command);
 	}
 }

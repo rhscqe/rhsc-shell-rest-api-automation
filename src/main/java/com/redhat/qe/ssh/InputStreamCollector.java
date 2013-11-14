@@ -2,7 +2,6 @@ package com.redhat.qe.ssh;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -24,7 +23,7 @@ public class InputStreamCollector {
 	}
 
 	public InputStreamCollector(Pattern prompt, InputStream inputStream) {
-		this(prompt, inputStream, new Duration(TimeUnit.SECONDS, 60));
+		this(prompt, inputStream, new Duration(TimeUnit.SECONDS, 120));
 	}
 	
 	public IResponse collect() {

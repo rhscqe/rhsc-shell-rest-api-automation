@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 public class Duration{
 	private long interval;
 	private TimeUnit units;
+	
+	public static Duration SECONDS_60 =  new Duration(TimeUnit.SECONDS, 60);
+	public static Duration MINUTES_THREE =  new Duration(TimeUnit.SECONDS, 60 * 3);
 
 	public Duration(TimeUnit units, long interval){
 		this.units = units;

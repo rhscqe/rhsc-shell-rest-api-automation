@@ -12,6 +12,7 @@ import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.IVolumeRepository;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.ssh.IResponse;
+import com.redhat.qe.ssh.InputStreamCollector;
 
 public class VolumeRepository extends Repository<Volume> implements IVolumeRepository,IVolumeRepositoryExtended{
 	
@@ -136,7 +137,7 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 		return new BrickRepository(volume, getShell()).listAllContentTrue();
 	}
 	
-	public IResponse _listBricks(Volume volume,String options){
+	public InputStreamCollector _listBricks(Volume volume,String options){
 		return new BrickRepository(volume, getShell())._list(options);
 	}
 	

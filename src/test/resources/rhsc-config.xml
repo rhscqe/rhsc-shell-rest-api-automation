@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>latest</hostname>
+	<hostname>rhsc-cb7.tsang</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>latest</hostname>
+		<hostname>rhsc-cb7.tsang</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>

@@ -13,7 +13,7 @@ public class RestApi {
 	 * @return the url
 	 */
 	public String getUrl() {
-		return String.format("https://%s/api", hostname);
+		return String.format("https://%s:443/api", hostname);
 	}
 	
 	/**

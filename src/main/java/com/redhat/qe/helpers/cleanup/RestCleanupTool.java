@@ -1,5 +1,7 @@
 package com.redhat.qe.helpers.cleanup;
 
+import java.net.URI;
+
 import javax.xml.bind.JAXBException;
 
 import org.calgb.test.performance.HttpSession;
