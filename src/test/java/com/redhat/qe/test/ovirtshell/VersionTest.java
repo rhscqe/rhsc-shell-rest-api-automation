@@ -45,7 +45,7 @@ public class VersionTest extends SshSessionTestBase {
 	 * @return
 	 */
 	private String getSdkVersion(BashShell bash) {
-		IResponse sdkverison = bash.send("rpm -qa | grep rhsc-sdk").expect("");
+		IResponse sdkverison = bash.send("rpm -qa | grep rhsc-sdk").read().expect("");
 		String sdk_version = new RegexMatch(sdkverison.toString()).find("rhsc-sdk-.*\\.noarch").get(0).find(VERSION_PATTERN).get(0).getText().trim();
 		return sdk_version;
 	}
@@ -55,7 +55,7 @@ public class VersionTest extends SshSessionTestBase {
 	 * @return
 	 */
 	private String getPythonVersion(BashShell bash) {
-		IResponse pythonVersion = bash.send("python -V").expect("");
+		IResponse pythonVersion = bash.send("python -V").read().expect("");
 		String pversion = new RegexMatch(pythonVersion.toString()).find(VERSION_PATTERN).get(0).getText().trim();
 		return pversion;
 	}
@@ -66,7 +66,7 @@ public class VersionTest extends SshSessionTestBase {
 	 * @return
 	 */
 	private String cliVersion( BashShell bash) {
-		IResponse rhscversions = bash.send("rpm -qa | grep rhsc-cli").expect("");
+		IResponse rhscversions = bash.send("rpm -qa | grep rhsc-cli").read().expect("");
 		String version = new RegexMatch(rhscversions.toString()).find("rhsc-cli-.*\\.noarch").get(0).find(VERSION_PATTERN).get(0).getText().trim();
 		return version;
 	}

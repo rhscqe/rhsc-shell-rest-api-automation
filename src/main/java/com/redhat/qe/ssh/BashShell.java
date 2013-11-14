@@ -24,8 +24,17 @@ public class BashShell extends Shell {
 	}
 
 	public BashShell(InputStream fromShell, OutputStream toShell) {
-		super(fromShell, toShell, BashShellReadInput.class);
+		super(fromShell, toShell );
 	}
+
+	public ReadInput send(String command) {
+		return send(command, new BashShellReadInputFactory());
+	}
+
+	public boolean waitForPrompt() {
+		return waitForPrompt(new BashShellReadInputFactory());
+	}
+	
 
 
 }

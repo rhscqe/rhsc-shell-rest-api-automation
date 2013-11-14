@@ -9,40 +9,45 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-public abstract class ReadInput {
+public class ReadInput {
 
 	private static final Logger LOG = Logger.getLogger(ReadInput.class);
 	protected StringBuffer buffer;
 	protected InputStream inputStream;
 	protected Duration timeout;
+	private Pattern prompt;
 
-	public ReadInput(InputStream inputStream, Duration timeout) {
+	public ReadInput(Pattern prompt, InputStream inputStream, Duration timeout) {
 		this.inputStream = inputStream;
 		this.buffer = new StringBuffer();
 		this.timeout = timeout;
+		this.prompt = prompt;
 	}
 
-	public ReadInput(InputStream inputStream) {
-		this(inputStream, new Duration(TimeUnit.SECONDS, 220));
+	public ReadInput(Pattern prompt, InputStream inputStream) {
+		this(prompt, inputStream, new Duration(TimeUnit.SECONDS, 220));
 	}
 	
 	public IResponse call() {
 		return call(true);
 	}
 	
-	public IResponse call(boolean logoutput) {
+	public IResponse call(boolean logoutput ) {
+		return call(this.prompt, true, this.timeout);
+	}
+
+	public IResponse call(Pattern prompt, boolean logoutput, Duration timeout) {
 		long starttime = System.currentTimeMillis();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-			LOG.debug("collecting output");
-			while (!bufferContainsPrompt() && !hasTimedOut(starttime)) {
+			LOG.info("collecting output");
+			while (!bufferContainsPrompt(prompt) && !hasTimedOut(starttime, timeout)) {
 				if (reader.ready()) {
 					buffer.append((char) reader.read());
 				}
 			}
-			if(logoutput)
-			LOG.debug("finished collecting output");
-			LOG.debug("[shell output] " + getBuffer());
+			LOG.info("finished collecting output");
+			if(logoutput) LOG.debug("[shell output] " + getBuffer());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -66,21 +71,25 @@ public abstract class ReadInput {
 		return buffer.toString();
 	}
 
-	private boolean hasTimedOut(long startTime) {
-		return (System.currentTimeMillis() - startTime) > TimeUnit.MILLISECONDS.convert(timeout.getInterval(), timeout.getUnits());
+	private boolean hasTimedOut(long startTime, Duration timeoutDuration) {
+		return (System.currentTimeMillis() - startTime) > TimeUnit.MILLISECONDS.convert(timeoutDuration.getInterval(), timeout.getUnits());
 	}
 
-	private boolean bufferContainsPrompt() {
-		return bufferContainsContent(getPrompt());
+	private boolean bufferContainsPrompt(Pattern prompt) {
+		return bufferContainsContent(prompt);
 	}
 
-	private boolean bufferContainsContent(Pattern content) {
-		boolean result = content.matcher(buffer.toString()).find();
-		LOG.trace(String.format("bufferContainsShell() = %s", result));
+	private boolean bufferContainsContent(Pattern pattern) {
+		boolean result = false;
+		if (pattern == null)
+			result = false;
+		else{
+			result = pattern.matcher(buffer.toString()).find();
+			LOG.trace(String.format("bufferContainsShell() = %s", result));
+		}
 		return result;
 	}
 
-	public abstract Pattern getPrompt(); 
 	
 	public IResponse read() {
 		return call();
@@ -88,6 +97,13 @@ public abstract class ReadInput {
 
 	public IResponse read(String expect) {
 		return call();
+	}
+
+	/**
+	 * @return the prompt
+	 */
+	public Pattern getPrompt() {
+		return prompt;
 	}
 
 }
