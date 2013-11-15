@@ -8,6 +8,7 @@ import junit.framework.Assert;
 
 import org.calgb.test.performance.HttpSession;
 
+import com.redhat.qe.helpers.mechanize.GuiSync;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.GlusterHookList;
@@ -64,7 +65,12 @@ public class HookRepository extends SimpleRestRepository<Hook>{
 	public void sync() {
 		// TODO Auto-generated method stub
 		// FIXME
-		System.out.println("sync not implemented.");		
+//		System.out.println("sync not implemented.");		
+		try{
+			GuiSync.sync();
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
 	}
 	
 

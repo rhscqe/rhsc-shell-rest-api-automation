@@ -27,4 +27,7 @@ public class FileHelper {
 	public Response getFilecontents(ExecSshSession session, AbsolutePath path){
 		return session.runCommandAndAssertSuccess("cat "+ path.toString());
 	}
+	public Response getMd5Sum(ExecSshSession session, AbsolutePath path){
+		return session.runCommandAndAssertSuccess("md5sum "+ path.toString());
+	}
 }

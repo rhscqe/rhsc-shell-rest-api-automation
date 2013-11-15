@@ -17,14 +17,14 @@ public abstract class ContentConflictHookTestBase extends HookTestBase {
 	
 	public String initialContent;
 	protected HookPath script;
-	String HOST2_CONTENT;
+	String HOST2_CONTENT="this is host2 content";
 
 	@Before
 	public void before(){
-		initialContent = "echo hi";
+		initialContent = "echo this is engine version";
 		script = createHookScripts(getFilename(), initialContent);
 		
-		createHookScript(getHost1(), getFilename(), "host1Content");
+		createHookScript(getHost1(), getFilename(), "echo this is host1 option");
 		createHookScript(getHost2(), getFilename(), HOST2_CONTENT);
 		
 		getHooksRepo().sync();

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import com.google.common.base.Function;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.helpers.ssh.FileHelper;
 import com.redhat.qe.helpers.ssh.HookPath;
 import com.redhat.qe.helpers.ssh.HookPathFactory;
 import com.redhat.qe.helpers.ssh.HooksHelper;
+import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.helpers.utils.Path;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.repository.rest.HookRepository;
@@ -66,6 +69,17 @@ public abstract class HookTestBase extends TwoHostClusterTestBase {
 	protected void assertScriptFilenameIsEnabled(Host host, HookPath script) {
 		Path expectedNewfileName = script.getDirectories().add(script.getPath().last().replaceAll("^[a-zA-z]*", "S"));
 		ensureHookFileExistsonHost(host, expectedNewfileName);
+	}
+	
+	protected String withHostSession(Host host, Function<ExecSshSession, String> withSession){
+		ExecSshSession host1Session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), host));
+		host1Session.start();
+		try{
+			return withSession.apply(host1Session);
+		}finally{
+			host1Session.stop();
+		}
+		
 	}
 
 }
