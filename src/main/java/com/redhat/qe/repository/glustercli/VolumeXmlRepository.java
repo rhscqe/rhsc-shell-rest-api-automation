@@ -23,6 +23,7 @@ public class VolumeXmlRepository extends Repository {
 	}
 	
 	
+
 	public VolumeStatusOutput status(Volume volume){
 		Response response = getShell().runCommand(String.format("gluster --mode=script volume status '%s' --xml", volume.getName())).expectSuccessful();
 		ArrayList<VolumeStatusOutput> result = parseVolumeStatus(response);

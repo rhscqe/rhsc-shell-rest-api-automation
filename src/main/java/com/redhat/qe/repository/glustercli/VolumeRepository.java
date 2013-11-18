@@ -88,5 +88,9 @@ public class VolumeRepository extends Repository {
 	}
 	
 	
+	public Response _rebalance(Volume volume){
+		String command = String.format("gluster --mode=script volume rebalance %s start", volume.getName());
+		return getShell().runCommand(command);
+	}
 
 }

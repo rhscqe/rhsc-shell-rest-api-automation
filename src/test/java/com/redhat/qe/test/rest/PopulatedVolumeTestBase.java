@@ -10,6 +10,7 @@ import org.junit.Before;
 
 import com.google.common.base.Function;
 import com.redhat.qe.config.RhscConfiguration;
+import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
@@ -27,6 +28,8 @@ import com.redhat.qe.repository.rest.BrickRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
+
+import dstywho.timeout.Duration;
 
 
 public abstract class PopulatedVolumeTestBase extends TwoHostClusterTestBase {
@@ -77,7 +80,12 @@ public abstract class PopulatedVolumeTestBase extends TwoHostClusterTestBase {
 	public void afterme(){
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
-		getVolumeRepository().stop(volume);
+		try{
+			getVolumeRepository().stop(volume);
+		}catch(UnexpectedReponseWrapperException e){
+			Duration.TEN_SECONDS.sleep();
+			getVolumeRepository().stop(volume);
+		}
 		getVolumeRepository().destroy(volume);
 		cleanUpBrickData(bricks);
 	}

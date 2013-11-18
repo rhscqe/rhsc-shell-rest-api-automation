@@ -12,6 +12,7 @@ import com.google.common.base.Joiner;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import com.redhat.qe.config.Configuration;
+import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.ChannelFailedToOpenException;
 import com.redhat.qe.model.Host;
 
@@ -27,7 +28,7 @@ public class ExecSshSession extends SshSession {
 				host.getRootPassword()), host.getAddress());
 		
 	}
-	
+
 	public Response withSession(Function<ExecSshSession, Response> toBeExecuted){
 		start();
 		Response result = null;

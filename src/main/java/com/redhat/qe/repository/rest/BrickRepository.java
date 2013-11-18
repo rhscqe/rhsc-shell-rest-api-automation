@@ -3,9 +3,12 @@ package com.redhat.qe.repository.rest;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import junit.framework.Assert;
+
 import org.apache.http.client.methods.HttpPost;
 import org.calgb.test.performance.HttpSession;
 
+import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickList;
 import com.redhat.qe.model.Cluster;
@@ -42,7 +45,7 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		HttpPost post = new PostRequestFactory().createPost(
 				getCollectionPath(), xml);
 		ResponseWrapper response = sendTransaction(post);
-		response.expectCode(201);
+		Assert  	.assertTrue( response.getCode() == 201 || response.getCode() == 202);
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<Brick> result = ((BrickList) unmarshal(response.getBody()))
