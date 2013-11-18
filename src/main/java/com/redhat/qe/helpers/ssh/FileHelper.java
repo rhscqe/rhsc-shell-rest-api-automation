@@ -8,7 +8,7 @@ public class FileHelper {
 	
 	public Response createFile(ExecSshSession session, AbsolutePath path, String content ){
 		StringBuffer command = new StringBuffer();
-		command.append("cat << 'ENDOFFILE' > " + path.toString() + "\n");
+		command.append("cat << \"ENDOFFILE\" > " + path.toString() + "\n");
 		command.append(content);
 		command.append("\n");
 		command.append("ENDOFFILE");
@@ -28,6 +28,6 @@ public class FileHelper {
 		return session.runCommandAndAssertSuccess("cat "+ path.toString());
 	}
 	public Response getMd5Sum(ExecSshSession session, AbsolutePath path){
-		return session.runCommandAndAssertSuccess("md5sum "+ path.toString());
+		return session.runCommandAndAssertSuccess("md5sum "+ path.toString() + "| awk '{print $1}'");
 	}
 }

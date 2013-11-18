@@ -8,17 +8,20 @@ import com.redhat.qe.helpers.ssh.HookPath;
 
 public abstract class NoConflictHooksTestBase extends HookTestBase {
 
-	protected static final String HOOK_CONTENT = "echo 'hi'\n echo 'hi'";
+	private static final String HOOK_CONTENT = "echo 'hi'\n echo 'hi'";
 	protected HookPath script;
 
 	public NoConflictHooksTestBase() {
 		super();
 	}
 	
-	
+	public String getHookContent(){
+		return HOOK_CONTENT;
+	}
+
 	@Before
 	public void before(){
-		script = createHookScripts(getFilename(), HOOK_CONTENT);
+		script = createHookScripts(getFilename(), getHookContent());
 	}
 
 	protected abstract String getFilename();

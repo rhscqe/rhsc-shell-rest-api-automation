@@ -95,7 +95,7 @@ public class Path {
 		return	new Path(separator,thesedirs);	
 	}
 	public int hashCode() {
-	        return new HashCodeBuilder(2, 31). // two randomly chosen prime numbers
+	        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
 	            append(directories).
 	            append(separator).
 	            toHashCode();

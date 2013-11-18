@@ -63,7 +63,7 @@ public class ResolveContentContentMissingByAddFromEngineTest extends NoConflictH
 		});
 		Assert.assertEquals( expectedCheckSum, actualmd5Sum);
 		String actualContent= getFileContents(getHost1(),script).getStdout();
-		Assert.assertEquals(HOOK_CONTENT.trim(), actualContent.trim());
+		Assert.assertEquals(getHookContent().trim(), actualContent.trim());
 		
 	}
 	

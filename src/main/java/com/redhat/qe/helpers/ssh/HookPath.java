@@ -74,7 +74,7 @@ public class HookPath {
 	}
 
 	public int hashCode() {
-		return new HashCodeBuilder(2, 17).append(path).toHashCode();
+		return new HashCodeBuilder(3, 17).append(path).toHashCode();
 	}
 
 	public boolean equals(Object obj) {
