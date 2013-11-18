@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.base.Predicate;
+import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.model.Action;
@@ -23,8 +24,10 @@ public class StopRebalanceTest extends RebalanceTestBase{
 	@Before
 	public void startRebalance(){
 		action = getVolumeRepository(getHost1().getCluster()).rebalance(volume);
+//		Job job = new JobRepository(getSession()).show(action.getJob());
 	}
 	
+	@Tcms("318693")
 	@Test
 	public void test(){
 		ResponseWrapper result = getVolumeRepository(getHost1().getCluster()).stopRebalance(volume);
