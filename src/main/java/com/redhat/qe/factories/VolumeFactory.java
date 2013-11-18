@@ -24,6 +24,20 @@ public class VolumeFactory {
 			return volume;
 	}
 	
+	public static Volume distributedUneven(String name,Host host1, Host host2){
+		Volume volume = new Volume();
+		volume.setName(name);
+		volume.setType("distribute");
+		volume.setCluster(host1.getCluster());
+		
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host1));
+		bricks.add(BrickFactory.brick(host1));
+		volume.setBricks(bricks);
+		return volume;
+	}
+	
 	public static Volume distributed(String name, Host...hosts ){
 		Volume volume = new Volume();
 		volume.setName(name);

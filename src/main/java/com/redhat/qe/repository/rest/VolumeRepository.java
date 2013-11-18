@@ -51,6 +51,7 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return _customAction(volume, getCollectionPath(), "rebalance");
 	}
 
+
 	public Action rebalance(Volume volume){
 		ResponseWrapper response = _rebalance(volume);
 		response.expectCode(200);
