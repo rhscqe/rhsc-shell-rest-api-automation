@@ -10,8 +10,7 @@ public class LoginTest extends SshSessionTestBase{
 	@Tcms("250537")
 	public void test(){
 		RhscShellSession rhscSession = RhscShellSession.fromConfiguration(session);
-		rhscSession.start();
-		rhscSession.connect()
+		rhscSession.start()//		rhscSession.connect()
 				.expect(">>> connected to (RHSC|OVIRT) manager.*<<<")
 				.expect("\\(connected\\)");
 	}

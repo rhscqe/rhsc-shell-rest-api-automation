@@ -43,11 +43,11 @@ public class RhscShellSession {
 		this.credentials= credentials;
 	}
 	
-	public void start(){
+	public IResponse start(){
 		String args = String.format("--url '%s' --username '%s' -I", url, credentials.getUsername() );
 		IResponse passwordPrompt = shell.send(String.format("ovirt-shell %s || rhsc-shell %s", args,args)).collect(Pattern.compile("Password"), true,  Duration.SECONDS_60);
 		passwordPrompt.expect("Password");
-		send(credentials.getPassword()).read().expect("Welcome");
+		return send(credentials.getPassword()).read().expect("Welcome");
 	}
 	
 	public void stop(){

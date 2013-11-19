@@ -29,6 +29,10 @@ public class ExecSshSession extends SshSession {
 		
 	}
 
+	public static ExecSshSession fromSession(SshSession existingSession){
+		return new ExecSshSession( existingSession.credentials, existingSession.hostname);
+	}
+
 	public Response withSession(Function<ExecSshSession, Response> toBeExecuted){
 		start();
 		Response result = null;
