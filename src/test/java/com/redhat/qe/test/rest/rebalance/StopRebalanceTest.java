@@ -32,26 +32,50 @@ public class StopRebalanceTest extends RebalanceTestBase{
 	public void test(){
 		ResponseWrapper result = getVolumeRepository(getHost1().getCluster()).stopRebalance(volume);
 
-		System.out.println("ZZZZZZZZZZZZZZZZZZZ");
-		System.out.println(result.getBody());
-		System.out.println(result.getCode());
-		Job job = new JobRepository(getSession()).show(action.getJob());
-		Assert.assertEquals( "FAILED",job.getStatus().getState());
-		Assert.assertNotNull( job.getEndTime());
+		Job job = verifyJobAndStatus();
 		
+		verifyStepTypeAndStatus(job);
+	}
+
+	/**
+	 * @return
+	 */
+	private Job verifyJobAndStatus() {
+		Job job = new JobRepository(getSession()).show(action.getJob());
+		Assert.assertEquals("Job Status", "FAILED",job.getStatus().getState());
+		Assert.assertNotNull( job.getEndTime());
+		return job;
+	}
+
+	/**
+	 * @param job
+	 */
+	private void verifyStepTypeAndStatus(Job job) {
 		Step step = getRebalanceStep(job);
-		Assert.assertEquals( "ABORTED",step.getStatus().getState());
+		Assert.assertEquals("Rebalance Step Status", "ABORTED",step.getStatus().getState());
 		Assert.assertNotNull( step.getEndTime());
+		
+		Step executingStep = getStepRepo(job).show(step.getParentStep());
+		Assert.assertEquals("Executing Step type", "executing",executingStep.getType());
+		Assert.assertEquals("Executing Step status", "FAILED",executingStep.getStatus().getState());
 	}
 
 	private Step getRebalanceStep(Job job) {
-		return CollectionUtils.findFirst(new StepRepository(getSession(), job).list(), new Predicate<Step>() {
+		return CollectionUtils.findFirst(getStepRepo(job).list(), new Predicate<Step>() {
 
 			public boolean apply(Step step) {
 				return step.getDescription().toLowerCase().contains("rebalan");
 			}
 		});
 
+	}
+
+	/**
+	 * @param job
+	 * @return
+	 */
+	private StepRepository getStepRepo(Job job) {
+		return new StepRepository(getSession(), job);
 	}
 
 	@Override

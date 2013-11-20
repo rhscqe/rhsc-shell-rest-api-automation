@@ -19,7 +19,7 @@ public class StepRepository extends SimpleRestRepository<Step> {
 
 	@Override
 	public String getCollectionPath() {
-		return String.format("/api/jobs/%s/steps/", job.getId());
+		return String.format("/api/jobs/%s/steps", job.getId());
 
 	}
 

@@ -20,6 +20,9 @@ public class Step extends Model{
 	private String description;
 	private Status status;
 	
+	@XmlElement(name="parent_step")
+	private Step parentStep;
+	
 	@XmlElement(name = "start_time")
 	private Date startTime;
 
@@ -63,6 +66,24 @@ public class Step extends Model{
 	}
 	public String getDescription() {
 		return description;
+	}
+	/**
+	 * @return the parentStep
+	 */
+	public Step getParentStep() {
+		return parentStep;
+	}
+	/**
+	 * @param parentStep the parentStep to set
+	 */
+	public void setParentStep(Step parentStep) {
+		this.parentStep = parentStep;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

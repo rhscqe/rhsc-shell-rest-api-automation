@@ -1,5 +1,7 @@
 package com.redhat.qe.test.rest;
 
+import java.util.Date;
+
 import org.calgb.test.performance.HttpSession;
 import org.calgb.test.performance.UseSslException;
 import org.junit.After;
@@ -16,20 +18,11 @@ import com.redhat.qe.repository.rest.HostRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 
 public abstract class TestBase implements ITestBase {
-	private HttpSession session;
+	protected Date startTime;
 
 	@Before
-	public void setup() throws UseSslException{ 
-		session = new HttpSessionFactory().createHttpSession(RhscConfiguration.getConfiguration().getRestApi());
-	}
-
-	@After
-	public void teardown(){
-		session.stop();
-	}
-	
-	protected HttpSession getSession(){
-		return session;
+	public void setupStartTime(){
+		startTime = new Date();
 	}
 
 	/* (non-Javadoc)

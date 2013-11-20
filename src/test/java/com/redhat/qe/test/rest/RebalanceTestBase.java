@@ -42,7 +42,7 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	
 	@After
 	public void afterrebalance(){
-		getVolumeRepository().stopRebalance(volume);
+		getVolumeRepository()._stopRebalance(volume);
 	}
 
 	

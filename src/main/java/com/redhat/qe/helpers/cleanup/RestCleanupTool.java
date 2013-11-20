@@ -126,7 +126,7 @@ public class RestCleanupTool {
 			new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
 		} else if (args.length < 5) {
 			System.out
-					.println("need to pass arguments: clihost/ip host_username host_pass rhsc_username rhscpass");
+					.println("need to pass arguments: cli host/ip host_username host_pass rhsc_username rhscpass");
 			System.exit(1);
 		} else {
 			RestApi api = new RestApi("https://localhost:443/api",

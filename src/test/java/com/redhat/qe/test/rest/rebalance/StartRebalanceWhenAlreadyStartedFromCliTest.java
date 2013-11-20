@@ -1,6 +1,7 @@
 package com.redhat.qe.test.rest.rebalance;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -13,6 +14,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.jaxb.ActionUnmarshaller;
 import com.redhat.qe.model.Action;
+import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.gluster.Task;
 import com.redhat.qe.repository.glustercli.VolumeRepository;
@@ -58,4 +60,7 @@ public class StartRebalanceWhenAlreadyStartedFromCliTest extends RebalanceTestBa
 	protected Volume getVolumeToBeCreated() {
 		return VolumeFactory.distributedUneven("startrebalwhenclistart", getHost1(), getHost2());
 	}
+	
+	
+
 }

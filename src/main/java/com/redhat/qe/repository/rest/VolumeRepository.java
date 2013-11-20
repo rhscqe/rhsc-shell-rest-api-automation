@@ -58,8 +58,12 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return (Action) unmarshal(response.getBody());
 	}
 
-	public ResponseWrapper stopRebalance(Volume volume){
+	public ResponseWrapper _stopRebalance(Volume volume){
 		return _customAction(volume, getCollectionPath(), "stoprebalance");
+	}
+
+	public ResponseWrapper stopRebalance(Volume volume){
+		return customAction(volume, getCollectionPath(), "stoprebalance");
 	}
 
 	public ResponseWrapper resetAllOptions(Volume volume){
@@ -70,6 +74,8 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 	public ResponseWrapper _resetAllOptions(Volume volume){
 		return _customAction(volume, getCollectionPath(), "resetalloptions");
 	}
+
+	
 	
 
 

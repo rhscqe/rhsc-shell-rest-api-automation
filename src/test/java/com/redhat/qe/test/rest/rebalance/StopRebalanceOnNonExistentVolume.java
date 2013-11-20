@@ -16,7 +16,7 @@ public class StopRebalanceOnNonExistentVolume extends TwoHostClusterTestBase{
 	public void stopReblanceWhenNoRebalanceInProgress(){
 		Volume nonexistantVolume = new Volume();
 		nonexistantVolume.setId("thisiddoesnotexist");
-		ResponseWrapper result = getVolumeRepository().stopRebalance(nonexistantVolume);
+		ResponseWrapper result = getVolumeRepository()._stopRebalance(nonexistantVolume);
 		int code = result.getCode();
 		Assert.assertEquals(404, code);
 	}

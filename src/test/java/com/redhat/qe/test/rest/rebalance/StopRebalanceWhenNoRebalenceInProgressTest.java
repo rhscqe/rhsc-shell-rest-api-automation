@@ -43,7 +43,7 @@ public class StopRebalanceWhenNoRebalenceInProgressTest extends TwoHostClusterTe
 	@Test
 	@Tcms("318692")
 	public void stopReblanceWhenNoRebalanceInProgress(){
-		ResponseWrapper result = getVolumeRepository().stopRebalance(volume);
+		ResponseWrapper result = getVolumeRepository()._stopRebalance(volume);
 		int code = result.getCode();
 		Asserts.asertCodeIsInRangeInclusive(code, 400, 499);
 		Action actionResponse = (Action)new ActionUnmarshaller().unmarshalResult(result);

@@ -32,29 +32,18 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 import dstywho.timeout.Duration;
 
 
-public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
-	private static final Logger LOG = Logger.getLogger(PopulatedVolumeTestBase.class);
+public abstract class VolumeTestBase extends TwoHostClusterTestBase {
+	private static final Logger LOG = Logger.getLogger(VolumeTestBase.class);
 
 	protected AbsolutePath mountPoint;
 	protected Host mounter;
+	protected Volume volume;
 
-	
-	@Before public void mountAndPopulate(){
-		mountVolume();
-		populateVolume();
+	@Before
+	public void setupVolumeAndStart(){
+		volume = createVolume();
 	}
 
-	private void populateVolume() {
-		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
-		LOG.info("populating volume");
-	}
-
-	private void mountVolume() {
-		mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
-		mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
-		MountHelper.mountVolume(mounter, mountPoint, volume);
-		LOG.info("volume mounted");
-	}
 
 
 	 protected abstract Volume getVolumeToBeCreated() ;
@@ -66,35 +55,38 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		return new BrickRepository(getSession(), getHost1().getCluster(), volume);
 	}
 	
-	@Override
 	@After
 	public void afterme(){
-		MountHelper.unmount(mounter, mountPoint);
-		ArrayList<Brick> bricks = getBrickRepo().list();
-		try{
-			getVolumeRepository().stop(volume);
-		}catch(UnexpectedReponseWrapperException e){
-			Duration.TEN_SECONDS.sleep();
-			getVolumeRepository().stop(volume);
-		}
 		getVolumeRepository().destroy(volume);
-		cleanUpBrickData(bricks);
 	}
-	/**
-	 * @param bricks
-	 */
-	private void cleanUpBrickData(ArrayList<Brick> bricks) {
-		for(final Brick brick: bricks){
-			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), brick.getHost()); 
-			ExecSshSession.fromHost(host).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
-				
-				public Response apply(ExecSshSession arg0) {
-					return arg0.runCommandAndAssertSuccess("rm -rf " + brick.getDir());
-				}
-			});
+	
+	
+	private Volume createVolume() {
+		LOG.info("creating volume");
+		VolumeRepository volumeRepo = getVolumeRepository();
+		volume = volumeRepo.createOrShow(getVolumeToBeCreated());
+		volumeRepo._start(volume);
+		LOG.info("volume created:" + volume.getName());
+		return volume;
+	}
+
+	protected VolumeStatusOutput getGlusterVolumeStatus() {
+		ExecSshSession glusterHostSshSession = ExecSshSession.fromHost( RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), getHost1()));
+		glusterHostSshSession.start();
+		try{
+			return new VolumeXmlRepository( glusterHostSshSession).status(volume);
+		}finally{
+			glusterHostSshSession.stop();
 		}
 	}
 
+	/**
+	 * @return
+	 */
+	protected VolumeRepository getVolumeRepository() {
+		VolumeRepository volumeRepo = getVolumeRepository(getHost1().getCluster());
+		return volumeRepo;
+	}
 	
 
 }
