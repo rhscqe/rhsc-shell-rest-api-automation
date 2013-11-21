@@ -48,7 +48,7 @@ public class VolumeXmlRepository extends Repository {
 				brick.setHost(host);
 				nodes.add(brick);
 			};
-			for(Element task :volElem.select("tasks")){
+			for(Element task :volElem.select("tasks > task")){
 				Task job = new Task();
 				job.setId(task.select("id").text());
 				job.setType(task.select("type").text());

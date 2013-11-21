@@ -7,6 +7,10 @@ import com.redhat.qe.helpers.utils.FileSize;
 import com.google.common.base.Joiner;
 
 public class DD {
+	
+	public static DD writeZeros(final String outputfile, FileSize filesize){
+		return writeData("/dev/zero", outputfile, "1024k", filesize.toMegabytes() );
+	}
 
 	public static DD writeRandomData(final String outputFile, FileSize filesize) {
 		return writeData("/dev/urandom", outputFile, "1024k", filesize.toMegabytes() );

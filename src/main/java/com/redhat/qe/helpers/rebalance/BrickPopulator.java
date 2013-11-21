@@ -76,8 +76,8 @@ public class BrickPopulator {
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
-			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
+			sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(), FileSize.megaBytes(50)).toString());
+//			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
 		} finally {
 			sshSession.stop();
  		}

@@ -2,10 +2,8 @@ package com.redhat.qe.test.rest.hooks;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.base.Function;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.repository.HookRepoHelper;

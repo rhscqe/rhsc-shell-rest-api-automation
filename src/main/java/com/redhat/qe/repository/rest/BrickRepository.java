@@ -1,24 +1,17 @@
 package com.redhat.qe.repository.rest;
 
-import org.testng.AssertJUnit;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.calgb.test.performance.HttpSession;
+import org.testng.AssertJUnit;
 
-import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickList;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
-import com.redhat.qe.model.jaxb.MigrateBrickWrapper;
-import com.redhat.qe.model.jaxb.MigrateBrickWrapper2;
-import com.redhat.qe.model.jaxb.MigrateBrickWrapperList;
-import com.redhat.qe.model.jaxb.MigrateBrickWrapperList2;
 import com.redhat.qe.repository.rest.context.MigrateBrickJaxbContext;
 
 public class BrickRepository extends SimpleRestRepository<Brick> {
