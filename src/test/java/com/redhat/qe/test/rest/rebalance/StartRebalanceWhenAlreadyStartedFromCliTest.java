@@ -13,7 +13,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.jaxb.ActionUnmarshaller;
-import com.redhat.qe.model.Action;
+import com.redhat.qe.model.GeneralAction;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.gluster.Task;

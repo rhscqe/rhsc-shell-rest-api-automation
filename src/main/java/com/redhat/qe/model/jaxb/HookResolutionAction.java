@@ -1,4 +1,4 @@
-package com.redhat.qe.model;
+package com.redhat.qe.model.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

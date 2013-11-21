@@ -1,9 +1,9 @@
 package com.redhat.qe.repository.rest;
 
+import org.testng.AssertJUnit;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import junit.framework.Assert;
 
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
@@ -13,9 +13,12 @@ import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickList;
 import com.redhat.qe.model.Cluster;
-import com.redhat.qe.model.MigrateBrickWrapper;
-import com.redhat.qe.model.MigrateBrickWrapperList;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.jaxb.MigrateBrickAction;
+import com.redhat.qe.model.jaxb.MigrateBrickWrapper;
+import com.redhat.qe.model.jaxb.MigrateBrickWrapper2;
+import com.redhat.qe.model.jaxb.MigrateBrickWrapperList;
+import com.redhat.qe.model.jaxb.MigrateBrickWrapperList2;
 import com.redhat.qe.repository.rest.context.MigrateBrickJaxbContext;
 
 public class BrickRepository extends SimpleRestRepository<Brick> {
@@ -49,7 +52,7 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		HttpPost post = new PostRequestFactory().createPost(
 				getCollectionPath(), xml);
 		ResponseWrapper response = sendTransaction(post);
-		Assert  	.assertTrue( response.getCode() == 201 || response.getCode() == 202);
+		AssertJUnit  	.assertTrue( response.getCode() == 201 || response.getCode() == 202);
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<Brick> result = ((BrickList) unmarshal(response.getBody()))
@@ -65,23 +68,53 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		return result.get(0);
 	}
 	
-	public ResponseWrapper _migrate(MigrateBrickWrapperList bricks){
+	public ResponseWrapper _migrate(MigrateBrickAction action){
 		return sendTransaction(new PostRequestFactory()
-		.createPost(getCollectionPath() + "/migrate", MigrateBrickJaxbContext.marshal(bricks)));
+		.createPost(getCollectionPath() + "/migrate", MigrateBrickJaxbContext.marshal(action)));
 	}
 
-	public ResponseWrapper _migrate(Brick... bricks){
-		MigrateBrickWrapperList brickList = new MigrateBrickWrapperList();
-		brickList.setBricks(new ArrayList<MigrateBrickWrapper>());
-		for(Brick brick: bricks){
-			brick.setHost(new HostRepository(getSession()).show(brick.getHost()));
-			brickList.getBrickWrappers().add(new MigrateBrickWrapper(brick));
-		}
-		return _migrate(brickList);
+	public ResponseWrapper _stopMigrate(MigrateBrickAction action){
+		return sendTransaction(new PostRequestFactory().createPost(getCollectionPath() + "/stopmigrate", MigrateBrickJaxbContext.marshal(action)));
 	}
-	
-	
-	
+
+	public ResponseWrapper _activate(MigrateBrickAction action){
+		return sendTransaction(new PostRequestFactory().createPost(getCollectionPath() + "/activate", MigrateBrickJaxbContext.marshal(action)));
+	}
+
+	public MigrateBrickAction stopMigrate(MigrateBrickAction action){
+		ResponseWrapper response = _stopMigrate(action);
+		response.expectCode(200);
+		return (MigrateBrickAction) MigrateBrickJaxbContext.unmarshal(response.getBody());
+	}
+	public MigrateBrickAction activate(MigrateBrickAction action){
+		ResponseWrapper response = _activate(action);
+		response.expectCode(200);
+		return (MigrateBrickAction) MigrateBrickJaxbContext.unmarshal(response.getBody());
+	}
+
+	public MigrateBrickAction migrate(MigrateBrickAction action){
+		ResponseWrapper response = _migrate(action);
+		response.expectCode(200);
+		return (MigrateBrickAction) MigrateBrickJaxbContext.unmarshal(response.getBody());
+	}
+	public ResponseWrapper _migrate(Brick... bricks){
+		return _migrate(MigrateBrickAction.create(getSession(), bricks));
+	}
+	public ResponseWrapper _stopMigrate(Brick... bricks){
+		return _stopMigrate(MigrateBrickAction.create(getSession(), bricks));
+	}
+
+	public MigrateBrickAction migrate(Brick... bricks) {
+		return migrate(MigrateBrickAction.create(getSession(), bricks));
+	}
+	public MigrateBrickAction stopMigrate(Brick... bricks) {
+		return stopMigrate(MigrateBrickAction.create(getSession(), bricks));
+	}
+	public MigrateBrickAction activate(Brick... bricks) {
+		return stopMigrate(MigrateBrickAction.create(getSession(), bricks));
+	}
+
+
 	
 	
 

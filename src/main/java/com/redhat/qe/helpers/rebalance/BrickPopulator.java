@@ -2,19 +2,18 @@ package com.redhat.qe.helpers.rebalance;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.calgb.test.performance.HttpSession;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.repository.HostHelper;
 import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.helpers.rest.WithEachBrick;
 import com.redhat.qe.helpers.ssh.MountHelper;
-import com.redhat.qe.helpers.utils.CollectionUtils;
-import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.helpers.utils.AbsolutePath;
+import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.helpers.utils.Null;
 import com.redhat.qe.helpers.utils.RandomIntGenerator;
 import com.redhat.qe.helpers.utils.TimestampHelper;
@@ -26,12 +25,12 @@ import com.redhat.qe.repository.rest.ClusterRepository;
 import com.redhat.qe.repository.rest.HostRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.repository.sh.DD;
-import com.redhat.qe.repository.sh.Mount;
-import com.redhat.qe.ssh.Credentials;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
 public class BrickPopulator {
+
+	private static final Logger LOG = Logger.getLogger(BrickPopulator.class);
 	
 
 	
@@ -62,9 +61,11 @@ public class BrickPopulator {
 		WithEachBrick.withEachBrick(bricks, session, new Function<WithEachBrick, Null>() {
 			
 			public Null apply(WithEachBrick brickinfo) {
+				LOG.info("populating brick:" + brickinfo.getBrick().getName());
 				while (getListofFilesForBrick(brickinfo.getBrick(), brickinfo.getHost(), session).getStdout().isEmpty()) {
 					writeRandomFile(mountPoint, mounter, volume);
 				}
+				LOG.info("finished populating brick:" + brickinfo.getBrick().getName());
 				return Null.NULL;
 			}
 		});
@@ -76,7 +77,7 @@ public class BrickPopulator {
 		sshSession.start();
 		try {
 			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
-
+			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
 		} finally {
 			sshSession.stop();
  		}

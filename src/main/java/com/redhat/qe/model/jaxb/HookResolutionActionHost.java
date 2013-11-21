@@ -1,10 +1,11 @@
-package com.redhat.qe.model;
+package com.redhat.qe.model.jaxb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.redhat.qe.model.Host;
 import com.redhat.qe.repository.rest.Marshallable;
 
 @XmlAccessorType( XmlAccessType.FIELD )

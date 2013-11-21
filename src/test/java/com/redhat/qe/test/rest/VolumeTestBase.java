@@ -15,7 +15,7 @@ import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
-import com.redhat.qe.model.Action;
+import com.redhat.qe.model.GeneralAction;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Job;
@@ -56,7 +56,7 @@ public abstract class VolumeTestBase extends TwoHostClusterTestBase {
 	}
 	
 	@After
-	public void afterme(){
+	public void destroyVolume(){
 		getVolumeRepository().destroy(volume);
 	}
 	

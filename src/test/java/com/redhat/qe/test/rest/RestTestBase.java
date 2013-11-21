@@ -24,7 +24,7 @@ public class RestTestBase extends TestBase {
 	}
 
 	@After
-	public void teardown(){
+	public void teardownTestBase(){
 		session.stop();
 	}
 	

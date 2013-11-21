@@ -13,8 +13,8 @@ import com.redhat.qe.helpers.ssh.HookPath;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Hook;
-import com.redhat.qe.model.HookResolutionAction;
 import com.redhat.qe.model.Host;
+import com.redhat.qe.model.jaxb.HookResolutionAction;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 

@@ -15,7 +15,7 @@ import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
-import com.redhat.qe.model.Action;
+import com.redhat.qe.model.GeneralAction;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Job;
@@ -45,11 +45,13 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	}
 
 	private void populateVolume() {
-		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
 		LOG.info("populating volume");
+		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
+		LOG.info("populated volume");
 	}
 
 	private void mountVolume() {
+		LOG.info("mounting volume");
 		mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
 		mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
@@ -68,7 +70,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	
 	@Override
 	@After
-	public void afterme(){
+	public void destroyVolume(){
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		try{

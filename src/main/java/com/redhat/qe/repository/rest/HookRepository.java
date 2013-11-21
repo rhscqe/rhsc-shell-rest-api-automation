@@ -13,9 +13,9 @@ import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.GlusterHookList;
 import com.redhat.qe.model.Hook;
-import com.redhat.qe.model.HookResolutionAction;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.HostList;
+import com.redhat.qe.model.jaxb.HookResolutionAction;
 
 public class HookRepository extends SimpleRestRepository<Hook>{
 	

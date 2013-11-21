@@ -39,6 +39,10 @@ public class Asserts {
 		Assert.assertTrue( expectedHigh <= 500 || expectedLow >= 400 );
 	}
 
+	public static void assertEqualsIgnoreCase(String expected, String actual) {
+		Assert.assertEquals(expected.toLowerCase(), actual.toLowerCase());
+	}
+
 
 
 }
