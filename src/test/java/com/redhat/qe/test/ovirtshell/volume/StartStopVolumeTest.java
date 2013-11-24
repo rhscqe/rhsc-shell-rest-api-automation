@@ -15,6 +15,16 @@ public class StartStopVolumeTest extends SingleVolumeTestBase{
 		getVolumeRepository().start(volume);
 		getVolumeRepository().stop(volume);
 	}
+	
+	@Test
+	public void startWhenAlreadyStarted() {
+		getVolumeRepository().start(volume);
+		try{
+			getVolumeRepository().start(volume);
+		}finally{
+			getVolumeRepository().stop(volume);
+		}
+	}
 
 
 }
