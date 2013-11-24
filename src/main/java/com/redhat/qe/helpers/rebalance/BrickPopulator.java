@@ -32,8 +32,6 @@ public class BrickPopulator {
 
 	private static final Logger LOG = Logger.getLogger(BrickPopulator.class);
 	
-
-	
 	public static void main(String[] args){
 		HttpSession session = new HttpSessionFactory().createHttpSession(RhscConfiguration.getConfiguration().getRestApi());
 		Cluster cluster = new ClusterRepository(session).createOrShow(RhscConfiguration.getConfiguration().getCluster());
@@ -71,18 +69,20 @@ public class BrickPopulator {
 		});
 	}
 
-	private static AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {
+	private AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {
 		AbsolutePath file = mountPoint.add(randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(), FileSize.megaBytes(50)).toString());
-//			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
+//			sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(), FileSize.megaBytes(50)).toString());
+//			sshSession.runCommandAndAssertSuccess("echo \"$(date)$RANDOM\" > " + file.toString());
+			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(50)).toString());
 		} finally {
 			sshSession.stop();
  		}
 		return file;
 	}
+	
 
 
 	private static String randomFileName() {
