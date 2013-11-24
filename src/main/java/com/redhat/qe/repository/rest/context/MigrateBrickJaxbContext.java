@@ -11,7 +11,6 @@ import com.redhat.qe.helpers.jaxb.MyMarshaller;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.model.jaxb.MigrateBrickWrapper;
 import com.redhat.qe.model.jaxb.MigrateBrickWrapperList;
-import com.redhat.qe.model.jaxb.MigrateBrickWrapperList2;
 
 public class MigrateBrickJaxbContext {
 	//singleton
@@ -19,7 +18,7 @@ public class MigrateBrickJaxbContext {
 
 	public static JAXBContext getContext() throws JAXBException {
 		if (context == null) {
-			context = JAXBContext.newInstance(MigrateBrickAction.class, MigrateBrickWrapper.class, MigrateBrickWrapperList.class, MigrateBrickWrapperList2.class);
+			context = JAXBContext.newInstance(MigrateBrickAction.class, MigrateBrickWrapper.class, MigrateBrickWrapperList.class );
 
 		}
 		return context;
