@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -29,6 +30,8 @@ public class Brick extends Model {
 	private  Host host;
 	@XmlElement(name="brick_dir")
 	private String dir;
+	
+	@XmlAttribute
 	private String id;
 	private RepeatingHashMap<String, String> mixedAttributes;
 	private HashMap<String, String> attributes;
