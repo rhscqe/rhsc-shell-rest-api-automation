@@ -54,6 +54,8 @@ public class StartRebalanceWhenAlreadyStartedFromCliTest extends RebalanceTestBa
 		cli.start();
 		Thread.sleep(500);
 		rest.start();
+		cli.join();
+		rest.join();
 	}
 
 	@Override
