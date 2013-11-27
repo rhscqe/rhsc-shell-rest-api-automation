@@ -57,7 +57,7 @@ public abstract class VolumeTestBase extends TwoHostClusterTestBase {
 	
 	@After
 	public void destroyVolume(){
-		getVolumeRepository().destroy(volume);
+//		getVolumeRepository().destroy(volume);
 	}
 	
 	

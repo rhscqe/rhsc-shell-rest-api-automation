@@ -84,6 +84,8 @@ public class VolumeFactory {
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
 		for(Host host: hosts){
 			bricks.add(BrickFactory.brick(host));
+			bricks.add(BrickFactory.brick(host));
+			bricks.add(BrickFactory.brick(host));
 		}
 		volume.setBricks(bricks);
 		return volume;
