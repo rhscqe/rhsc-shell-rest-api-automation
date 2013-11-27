@@ -20,7 +20,7 @@ import com.redhat.qe.test.rest.RebalanceTestBase;
 public class StartRebalanceDistributedVolumeTest extends RebalanceTestBase{
 
 	@Test
-	@Tcms("311347")
+	@Tcms({"311347","311410"})
 	public void test(){
 		Action action = getVolumeRepository(getHost1().getCluster()).rebalance(volume);
 		ensureRebalanceHasStarted(action);
