@@ -1,5 +1,7 @@
 package com.redhat.qe.helpers.ssh;
 
+import junit.framework.Assert;
+
 import com.google.common.base.Function;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Host;
@@ -8,7 +10,12 @@ import com.redhat.qe.repository.sh.Mount;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
+import dstywho.timeout.Duration;
+
 public class MountHelper {
+
+	protected static final int NUM_UMOUNT_ATTEPMTS = 10;
+
 
 	/**
 	 * @param mounter
@@ -47,8 +54,19 @@ public class MountHelper {
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
 			public Response apply(ExecSshSession session) {
-				session.runCommandAndAssertSuccess("umount " + mountPoint);
+				Assert.assertTrue(umountVolume(mountPoint, session).isSuccessful());
 				return session.runCommandAndAssertSuccess("rm -rf " + mountPoint);
+			}
+
+			private Response umountVolume(final AbsolutePath mountPoint,
+					ExecSshSession session) {
+				Response response = null;
+				for(int i =0 ; i< NUM_UMOUNT_ATTEPMTS ; i++){
+					response = session.runCommand("umount " + mountPoint);
+					Duration.TEN_SECONDS.sleep();
+					if(response.isSuccessful()) return response;
+				}
+				return response;
 			}
 		});
 		

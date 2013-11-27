@@ -11,6 +11,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
@@ -27,36 +28,23 @@ import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 import com.redhat.qe.test.rest.PopulatedVolumeTestBase;
 
-public class StartMigrateNonRepCountTest extends MigrateTestBase{
+public class RetainWhenNoBrickRemovedTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
+		return VolumeFactory.distributed("startbriciikmigrate", 4, getHost1(),
+				getHost2());
 	}
-//	
-//	@Override
-//	public void cleanupRhsc(){
-//		//TODO don't clean up
-//	}
-//	
-//	@Override
-//	public void destroyVolume(){
-//		//TodO dont' do that
-//	}
-//	
-	
+
 	@Test
-	@Tcms({"318704"})
 	public void testRestStartedStatus(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		
 		ArrayList<Brick> bricks = brickRepo.list();
-		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0),bricks.get(1),bricks.get(2));
-		Job migrateJob = getJob(migrateAction);
 
-		validateJobAndStepsStarted(migrateJob);
+		ResponseWrapper response = brickRepo._activate(bricks.get(0),bricks.get(1));
+		response.unexpect("(?i)stop remove bricks.*volume");
 	}
-
 
 
 }

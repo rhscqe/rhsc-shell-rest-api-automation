@@ -75,7 +75,14 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 	 * @return
 	 */
 	protected Job getJob(MigrateBrickAction migrateAction) {
-		return new JobRepository(getSession()).show(migrateAction.getJob());
+		return getJobRepository().show(migrateAction.getJob());
+	}
+
+	/**
+	 * @return
+	 */
+	protected JobRepository getJobRepository() {
+		return new JobRepository(getSession());
 	}
 
 	/**

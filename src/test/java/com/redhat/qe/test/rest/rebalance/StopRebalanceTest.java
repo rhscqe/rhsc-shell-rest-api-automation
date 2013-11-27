@@ -37,9 +37,6 @@ public class StopRebalanceTest extends RebalanceTestBase{
 		verifyStepTypeAndStatus(job);
 	}
 
-	/**
-	 * @return
-	 */
 	private Job verifyJobAndStatus() {
 		Job job = new JobRepository(getSession()).show(action.getJob());
 		Assert.assertEquals("Job Status", "FAILED",job.getStatus().getState());
@@ -80,7 +77,7 @@ public class StopRebalanceTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("stoprebalancetest", getHost1(), getHost2());
+		return VolumeFactory.distributedUneven("stoprebalancetest", getHost1(), getHost2());
 	}
 
 }

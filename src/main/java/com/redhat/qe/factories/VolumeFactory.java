@@ -109,10 +109,12 @@ public class VolumeFactory {
 		volume.setType("DISTRIBUTED_REPLICATE");
 		volume.setReplicaCount(2);
 		volume.setCluster(host1.getCluster());
-		for (int _ : new int[2])
-			volume.getBricks().add(BrickFactory.brick(host1));
-		for (int _ : new int[2])
-			volume.getBricks().add(BrickFactory.brick(host2));
+		volume.getBricks().add(BrickFactory.brick(host1));
+		volume.getBricks().add(BrickFactory.brick(host2));
+		volume.getBricks().add(BrickFactory.brick(host1));
+		volume.getBricks().add(BrickFactory.brick(host2));
+		volume.getBricks().add(BrickFactory.brick(host1));
+		volume.getBricks().add(BrickFactory.brick(host2));
 		return volume;
 		
 	}

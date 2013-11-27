@@ -19,9 +19,9 @@ import com.redhat.qe.model.Host;
 import dstywho.timeout.Timeout;
 
 public class ExecSshSession extends SshSession {
-	private static final int SESSION_TIMEOUT = 3020000;
+	private static final int SESSION_TIMEOUT = 19020000;
 	private static final Logger LOG = Logger.getLogger(ExecSshSession.class);
-	private static final int MAX_ATTEMPTS = 15;
+	private static final int MAX_ATTEMPTS = 180;
 
 	public static ExecSshSession fromHost(Host host){
 		return new ExecSshSession(new Credentials("root",
@@ -123,7 +123,7 @@ public class ExecSshSession extends SshSession {
 		}
 
 		public Response expectSuccessful(){
-			Assert.assertEquals(0, getExitCode());
+			Assert.assertEquals("response:" + getStderr(),0, getExitCode());
 			return this;
 		}
 
@@ -192,8 +192,8 @@ public class ExecSshSession extends SshSession {
 
 	private void connectChannel(ChannelExec channel) {
 		try {
-			channel.getSession().setTimeout(SESSION_TIMEOUT);
-			channel.connect();
+//			channel.getSession().setTimeout(SESSION_TIMEOUT);
+			channel.connect(0);
 		} catch (JSchException e) {
 			throw new RuntimeException("can not start channel", e);
 		}
@@ -207,10 +207,12 @@ public class ExecSshSession extends SshSession {
 	private void waitUntilCommanFinishes(ChannelExec channel, InputStream stdout) {
 		int attempt = 0;
 		while(true){
-			if(channel.isEOF() || attempt > MAX_ATTEMPTS){
+			if(channel.isEOF()){
 				break;
+			}
+			else if(attempt > MAX_ATTEMPTS	){
+				throw new RuntimeException("attempts exceeded waiting for response");
 			}else{
-				
 				Timeout.TIMEOUT_ONE_SECOND.sleep();
 				attempt++;
 			}

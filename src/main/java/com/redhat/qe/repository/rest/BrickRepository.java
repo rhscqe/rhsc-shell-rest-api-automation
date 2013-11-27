@@ -104,7 +104,10 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		return stopMigrate(MigrateBrickAction.create(getSession(), bricks));
 	}
 	public MigrateBrickAction activate(Brick... bricks) {
-		return stopMigrate(MigrateBrickAction.create(getSession(), bricks));
+		return activate(MigrateBrickAction.create(getSession(), bricks));
+	}
+	public ResponseWrapper _activate(Brick... bricks) {
+		return _activate(MigrateBrickAction.create(getSession(), bricks));
 	}
 
 

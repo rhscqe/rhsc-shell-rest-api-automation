@@ -74,10 +74,10 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		try{
-			getVolumeRepository().stop(volume);
+			getVolumeRepository()._stop(volume);
 		}catch(UnexpectedReponseWrapperException e){
 			Duration.TEN_SECONDS.sleep();
-			getVolumeRepository().stop(volume);
+			getVolumeRepository()._stop(volume);
 		}
 		getVolumeRepository().destroy(volume);
 		cleanUpBrickData(bricks);

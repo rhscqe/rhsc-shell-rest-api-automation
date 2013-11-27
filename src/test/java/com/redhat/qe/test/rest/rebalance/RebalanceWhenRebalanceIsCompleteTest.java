@@ -39,7 +39,7 @@ public class RebalanceWhenRebalanceIsCompleteTest extends VolumeTestBase{
 		
 		Step rebalanceStep = new StepsRepositoryHelper().getRebalanceStep(getStepRepository(job));
 		Assert.assertEquals("FINISHED", rebalanceStep.getStatus().getState());
-		Assert.assertEquals("", getStepRepository(job).show(rebalanceStep.getParentStep()).getStatus().getState());
+		Assert.assertEquals("FINISHED", getStepRepository(job).show(rebalanceStep.getParentStep()).getStatus().getState());
 	}
 
 	/**

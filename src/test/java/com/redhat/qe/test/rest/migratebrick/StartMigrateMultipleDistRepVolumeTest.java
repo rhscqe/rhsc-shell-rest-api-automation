@@ -27,31 +27,19 @@ import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 import com.redhat.qe.test.rest.PopulatedVolumeTestBase;
 
-public class StartMigrateNonRepCountTest extends MigrateTestBase{
+public class StartMigrateMultipleDistRepVolumeTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
 		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
 	}
-//	
-//	@Override
-//	public void cleanupRhsc(){
-//		//TODO don't clean up
-//	}
-//	
-//	@Override
-//	public void destroyVolume(){
-//		//TodO dont' do that
-//	}
-//	
-	
 	@Test
-	@Tcms({"318704"})
+	@Tcms({"318702"})
 	public void testRestStartedStatus(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		
 		ArrayList<Brick> bricks = brickRepo.list();
-		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0),bricks.get(1),bricks.get(2));
+		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(bricks.size()-2),bricks.get(bricks.size()-1));
 		Job migrateJob = getJob(migrateAction);
 
 		validateJobAndStepsStarted(migrateJob);
