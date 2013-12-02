@@ -28,7 +28,7 @@ public class CollectionBrickDeleteTest extends VolumeTestBase{
 	
 	@Tcms("318694")
 	@Test
-	public void test(){
+	public void deleteSinagle(){
 		BrickRepository repo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		ArrayList<Brick> bricks = repo.list();
 		final Brick brickToDelete = bricks.get(0);
@@ -37,6 +37,19 @@ public class CollectionBrickDeleteTest extends VolumeTestBase{
 		ResponseWrapper response = repo._collectionDelete(DeletionBrickWrapperList.fromBricks(brickToDelete));
 		Assert.assertEquals(200,response.getCode());
 		assertBrickDeleted(repo, brickToDelete);
+	}
+	
+	@Tcms("318695")
+	@Test
+	public void deleteMultiple(){
+		BrickRepository repo = new BrickRepository(getSession(), volume.getCluster(), volume);
+		ArrayList<Brick> bricks = repo.list();
+		final Brick brickToDelete = bricks.get(0);
+		final Brick brickToDelete2 = bricks.get(1);
+		ResponseWrapper response = repo._collectionDelete(DeletionBrickWrapperList.fromBricks(brickToDelete, brickToDelete2));
+		Assert.assertEquals(200,response.getCode());
+		assertBrickDeleted(repo, brickToDelete);
+		assertBrickDeleted(repo, brickToDelete2);
 	}
 
 
