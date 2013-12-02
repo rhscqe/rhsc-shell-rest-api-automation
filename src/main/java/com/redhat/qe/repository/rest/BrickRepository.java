@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.http.client.methods.HttpPost;
+import org.calgb.test.performance.BuildPostException;
+import org.calgb.test.performance.HttpDeleteWithBody;
 import org.calgb.test.performance.HttpSession;
 import org.testng.AssertJUnit;
 
@@ -11,7 +13,10 @@ import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.BrickList;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.jaxb.DeletionBrickWrapperList;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
+import com.redhat.qe.model.jaxb.MigrateBrickWrapperList;
+import com.redhat.qe.repository.rest.context.DeleteBrickJaxbContext;
 import com.redhat.qe.repository.rest.context.MigrateBrickJaxbContext;
 
 public class BrickRepository extends SimpleRestRepository<Brick> {
@@ -109,7 +114,14 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 	public ResponseWrapper _activate(Brick... bricks) {
 		return _activate(MigrateBrickAction.create(getSession(), bricks));
 	}
-
+	
+	public ResponseWrapper _collectionDelete(DeletionBrickWrapperList bricks){
+		HttpDeleteWithBody request = null;
+		request = new DeleteRequestFactory().create(getCollectionPath(), new DeleteBrickJaxbContext().marshal(bricks));
+		return sendTransaction(request);
+	}
+	
+	
 
 	
 	
