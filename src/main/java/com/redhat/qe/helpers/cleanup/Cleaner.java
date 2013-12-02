@@ -3,6 +3,7 @@ package com.redhat.qe.helpers.cleanup;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
@@ -10,6 +11,8 @@ import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.IClusterRepository;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.rest.IHostRepositoryExtended;
+
+import dstywho.timeout.Duration;
 
 public abstract class Cleaner {
 
@@ -74,7 +77,12 @@ public abstract class Cleaner {
 			List<Volume> volumes = volumeRepo.listAll(); //TODO maybreak
 			for (Volume volume : volumes) {
 				volumeRepo._stop(volume);
-				volumeRepo.destroy(volume);
+				try{
+					volumeRepo.destroy(volume);
+				}catch(UnexpectedReponseWrapperException e){
+					Duration.TEN_SECONDS.sleep();
+					volumeRepo.destroy(volume);
+				}
 			}
 		}
 	}
