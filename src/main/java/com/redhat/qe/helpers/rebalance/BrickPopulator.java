@@ -11,8 +11,10 @@ import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.repository.HostHelper;
 import com.redhat.qe.helpers.rest.HttpSessionFactory;
 import com.redhat.qe.helpers.rest.WithEachBrick;
+import com.redhat.qe.helpers.ssh.FileHelper;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
+import com.redhat.qe.helpers.utils.FileNameHelper;
 import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.helpers.utils.Null;
 import com.redhat.qe.helpers.utils.RandomIntGenerator;
@@ -47,6 +49,18 @@ public class BrickPopulator {
 	}
 
 
+
+	private FileSize fileSizeToPopulateWith;
+	
+	public BrickPopulator(FileSize fileSizeToPopulateWith) {
+		this.fileSizeToPopulateWith = fileSizeToPopulateWith ;
+	}
+
+	public BrickPopulator() {
+		this(FileSize.megaBytes(100));
+	}
+
+
 	/**
 	 * @param session
 	 * @param cluster
@@ -70,13 +84,11 @@ public class BrickPopulator {
 	}
 
 	private AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {
-		AbsolutePath file = mountPoint.add(randomFileName());
+		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-//			sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(), FileSize.megaBytes(50)).toString());
-//			sshSession.runCommandAndAssertSuccess("echo \"$(date)$RANDOM\" > " + file.toString());
-			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(), FileSize.megaBytes(100)).toString());
+			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(),fileSizeToPopulateWith ).toString());
 		} finally {
 			sshSession.stop();
  		}
@@ -85,9 +97,7 @@ public class BrickPopulator {
 	
 
 
-	private static String randomFileName() {
-		return TimestampHelper.timestamp() + "" + (RandomIntGenerator.positive() + "").substring(0, 5);
-	}
+
 
 
 

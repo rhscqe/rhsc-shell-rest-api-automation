@@ -44,7 +44,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		populateVolume();
 	}
 
-	private void populateVolume() {
+	protected void populateVolume() {
 		LOG.info("populating volume");
 		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
 		LOG.info("populated volume");
