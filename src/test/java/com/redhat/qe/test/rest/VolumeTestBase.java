@@ -57,7 +57,6 @@ public abstract class VolumeTestBase extends TwoHostClusterTestBase {
 	
 	@After
 	public void destroyVolume(){
-		getVolumeRepository().stop(volume);
 		getVolumeRepository().destroy(volume);
 	}
 	
@@ -66,8 +65,6 @@ public abstract class VolumeTestBase extends TwoHostClusterTestBase {
 		LOG.info("creating volume");
 		VolumeRepository volumeRepo = getVolumeRepository();
 		volume = volumeRepo.createOrShow(getVolumeToBeCreated());
-		volumeRepo._start(volume);
-		LOG.info("volume created:" + volume.getName());
 		return volume;
 	}
 

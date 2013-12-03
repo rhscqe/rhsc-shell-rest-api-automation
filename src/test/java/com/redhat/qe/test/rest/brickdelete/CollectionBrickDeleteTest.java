@@ -39,7 +39,7 @@ public class CollectionBrickDeleteTest extends VolumeTestBase{
 		assertBrickDeleted(repo, brickToDelete);
 	}
 	
-	@Tcms("318695")
+	@Tcms("318694")
 	@Test
 	public void deleteMultiple(){
 		BrickRepository repo = new BrickRepository(getSession(), volume.getCluster(), volume);

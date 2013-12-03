@@ -23,8 +23,10 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	@Before
 	public void addEmptyBricks(){
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
+		getBrickRepo().create(BrickFactory.brick(getHost1()));
 		getBrickRepo().create(BrickFactory.brick(getHost2()));
-		LOG.info("2 bricks added");
+		getBrickRepo().create(BrickFactory.brick(getHost1()));
+		LOG.info("bricks added");
 		LOG.info("end of RebalanceTestBase fixture");
 	}
 

@@ -40,6 +40,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 
 	
 	@Before public void mountAndPopulate(){
+		getVolumeRepository().start(volume);
 		mountVolume();
 		populateVolume();
 	}

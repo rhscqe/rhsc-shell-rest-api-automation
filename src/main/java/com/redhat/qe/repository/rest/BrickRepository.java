@@ -3,6 +3,8 @@ package com.redhat.qe.repository.rest;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import junit.framework.Assert;
+
 import org.apache.http.client.methods.HttpPost;
 import org.calgb.test.performance.BuildPostException;
 import org.calgb.test.performance.HttpDeleteWithBody;
@@ -119,6 +121,11 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		HttpDeleteWithBody request = null;
 		request = new DeleteRequestFactory().create(getCollectionPath(), new DeleteBrickJaxbContext().marshal(bricks));
 		return sendTransaction(request);
+	}
+	public ResponseWrapper collectionDelete(DeletionBrickWrapperList bricks){
+		ResponseWrapper response =_collectionDelete(bricks);
+		Assert.assertEquals(200,response.getCode());
+		return response;
 	}
 	
 	

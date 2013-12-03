@@ -11,6 +11,9 @@ public class JobRepoHelper {
 		return waitUntilJob("finished", repo, job);
 
 	}
+	public WaitResult waitUntilJobComplete(final JobRepository repo, final Job job) {
+		return waitUntilJob("complete", repo, job);
+	}
 	public WaitResult waitUntilJob(final String status, final JobRepository repo, final Job job) {
 		return WaitUtil.waitUntil(new dstywho.functional.Predicate() {
 			@Override
