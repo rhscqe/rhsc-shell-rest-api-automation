@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-	<hostname>latest.rhsc</hostname>
+	<hostname>10.70.37.163</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>latest.rhsc</hostname>
+		<hostname>10.70.37.163</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>
@@ -33,14 +33,14 @@
   <hosts>
     <com.redhat.qe.model.Host>
       <name>node1</name>
-      <address>latest-a</address>
+      <address>10.70.37.111</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
-      <address>latest-b</address>
+      <address>10.70.37.93</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
