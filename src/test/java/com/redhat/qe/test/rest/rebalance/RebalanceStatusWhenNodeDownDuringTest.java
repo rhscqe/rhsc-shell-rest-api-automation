@@ -7,6 +7,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.redhat.qe.config.RhscConfiguration;
@@ -62,6 +63,7 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 	}
 
 	@Test
+	@Ignore
 	public void test() throws InterruptedException{
 		Thread startRebalanceThread = new Thread(new Runnable() {
 			
