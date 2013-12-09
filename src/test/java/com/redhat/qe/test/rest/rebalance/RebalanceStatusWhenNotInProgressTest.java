@@ -14,7 +14,7 @@ import com.redhat.qe.model.Job;
 import com.redhat.qe.repository.JobRepository;
 import com.redhat.qe.test.rest.TwoHostClusterTestBase;
 
-public class ReblanceStatusWhenNotInProgressTest extends TwoHostClusterTestBase{
+public class RebalanceStatusWhenNotInProgressTest extends TwoHostClusterTestBase{
 
 	@Tcms("311403")
 	@Test
