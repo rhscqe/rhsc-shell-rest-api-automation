@@ -25,7 +25,8 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 
 	@After
 	public void stopVolume(){
-		getVolumeRepository().start(volume);
+		if(volume != null)
+			getVolumeRepository().stop(volume);
 	}
 	
 	@Tcms("311415")
