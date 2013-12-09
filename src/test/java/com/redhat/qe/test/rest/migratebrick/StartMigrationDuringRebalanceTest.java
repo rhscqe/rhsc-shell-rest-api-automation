@@ -52,7 +52,7 @@ public class StartMigrationDuringRebalanceTest extends MigrateTestBase{
 	
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("rebalstatusComplete", getHosts().toArray(new Host[0]));
+		return VolumeFactory.distributed("startMigrationDuringRebalance", getHosts().toArray(new Host[0]));
 	}
 
 	
