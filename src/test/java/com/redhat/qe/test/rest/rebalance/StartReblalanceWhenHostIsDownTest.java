@@ -18,6 +18,16 @@ import com.redhat.qe.test.rest.VolumeTestBase;
 public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 	
 	
+	@Before
+	public void startVolume(){
+		getVolumeRepository().start(volume);
+	}
+
+	@After
+	public void stopVolume(){
+		getVolumeRepository().start(volume);
+	}
+	
 	@Tcms("311415")
 	@Test
 	public void test(){
