@@ -52,6 +52,9 @@ public class Host extends Model{
 	@XmlElement(name="reboot_after_installation")
 	private boolean reboot = false;
 	
+	@XmlElement(name="override_iptables")
+	private boolean  isOverideIptables;
+	
 	/**
 	 * @return the name
 	 */
@@ -181,8 +184,17 @@ public class Host extends Model{
             append(name, rhs.name).
             isEquals();
     }
+
+	public boolean isOverideIptables() {
+		return isOverideIptables;
+	}
+
+	public void setOverideIptables(boolean isOverideIptables) {
+		this.isOverideIptables = isOverideIptables;
+	}
 	
 	
 	
+    
 	
 }
