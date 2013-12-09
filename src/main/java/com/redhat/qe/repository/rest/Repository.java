@@ -163,7 +163,7 @@ public abstract class Repository<T extends Model> {
 
 	ResponseWrapper _show(T entity, String collectionPath) {
 		String memberPath = memberPath(entity, collectionPath);
-		ResponseWrapper response = _list(memberPath);
+		ResponseWrapper response = _httpGet(memberPath);
 		return response;
 	}
 
@@ -186,6 +186,10 @@ public abstract class Repository<T extends Model> {
 	 * @return
 	 */
 	ResponseWrapper _list(String collectionPath) {
+		return _httpGet(collectionPath);
+	}
+
+	ResponseWrapper _httpGet(String collectionPath) {
 		return sendTransaction(new HttpGet(collectionPath));
 	}
 
