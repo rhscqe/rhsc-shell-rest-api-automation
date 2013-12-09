@@ -46,6 +46,20 @@ public class ResponseWrapper extends Response implements IResponse{
 		}
 	}
 
+	//TODO fix magic nums
+	public void expectSimilarCode(int code){
+		if(!isCodeSimilar(code )){
+			throw new UnexpectedReponseWrapperException(String.format("unexpected http code returned expected %sxx but recieved %s; body: %s", code/100, response.getCode(), response.getBody()), this);
+		}
+	}
+
+	public boolean isCodeSimilar(int code ) {
+		assert code > 100;
+		assert code <= 999;
+		int classCode = (int) (Math.floor(code / 100.0) * 100);
+		return (response.getCode() >= classCode && response.getCode() < code + 100 );
+	}
+
 
 
 	
