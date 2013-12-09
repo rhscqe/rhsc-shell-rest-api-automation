@@ -12,16 +12,13 @@ public class PostRequestFactory {
 		} catch (BuildPostException e) {
 			throw new RuntimeException(e);
 		}
-		post.addHeader("Content-Type", "application/xml");
-		post.addHeader("Accept", "application/xml");
-		return post;
+		return new RequestHelper().appendXmlRequestHeaders(post);
 	}
+
 	public HttpPost createPost(String path){
 		HttpPost post;
 		post = new HttpPost(); 
-		post.addHeader("Content-Type", "application/xml");
-		post.addHeader("Accept", "application/xml");
-		return post;
+		return new RequestHelper().appendXmlRequestHeaders(post);
 	}
 
 }
