@@ -35,7 +35,7 @@ public class CollectionBrickDeleteNonMultipleSpecialCountTest extends VolumeTest
 		ArrayList<Brick> bricks = repo.list();
 		ResponseWrapper response = repo._collectionDelete(DeletionBrickWrapperList.fromBricks( bricks.get(1)));
 		Assert.assertEquals(400,response.getCode());
-		response.expect("(?i)non replicate count");
+		response.expect("(?i)count");
 		
 	}
 	
