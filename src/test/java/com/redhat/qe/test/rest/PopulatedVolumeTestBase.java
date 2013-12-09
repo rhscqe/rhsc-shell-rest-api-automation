@@ -20,6 +20,8 @@ import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
+import com.redhat.qe.model.WaitUtil.WaitResult;
 import com.redhat.qe.model.gluster.Task;
 import com.redhat.qe.model.gluster.VolumeStatusOutput;
 import com.redhat.qe.repository.JobRepository;
@@ -29,6 +31,7 @@ import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
+import dstywho.functional.Predicate;
 import dstywho.timeout.Duration;
 
 
@@ -40,7 +43,8 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 
 	
 	@Before public void mountAndPopulate(){
-		getVolumeRepository().start(volume);
+		if(getVolumeRepository().show(volume).getStatus().equals("down"))
+			getVolumeRepository().start(volume);
 		mountVolume();
 		populateVolume();
 	}
@@ -69,19 +73,36 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		return new BrickRepository(getSession(), getHost1().getCluster(), volume);
 	}
 	
+	private WaitResult stopVolume(){
+		return WaitUtil.waitUntil(new Predicate() {
+
+			@Override
+			public Boolean act() {
+				return getVolumeRepository()._stop(volume).isCodeSimilar(200);
+			}
+
+		}, 3);
+	}
+	
 	@Override
 	@After
 	public void destroyVolume(){
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
-		try{
-			getVolumeRepository()._stop(volume);
-		}catch(UnexpectedReponseWrapperException e){
-			Duration.TEN_SECONDS.sleep();
-			getVolumeRepository()._stop(volume);
-		}
+		printGlusterVolStatusFromANode();
+		Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
 		getVolumeRepository().destroy(volume);
 		cleanUpBrickData(bricks);
+	}
+
+	private void printGlusterVolStatusFromANode() {
+		ExecSshSession sshsession = ExecSshSession.fromHost(getHost1ToBeCreated());
+		sshsession.start();
+		try{
+			LOG.error( sshsession.runCommand("gluster vol status").getStdout());
+		}finally{
+		 sshsession.stop();	
+		}
 	}
 	/**
 	 * @param bricks
