@@ -7,6 +7,8 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.redhat.qe.factories.VolumeFactory;
@@ -19,18 +21,35 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.JobRepository;
 import com.redhat.qe.repository.rest.StepRepository;
-public class RebalanceWhenRebalanceIsCompleteTest extends VolumeTestBase{
+
+import dstywho.timeout.Duration;
+import dstywho.timeout.Timeout;
+public class RebalanceStatusWhenRebalanceIsCompleteTest extends VolumeTestBase{
 	
+	
+	@Before
+	public void startTheVolume(){
+		getVolumeRepository(getVolume().getCluster()).start(getVolume());
+	}
+	
+	@After
+	public void stopTheVolume(){
+		getVolumeRepository(getVolume().getCluster()).stop(getVolume());
+	}
 
 	@Test
 	public void test(){
 		Volume volume = getVolume();
-		getVolumeRepository(volume.getCluster()).start(volume);
+		rebalanceAndVerifyJobFinished(volume);
+	}
+
+	private void rebalanceAndVerifyJobFinished(Volume volume) {
 		Action rebalAction = getVolumeRepository(volume.getCluster()).rebalance(volume);
 		final Job job = showJob(rebalAction.getJob());
 		assertTrue(WaitUtil.waitUntil(new dstywho.functional.Predicate() {
 			@Override
 			public Boolean act() {
+				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
 				return showJob(job).getStatus().getState().equalsIgnoreCase("finished");
 			}
 		}, 20).isSuccessful());
@@ -61,7 +80,7 @@ public class RebalanceWhenRebalanceIsCompleteTest extends VolumeTestBase{
 	@Override
 	protected List<Volume> getVolumesToBeCreated() {
 		ArrayList<Volume> volumes = new ArrayList<Volume>();
-		volumes.add(VolumeFactory.distributed("rebalstatusComplete", getHosts().toArray(new Host[0])));
+		volumes.add(VolumeFactory.distributed("rebal", getHosts().toArray(new Host[0])));
 		return volumes;
 	}
 

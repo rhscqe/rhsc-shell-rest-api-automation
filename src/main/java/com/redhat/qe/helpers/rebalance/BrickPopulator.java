@@ -46,6 +46,7 @@ public class BrickPopulator {
 		Host mounter = RhscConfiguration.getConfiguration().getHosts().get(0);
 		MountHelper.mountVolume(mounter, mountPoint, volume);
 		new BrickPopulator().createDataForEachBrick(session, cluster,volume, mounter, mountPoint);
+//		MountHelper.unmount(mounter, mountPoint);
 	}
 
 
