@@ -78,8 +78,11 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	}
 	
 	public IResponse start(Volume entity){
-		return getShell().sendAndCollect(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()))		
+		return _start(entity)		
 				.expect("complete");
+	}
+	public IResponse _start(Volume entity) {
+		return getShell().sendAndCollect(String.format("action glustervolume %s start --cluster-identifier %s", entity.getId(), entity.getCluster().getId()));
 	}
 	
 	public IResponse setOption(Volume entity, GlusterOption option, GlusterOptionValue value){
