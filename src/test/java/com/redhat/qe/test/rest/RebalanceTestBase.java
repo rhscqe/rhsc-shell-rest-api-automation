@@ -36,7 +36,7 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	/**
 	 * @return
 	 */
-	private BrickRepository getBrickRepo() {
+	protected BrickRepository getBrickRepo() {
 		return new BrickRepository(getSession(), getHost1().getCluster(), volume);
 	}
 	
