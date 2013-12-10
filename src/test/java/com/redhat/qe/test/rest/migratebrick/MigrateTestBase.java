@@ -15,6 +15,7 @@ import com.redhat.qe.model.gluster.VolumeStatusOutput;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.repository.JobRepository;
 import com.redhat.qe.repository.glustercli.VolumeXmlRepository;
+import com.redhat.qe.repository.rest.BrickRepository;
 import com.redhat.qe.repository.rest.StepRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.test.rest.PopulatedVolumeTestBase;
@@ -123,5 +124,12 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 			mountedSession.stop();
 		}
 		
+	}
+
+	/**
+	 * @return
+	 */
+	protected BrickRepository getBrickRepo() {
+		return new BrickRepository(getSession(), volume.getCluster(), volume);
 	}
 }

@@ -90,7 +90,8 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		printGlusterVolStatusFromANode();
-		Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
+		if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
+			Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
 		getVolumeRepository().destroy(volume);
 		cleanUpBrickData(bricks);
 	}
