@@ -7,6 +7,7 @@ import org.junit.Assert;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
+import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Step;
 import com.redhat.qe.model.WaitUtil;
@@ -131,5 +132,12 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 	 */
 	protected BrickRepository getBrickRepo() {
 		return new BrickRepository(getSession(), volume.getCluster(), volume);
+	}
+	
+	protected void startMigrationAndWaitTilFinish(ArrayList<Brick> bricks) {
+		MigrateBrickAction migrateAction = getBrickRepo().migrate(bricks.get(0), bricks.get(1));
+
+		Job migrateJob = getJob(migrateAction);
+		waitForMigrateToFinish(migrateJob);
 	}
 }

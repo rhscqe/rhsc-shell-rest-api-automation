@@ -1,4 +1,4 @@
-package com.redhat.qe.test.rest.migratebrick;
+package com.redhat.qe.test.rest.rebalance;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,10 +28,11 @@ import com.redhat.qe.repository.rest.StepRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 import com.redhat.qe.test.rest.PopulatedVolumeTestBase;
+import com.redhat.qe.test.rest.migratebrick.MigrateTestBase;
 
 import dstywho.timeout.Timeout;
 
-public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
+public class StopRebalanceWhileMigrationTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
@@ -43,18 +44,18 @@ public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
 	}
 
 	@Test
-	@Tcms("325558")
+	@Tcms("318690")
 	public void test(){
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		startMigrationAndWaitTilFinish(bricks);
 		
-		getVolumeRepository().stop(volume);
-		
-		ResponseWrapper response = getBrickRepo()._activate(bricks.get(0),bricks.get(1));
+		ResponseWrapper response = getVolumeRepository()._rebalance(volume);
 		response.expectSimilarCode(400);
-		response.expect("down");
-		
+		response.expect("(?i)cannot rebalance.*task is in progress");
 	}
+
+
+
 
 
 }
