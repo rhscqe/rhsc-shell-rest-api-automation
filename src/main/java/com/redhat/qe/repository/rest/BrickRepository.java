@@ -59,6 +59,17 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		.getBricks();
 		return result;
 	}
+
+	public void createWithoutBodyExpected(Brick... bricks) {
+		BrickList _bricks = new BrickList();
+		_bricks.getBricks().addAll(Arrays.asList(bricks));
+		String xml = marshall(_bricks);
+		
+		HttpPost post = new PostRequestFactory().createPost(
+				getCollectionPath(), xml);
+		ResponseWrapper response = sendTransaction(post);
+		AssertJUnit  	.assertTrue( response.getCode() == 201 || response.getCode() == 202);
+	}
 	
 	@Override
 	public Brick create(Brick brick){
@@ -67,6 +78,7 @@ public class BrickRepository extends SimpleRestRepository<Brick> {
 		ArrayList<Brick> result = create(bricks);
 		return result.get(0);
 	}
+
 	
 	public ResponseWrapper _migrate(MigrateBrickAction action){
 		return sendTransaction(new PostRequestFactory()
