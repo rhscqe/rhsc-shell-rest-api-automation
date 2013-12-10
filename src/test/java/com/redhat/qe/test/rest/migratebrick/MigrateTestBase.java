@@ -10,6 +10,7 @@ import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Step;
 import com.redhat.qe.model.WaitUtil;
+import com.redhat.qe.model.WaitUtil.WaitResult;
 import com.redhat.qe.model.gluster.VolumeStatusOutput;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.repository.JobRepository;
@@ -100,5 +101,27 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 		}finally{
 			host1Session.stop();
 		}
+	}
+
+	/**
+	 * @param migrateJob
+	 */
+	protected void waitForMigrateToFinish(Job migrateJob) {
+		Step executingStep = new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), migrateJob));
+		Step removeBrickStep = new StepsRepositoryHelper().getChildren(new StepRepository(getSession(), migrateJob), executingStep).get(0);
+		WaitResult waitForMigrationStepFinish = new StepsRepositoryHelper().waitUntilStepStatus(new StepRepository(getSession(), migrateJob), removeBrickStep, "finished");
+		Assert.assertTrue(waitForMigrationStepFinish.isSuccessful());
+	}
+
+	protected void deleteAllDataFromVolume() {
+		ExecSshSession mountedSession = ExecSshSession.fromHost(mounter);
+		mountedSession.start();
+		try{
+			mountedSession.runCommandAndAssertSuccess("rm -rf " + mountPoint.add("*").toString());
+			Assert.assertTrue(mountedSession.runCommandAndAssertSuccess("ls " + mountPoint.toString()).getStdout().isEmpty());
+		}finally{
+			mountedSession.stop();
+		}
+		
 	}
 }

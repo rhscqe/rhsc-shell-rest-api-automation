@@ -11,6 +11,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Brick;
@@ -28,6 +29,8 @@ import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 import com.redhat.qe.test.rest.PopulatedVolumeTestBase;
 
+import dstywho.timeout.Timeout;
+
 public class RetainMigrateTest extends MigrateTestBase {
 
 	@Override
@@ -35,8 +38,10 @@ public class RetainMigrateTest extends MigrateTestBase {
 		return VolumeFactory.distributed("startbriciikmigrate", 4, getHost1(),
 				getHost2());
 	}
+	
 
 	@Test
+	@Tcms("325561")
 	public void testRestStartedStatus(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		
@@ -44,11 +49,15 @@ public class RetainMigrateTest extends MigrateTestBase {
 		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0), bricks.get(1));
 		Job migrateJob = getJob(migrateAction);
 
-		validateJobAndStepsStarted(migrateJob);
-		Assert.assertTrue(new JobRepoHelper().waitUntilJobFinished(getJobRepository(), migrateJob).isSuccessful());
+		waitForMigrateToFinish(migrateJob);
 		
 		brickRepo.activate(bricks.get(0),bricks.get(1));
 		getVolumeRepository().rebalance(volume);
+		getVolumeRepository()._rebalance(volume);
+
+		deleteAllDataFromVolume();
+		
+		Timeout.TIMEOUT_TEN_SECONDS.sleep();
 	}
 
 
