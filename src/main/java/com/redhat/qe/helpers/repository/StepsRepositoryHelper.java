@@ -1,13 +1,16 @@
 package com.redhat.qe.helpers.repository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.model.Step;
+import com.redhat.qe.model.WaitUtil;
+import com.redhat.qe.model.WaitUtil.WaitResult;
 import com.redhat.qe.repository.rest.StepRepository;
+
+import dstywho.timeout.Timeout;
 
 public class StepsRepositoryHelper {
 
@@ -39,6 +42,18 @@ public class StepsRepositoryHelper {
 					return false;
 			}
 		}));
+	}
+	
+	public WaitResult waitUntilStepStatus(final StepRepository repo,  final Step step, final String status){
+		return WaitUtil.waitUntil(new dstywho.functional.Predicate() {
+			
+			@Override
+			public Boolean act() {
+				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
+				return repo.show(step).getStatus().getState().equalsIgnoreCase(status);
+			}
+		}, 30);
+		
 	}
 
 }
