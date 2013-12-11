@@ -10,6 +10,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.repository.rest.ResponseWrapper;
 import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.ssh.ExecSshSession;
@@ -20,11 +21,13 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 	
 	@Before
 	public void startVolume(){
+		stopGlusterOnHost1();
 		getVolumeRepository().start(volume);
 	}
 
 	@After
 	public void stopVolume(){
+		startGlusterOnHost1();
 		if(volume != null)
 			getVolumeRepository().stop(volume);
 	}
@@ -37,7 +40,6 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 		response.expect("check.*daemon.*operational");
 	}
 
-	@Before
 	public void stopGlusterOnHost1() {
 		ExecSshSession host1session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), getHost1()));
 		host1session.start();
@@ -48,7 +50,6 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 		}
 	}
 
-	@After 
 	public void startGlusterOnHost1() {
 		ExecSshSession host1session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), getHost1()));
 		host1session.start();
@@ -56,6 +57,10 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 			host1session.runCommandAndAssertSuccess("service glusterd start");
 		}finally{
 			host1session.stop();
+		}
+		if(getHostRepository().show(getHost1()).getState().contains("operational")){
+			getHostRepository().activate(getHost1());
+				WaitUtil.waitForHostStatus(getHostRepository(), getHost1(), "up", 20);
 		}
 	}
 
