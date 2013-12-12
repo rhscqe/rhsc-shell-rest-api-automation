@@ -7,6 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.redhat.qe.factories.BrickFactory;
+import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.utils.AbsolutePath;
+import com.redhat.qe.helpers.utils.FileNameHelper;
+import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Volume;
@@ -14,11 +18,27 @@ import com.redhat.qe.model.gluster.Task;
 import com.redhat.qe.model.gluster.VolumeStatusOutput;
 import com.redhat.qe.repository.JobRepository;
 import com.redhat.qe.repository.rest.BrickRepository;
+import com.redhat.qe.repository.sh.DD;
+import com.redhat.qe.ssh.ExecSshSession;
 
 
 public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	private static final Logger LOG = Logger.getLogger(RebalanceTestBase.class);
 
+	@Override
+	protected void populateVolume() {
+		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
+		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
+		sshSession.start();
+		try {
+			for(int i=0; i< 10; i ++){
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
+			}
+		} finally {
+			sshSession.stop();
+ 		}
+	}
 
 	@Before
 	public void addEmptyBricks(){
