@@ -1,5 +1,6 @@
 package com.redhat.qe.helpers.rebalance;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -30,7 +31,16 @@ import com.redhat.qe.repository.sh.DD;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
+import dstywho.functional.Closure;
+
 public class BrickPopulator {
+	
+	public static abstract class FileCreator{
+		public abstract void createFile(ExecSshSession sshSession, AbsolutePath path, FileSize size);
+		
+	}
+	
+	public static final FileSize MAX_TOTAL_DATA_WRITTEN = FileSize.Gigabytes(16);
 
 	private static final Logger LOG = Logger.getLogger(BrickPopulator.class);
 	
@@ -52,10 +62,16 @@ public class BrickPopulator {
 
 
 	private FileSize fileSizeToPopulateWith;
+	private FileSize maxDataToWrite;
 	
-	public BrickPopulator(FileSize fileSizeToPopulateWith) {
+	public BrickPopulator(FileSize fileSizeToPopulateWith, FileSize maxDataToWrite) {
 		this.fileSizeToPopulateWith = fileSizeToPopulateWith ;
+		this.maxDataToWrite = maxDataToWrite;
 	}
+	public BrickPopulator(FileSize fileSizeToPopulateWith) {
+		this(fileSizeToPopulateWith, MAX_TOTAL_DATA_WRITTEN);
+	}
+	
 
 	public BrickPopulator() {
 		this(FileSize.megaBytes(100));
@@ -70,35 +86,61 @@ public class BrickPopulator {
 	 */
 	public void createDataForEachBrick(final HttpSession session, Cluster cluster,  final Volume volume,final Host mounter, final AbsolutePath mountPoint) {
 		ArrayList<Brick> bricks = new com.redhat.qe.repository.rest.BrickRepository(session, cluster, volume).list();
+		createDataForEachBrickBy(new FileCreator(){
+
+			@Override
+			public void createFile(ExecSshSession sshSession, AbsolutePath path, FileSize size) {
+				sshSession.runCommandAndAssertSuccess(DD.writeRandomData(path.toString(),size).toString());
+			}}, session, cluster, volume, mounter, mountPoint);
 		
-		WithEachBrick.withEachBrick(bricks, session, new Function<WithEachBrick, Null>() {
-			
-			public Null apply(WithEachBrick brickinfo) {
-				LOG.info("populating brick:" + brickinfo.getBrick().getName());
-				while (getListofFilesForBrick(brickinfo.getBrick(), brickinfo.getHost(), session).getStdout().isEmpty()) {
-					writeRandomFile(mountPoint, mounter, volume);
-				}
-				LOG.info("finished populating brick:" + brickinfo.getBrick().getName());
-				return Null.NULL;
-			}
-		});
 	}
 
-	private AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume) {
+	public void createDataForEachBrickBy(FileCreator fileCreator, final HttpSession session, Cluster cluster,  final Volume volume,final Host mounter, final AbsolutePath mountPoint) {
+		ArrayList<Brick> bricks = new com.redhat.qe.repository.rest.BrickRepository(session, cluster, volume).list();
+		
+		long totalMegaBytesWritten = 0;
+		int numFilesCreated = 0;
+		for (final Brick brick : bricks) {
+			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(session, brick.getHost()); 
+			LOG.info("populating brick:" + brick.getName());
+			
+			while (getListofFilesForBrick(brick, brick.getHost(), session).getStdout().isEmpty() 
+					&& totalMegaBytesWritten < maxDataToWrite.toMegabytes()) {
+				writeFile(fileCreator, mountPoint, mounter, fileSizeToPopulateWith);
+
+				numFilesCreated++;
+				totalMegaBytesWritten = totalMegaBytesWritten + fileSizeToPopulateWith.toMegabytes();
+				LOG.info(totalMegaBytesWritten + "MBs written");
+			}
+			
+			LOG.info("finished populating brick:" + brick.getName());
+		}
+	}
+
+	private AbsolutePath writeFile(FileCreator fileCreator, AbsolutePath mountPoint, Host mounter, FileSize fileSize) {
 		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(),fileSizeToPopulateWith ).toString());
+			fileCreator.createFile(sshSession, file, fileSize);
+		} finally {
+			sshSession.stop();
+		}
+		return file;
+	}
+
+	private AbsolutePath writeRandomFile(AbsolutePath mountPoint, Host mounter, Volume volume, FileSize fileSize) {
+		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
+		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
+		sshSession.start();
+		try {
+			sshSession.runCommandAndAssertSuccess(DD.writeRandomData(file.toString(),fileSize ).toString());
 		} finally {
 			sshSession.stop();
  		}
 		return file;
 	}
 	
-
-
-
 
 
 

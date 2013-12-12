@@ -3,11 +3,11 @@ package com.redhat.qe.helpers.utils;
 public class FileSize {
 	
 	private static final int CONVERSION_FACTOR = 1024;
-	public long bytes;
+	public long kilobytes;
 	
 	
-	private FileSize(int bytes){
-		this.bytes = bytes;
+	private FileSize(int kilobytes){
+		this.kilobytes = kilobytes;
 	}
 	
 	public static FileSize Gigabytes(int gbs){
@@ -15,7 +15,7 @@ public class FileSize {
 	}
 	
 	public static FileSize kiloBytes(int kbytes){
-		return new FileSize(kbytes * CONVERSION_FACTOR);
+		return new FileSize(kbytes);
 	}
 	
 	public static FileSize megaBytes( int mbs){
@@ -23,7 +23,7 @@ public class FileSize {
 	}
 	
 	public long toKilobytes(){
-		return bytes / CONVERSION_FACTOR;
+		return kilobytes;
 	}
 
 	public long toMegabytes(){
