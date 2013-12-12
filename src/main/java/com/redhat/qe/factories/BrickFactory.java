@@ -30,7 +30,7 @@ public class BrickFactory {
 	 * 
 	 */
 	private static String generateBrickDir() {
-		return String.format("/tmp/%s", TimestampHelper.timestamp()  + RandomIntGenerator.positive());
+		return String.format("/bricks/%s", TimestampHelper.timestamp()  + RandomIntGenerator.positive());
 	}
 
 
