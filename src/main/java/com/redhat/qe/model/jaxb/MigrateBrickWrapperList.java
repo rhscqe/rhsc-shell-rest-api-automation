@@ -16,6 +16,8 @@ import com.google.common.collect.Collections2;
 @XmlRootElement(name = "bricks")
 public class MigrateBrickWrapperList {
 	
+	@XmlElement(name = "replica_count")
+	private int replicaCount;
 
 	@XmlElement(name = "brick")
 	ArrayList<MigrateBrickWrapper> bricks;
@@ -28,7 +30,25 @@ public class MigrateBrickWrapperList {
 		this.bricks= arrayList;
 	}
 
-	
-	
+	/**
+	 * @return the replicaCount
+	 */
+	public int getReplicaCount() {
+		return replicaCount;
+	}
 
+	/**
+	 * @param replicaCount the replicaCount to set
+	 */
+	public void setReplicaCount(int replicaCount) {
+		this.replicaCount = replicaCount;
+	}
+
+	/**
+	 * @return the bricks
+	 */
+	public ArrayList<MigrateBrickWrapper> getBricks() {
+		return bricks;
+	}
+	
 }
