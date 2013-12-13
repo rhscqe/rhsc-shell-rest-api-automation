@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.redhat.qe.model.Host;
 import com.redhat.qe.repository.rest.Marshallable;
 
 @XmlAccessorType( XmlAccessType.FIELD )
@@ -14,10 +15,9 @@ public class HookResolutionAction implements Marshallable {
 	@XmlElement(name="resolution_type")
 	private String resolutionType;
 	
-	@XmlElement(name="host.id")
-	public String hostId;
+	@XmlElement
+	public Host host;
 	
-	private HookResolutionActionHost host;
 
 	public String getResolutionType() {
 		return resolutionType;
@@ -27,11 +27,11 @@ public class HookResolutionAction implements Marshallable {
 		this.resolutionType = resolutionType;
 	}
 
-	public HookResolutionActionHost getHost() {
+	public Host getHost() {
 		return host;
 	}
 
-	public void setHost(HookResolutionActionHost host) {
+	public void setHost(Host host) {
 		this.host = host;
 	}
 

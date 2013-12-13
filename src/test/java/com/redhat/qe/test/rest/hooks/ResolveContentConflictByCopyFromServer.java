@@ -15,6 +15,7 @@ import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Hook;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.jaxb.HookResolutionAction;
+import com.redhat.qe.repository.rest.HookRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
 
@@ -33,7 +34,7 @@ public class ResolveContentConflictByCopyFromServer extends ContentConflictHookT
 
 		HookResolutionAction resolution = new HookResolutionAction();
 		resolution.setResolutionType("COPY");
-		resolution.hostId = getHost2().getId();
+		resolution.setHost(host2);
 //	TODO log a bug against improper rsdl. HookResolutionActionHost host = new HookResolutionActionHost();
 //		host.populateFromHost(getHost1());
 //		resolution.setHost(host);
@@ -44,9 +45,9 @@ public class ResolveContentConflictByCopyFromServer extends ContentConflictHookT
 		Assert.assertTrue(resolvedHook.getConflicts()== null || resolvedHook.getConflicts().isEmpty());
 		
 		String actualContent= getFileContents(getHost1(),script).getStdout();
-		Assert.assertEquals(HOST2_CONTENT, actualContent);
-		Assert.assertEquals(HOST2_CONTENT,  getFileContents(getHost2(),script).getStdout());
-		
+		Assert.assertEquals(HOST2_CONTENT, actualContent.trim());
+		Assert.assertEquals(HOST2_CONTENT,  getFileContents(getHost2(),script).getStdout().trim());
+		Assert.assertEquals(HOST2_CONTENT, getHooksRepo().show(conflictedHook).getContent().trim());
 	}
 	
 	private Response getFileContents(Host host, HookPath script){
