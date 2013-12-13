@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
@@ -52,6 +53,7 @@ public class RemoveBrickWhileRebalanceIsOccuringTest extends RebalanceTestBase{
 
 	@Test
 	@Tcms("318696")
+	@Ignore //this test case will be disabled because it's allowed
 	public void test() throws InterruptedException{
 		Action rebalAction = getVolumeRepository(volume.getCluster()).rebalance(volume);
 		Job job = showJob(rebalAction.getJob());
@@ -61,7 +63,8 @@ public class RemoveBrickWhileRebalanceIsOccuringTest extends RebalanceTestBase{
 		
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		bricks.remove(0);
-		ResponseWrapper result = getBrickRepo()._collectionDelete(DeletionBrickWrapperList.fromBricks(bricks.toArray(new Brick[0])));
+		ResponseWrapper result = 
+				getBrickRepo()._collectionDelete(DeletionBrickWrapperList.fromBricks(bricks.toArray(new Brick[0])));
 		result.expectSimilarCode(400);
 		
 	}
