@@ -36,20 +36,19 @@ import dstywho.timeout.Timeout;
 public class StartMigrationDuringRebalanceTest extends RebalanceTestBase{
 
 
-
 	@Override
 	protected void populateVolume() {
-//		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
-//		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
-//		sshSession.start();
-//		try {
-//			for(int i=0; i< 15; i ++){
-//				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
-//				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
-//			}
-//		} finally {
-//			sshSession.stop();
-// 		}
+		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
+		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
+		sshSession.start();
+		try {
+			for(int i=0; i< 15; i ++){
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
+			}
+		} finally {
+			sshSession.stop();
+ 		}
 	}
 
 	@Test
@@ -78,7 +77,7 @@ public class StartMigrationDuringRebalanceTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("StartMigrationDuringRebalanceTest", getHosts().toArray(new Host[0]));
+		return VolumeFactory.distributed("StartMigDuringRebalTest", getHosts().toArray(new Host[0]));
 	}
 
 	private void getGlusterVolumeStatus2() {
