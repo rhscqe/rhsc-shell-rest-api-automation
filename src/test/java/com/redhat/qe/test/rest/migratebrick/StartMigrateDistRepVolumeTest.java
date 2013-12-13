@@ -13,7 +13,7 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.repository.rest.BrickRepository;
 
-public class StartMigrateMultipleDistRepVolumeTest extends MigrateTestBase{
+public class StartMigrateDistRepVolumeTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
