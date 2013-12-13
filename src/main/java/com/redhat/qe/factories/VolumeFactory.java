@@ -34,11 +34,7 @@ public class VolumeFactory {
 		volume.setType("distribute");
 		volume.setCluster(hosts[0].getCluster());
 		
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		InfiniteIterator<Host, ArrayList<Host>> hostiterator = new InfiniteIterator<Host, ArrayList<Host>>(new ArrayList<Host>(Arrays.asList(hosts)));
-		for(int i=0; i<numbricks;i ++){
-			bricks.add(BrickFactory.brick(hostiterator.next()));
-		}
+		ArrayList<Brick> bricks = createBricksUsingHosts(numbricks, hosts);
 		volume.setBricks(bricks);
 		return volume;
 	}
@@ -119,6 +115,30 @@ public class VolumeFactory {
 		volume.getBricks().add(BrickFactory.brick(host2));
 		return volume;
 		
+	}
+	public static Volume distributedReplicate(String name, int repCount, int numBricks, Host... hosts) {
+		Volume volume = new Volume();
+		volume.setName(name);
+		volume.setType("DISTRIBUTED_REPLICATE");
+		volume.setReplicaCount(repCount);
+		
+		volume.setCluster(hosts[0].getCluster());
+		
+		ArrayList<Brick> bricks = createBricksUsingHosts(numBricks, hosts);
+		volume.setBricks(bricks);
+		return volume;
+		
+	}
+
+
+	private static ArrayList<Brick> createBricksUsingHosts(int numBricks,
+			Host... hosts) {
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		InfiniteIterator<Host, ArrayList<Host>> hostiterator = new InfiniteIterator<Host, ArrayList<Host>>(new ArrayList<Host>(Arrays.asList(hosts)));
+		for(int i=0; i< numBricks;i ++){
+			bricks.add(BrickFactory.brick(hostiterator.next()));
+		}
+		return bricks;
 	}
 
 }
