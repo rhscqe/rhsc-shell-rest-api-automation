@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
+import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Volume;
@@ -18,6 +19,12 @@ public class StartMigrateMultipleDistRepVolumeTest extends MigrateTestBase{
 	protected Volume getVolumeToBeCreated() {
 		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
 	}
+	
+	@Override
+	protected void populateVolume() {
+//		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
+	}
+	
 	@Test
 	@Tcms({"318702"})
 	public void testRestStartedStatus(){
