@@ -43,26 +43,23 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 	 * @return
 	 */
 	protected Step validateJobAndStepsStarted(Job migrateJob) {
-		Asserts.assertEqualsIgnoreCase("started", migrateJob.getStatus()
-				.getState());
-		Step executingStep = new StepsRepositoryHelper()
-				.getExecutingStep(getStepRepo(migrateJob));
-		Asserts.assertEqualsIgnoreCase("started", executingStep.getStatus()
-				.getState());
-		ArrayList<Step> children = new StepsRepositoryHelper().getChildren(
-				getStepRepo(migrateJob), executingStep);
+		Asserts.assertEqualsIgnoreCase("started", migrateJob.getStatus() .getState());
+		Step executingStep = getExecutingStep(migrateJob);
+		Asserts.assertEqualsIgnoreCase("started", executingStep.getStatus() .getState());
+		ArrayList<Step> children = new StepsRepositoryHelper().getChildren( getStepRepo(migrateJob), executingStep); 
 		Assert.assertTrue(children.size() == 1);
-		Asserts.assertEqualsIgnoreCase("started",
-				getMigrateStep(migrateJob, executingStep).getStatus()
-						.getState());
+		Asserts.assertEqualsIgnoreCase("started", getMigrateStep(migrateJob, executingStep).getStatus() .getState());
 		return executingStep;
 	}
 
-	/**
-	 * @param migrateJob
-	 * @param executingStep
-	 * @return
-	 */
+	private Step getExecutingStep(Job migrateJob) {
+		return new StepsRepositoryHelper() .getExecutingStep(getStepRepo(migrateJob));
+	}
+
+	protected Step getMigrateStep(Job migrateJob) {
+		return getMigrateStep(migrateJob, getExecutingStep(migrateJob)); 
+	}
+
 	protected Step getMigrateStep(Job migrateJob, Step executingStep) {
 		return new StepsRepositoryHelper().getChildren(getStepRepo(migrateJob),
 				executingStep).get(0);

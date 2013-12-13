@@ -28,6 +28,13 @@ public class Step extends Model{
 
 	@XmlElement(name = "end_time")
 	private Date endTime;
+	
+
+	private String external;
+	
+	@XmlElement(name= "external_type")
+	private String externalType;
+
 	public String getId() {
 		return id;
 	}
@@ -84,6 +91,18 @@ public class Step extends Model{
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getExternal() {
+		return external;
+	}
+	public void setExternal(String external) {
+		this.external = external;
+	}
+	public String getExternalType() {
+		return externalType;
+	}
+	public void setExternalType(String externalType) {
+		this.externalType = externalType;
 	}
 	
 	
