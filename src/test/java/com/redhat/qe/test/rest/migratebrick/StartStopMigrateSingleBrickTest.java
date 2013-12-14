@@ -64,7 +64,7 @@ public class StartStopMigrateSingleBrickTest extends MigrateTestBase{
  * @param executingStep
  * @return
  */
-private Step getMigrateStep(Job migrateJob) {
+protected Step getMigrateStep(Job migrateJob) {
 	Step executingStep = new StepsRepositoryHelper().getExecutingStep(getStepRepo(migrateJob));
 	return new StepsRepositoryHelper().getChildren(getStepRepo(migrateJob), executingStep).get(0);
 }
