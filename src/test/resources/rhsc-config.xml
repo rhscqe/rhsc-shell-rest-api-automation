@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>10.14.16.112</hostname>
+		<hostname>10.14.16.120</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>10.14.16.112</hostname>
+		<hostname>10.14.16.120</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>
