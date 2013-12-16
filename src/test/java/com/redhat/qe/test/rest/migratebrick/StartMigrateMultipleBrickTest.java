@@ -31,7 +31,7 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbriciikmigrate",4, getHost1(), getHost2());
+		return VolumeFactory.distributed("StartMigrateMultipleBrickTest",4, getHost1(), getHost2());
 	}
 //	
 //	@Override
@@ -44,7 +44,6 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 //		//TodO dont' do that
 //	}
 //	
-	
 	@Test
 	@Tcms({"318702"})
 	public void testRestStartedStatus(){
@@ -52,9 +51,13 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 		
 		ArrayList<Brick> bricks = brickRepo.list();
 		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0), bricks.get(1));
-		Job migrateJob = getJob(migrateAction);
-
-		validateJobAndStepsStarted(migrateJob);
+		try{
+			Job migrateJob = getJob(migrateAction);
+	
+			validateJobAndStepsStarted(migrateJob);
+		}finally{
+			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
+		}
 	}
 
 	@Tcms("318702")
@@ -64,16 +67,19 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 		
 		ArrayList<Brick> bricks = brickRepo.list();
 		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0), bricks.get(1));
-		
-		ExecSshSession host1Session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), getHost1()));
-		host1Session.start();
 		try{
-			VolumeStatusOutput volStatus = new VolumeXmlRepository(host1Session).status(volume);
-			Assert.assertTrue(volStatus.getTasks().size() == 1);
-			Asserts.assertEqualsIgnoreCase("remove brick",volStatus.getTasks().get(0).getType());
-			Asserts.assertEqualsIgnoreCase("in progress",volStatus.getTasks().get(0).getStatusStr());
+			ExecSshSession host1Session = ExecSshSession.fromHost(RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), getHost1()));
+			host1Session.start();
+			try{
+				VolumeStatusOutput volStatus = new VolumeXmlRepository(host1Session).status(volume);
+				Assert.assertTrue(volStatus.getTasks().size() == 1);
+				Asserts.assertEqualsIgnoreCase("remove brick",volStatus.getTasks().get(0).getType());
+				Asserts.assertEqualsIgnoreCase("in progress",volStatus.getTasks().get(0).getStatusStr());
+			}finally{
+				host1Session.stop();
+			}
 		}finally{
-			host1Session.stop();
+			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
 		}
 	}
 
