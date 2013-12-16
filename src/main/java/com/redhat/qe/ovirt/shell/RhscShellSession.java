@@ -56,7 +56,7 @@ public class RhscShellSession {
 
 	public IResponse connect() {
 		String command = String.format("connect --url '%s' --user '%s' --password '%s' -I", url, credentials.getUsername(), credentials.getPassword());
-		return shell.send(command).read().expect("connected");
+		return shell.send(command).read().unexpect("disconnected");
 	}
 	public IResponse sendAndCollect(String command){
 		return shell.send(command).read();
