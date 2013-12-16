@@ -36,7 +36,7 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			for(int i=0; i< 15; i ++){
+			for(int i=0; i< 16; i ++){
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 			}
@@ -128,7 +128,7 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("rebalanceStatusWhenNodeGoesDownDuringRebalance", getHosts().toArray(new Host[0]));
+		return VolumeFactory.distributed("RebStatusWhenNodeGoesDownDuring", getHosts().toArray(new Host[0]));
 	}
 
 	

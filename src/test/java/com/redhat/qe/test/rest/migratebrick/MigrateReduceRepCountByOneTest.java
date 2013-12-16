@@ -27,7 +27,7 @@ public class MigrateReduceRepCountByOneTest extends MigrateTestBase{
 	
 	@Test
 	@Tcms({"325635"})
-	public void testRestStartedStatus(){
+	public void test(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		
 		final ArrayList<Brick> bricks = brickRepo.list();
