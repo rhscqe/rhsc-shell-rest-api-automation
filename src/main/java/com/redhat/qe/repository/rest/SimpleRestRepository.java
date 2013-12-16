@@ -30,6 +30,10 @@ public abstract class SimpleRestRepository<T extends Model> extends Repository<T
 		return create(entity, getCollectionPath());
 	}
 
+	public  ResponseWrapper _create(T entity) {
+		return _create(entity, getCollectionPath());
+	}
+
 	public ResponseWrapper destroy(T entity) {
 		return delete(entity, getCollectionPath());
 	}

@@ -130,6 +130,19 @@ public class VolumeFactory {
 		
 	}
 
+	public static Volume distributedStripe(String name, int stripeCount, int numBricks, Host... hosts) {
+		Volume volume = new Volume();
+		volume.setName(name);
+		volume.setType("DISTRIBUTED_STRIPE");
+		volume.setStripe_count(stripeCount);
+		
+		volume.setCluster(hosts[0].getCluster());
+		ArrayList<Brick> bricks = createBricksUsingHosts(numBricks, hosts);
+		volume.setBricks(bricks);
+		return volume;
+		
+	}
+
 
 	private static ArrayList<Brick> createBricksUsingHosts(int numBricks,
 			Host... hosts) {

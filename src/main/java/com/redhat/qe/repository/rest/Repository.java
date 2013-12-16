@@ -85,13 +85,23 @@ public abstract class Repository<T extends Model> {
 	}
 
 	T create(T entity, String path) {
-		String xml = marshall(entity);
-		HttpPost post = new PostRequestFactory().createPost(path, xml);
-		ResponseWrapper response = sendTransaction(post);
+		ResponseWrapper response = _create(entity, path);
 		response.expectCode(201);
 		@SuppressWarnings("unchecked")
 		T result = (T) unmarshal(response.getBody());
 		return result;
+	}
+
+	/**
+	 * @param entity
+	 * @param path
+	 * @return
+	 */
+	ResponseWrapper _create(T entity, String path) {
+		String xml = marshall(entity);
+		HttpPost post = new PostRequestFactory().createPost(path, xml);
+		ResponseWrapper response = sendTransaction(post);
+		return response;
 	}
 
 	ResponseWrapper delete(T entity, String collectionPath) {

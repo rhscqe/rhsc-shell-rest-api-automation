@@ -11,6 +11,7 @@ import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.repository.IVolumeRepository;
+import com.redhat.qe.repository.rest.ResponseWrapper;
 import com.redhat.qe.repository.rest.SimpleRestRepository;
 import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.test.rest.TwoHostClusterTestBase;
@@ -32,13 +33,22 @@ public class VolumeTest extends TwoHostClusterTestBase {
 
 	}
 
+	@Test
+	public void testDistributedStripeInvalidNumBricks() {
+		Volume expected = VolumeFactory.distributedStripe("mydistvolume", 4, 4, host1,
+				host2);
+		ResponseWrapper response = getVolumeRepository()._create(expected);
+		response.expectSimilarCode(400);
+		
+	}
+
 	@After
 	public void cleanupVolumeTest() {
 		if (actual != null)
 			getVolumeRepository().destroy(actual);
 	}
 
-	private IVolumeRepository getVolumeRepository() {
+	private VolumeRepository getVolumeRepository() {
 		return getVolumeRepository(getHost1().getCluster());
 	}
 
