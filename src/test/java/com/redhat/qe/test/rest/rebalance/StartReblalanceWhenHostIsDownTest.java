@@ -37,7 +37,7 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 	public void test(){
 		ResponseWrapper response = new VolumeRepository(getSession(), volume.getCluster())._rebalance(volume);
 		Assert.assertNotEquals(200, response.getCode(), "rebalance succeeded when it shouldn't have");
-		response.expect("check.*daemon.*operational");
+		response.expect("please check if gluster daemon is operational");
 	}
 
 	public void stopGlusterOnHost1() {
