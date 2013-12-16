@@ -51,7 +51,7 @@ public class MigrateStepExecutingStepTest extends MigrateTestBase {
 		assertEquals("removing_bricks", step.getType());
 		assertTrue(step.getDescription().contains("Removing Bricks"));
 		Asserts.assertEqualsIgnoreCase("true", step.getExternal());
-		Asserts.assertEqualsIgnoreCase("", step.getExternalType());
+		Asserts.assertEqualsIgnoreCase("Gluster", step.getExternalType());
 
 	}
 
