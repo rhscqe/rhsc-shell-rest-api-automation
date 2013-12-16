@@ -74,7 +74,7 @@ public class BrickPopulator {
 	
 
 	public BrickPopulator() {
-		this(FileSize.megaBytes(100));
+		this(FileSize.megaBytes(500));
 	}
 
 
