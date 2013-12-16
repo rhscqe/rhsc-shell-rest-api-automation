@@ -2,6 +2,7 @@ package com.redhat.qe.test.rest.rebalance;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
@@ -47,6 +48,7 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 
 	@Test
 	@Tcms("311413")
+	@Ignore
 	public void test() throws InterruptedException{
 		Action rebalAction = getVolumeRepository(volume.getCluster()).rebalance(volume);
 		Job job = showJob(rebalAction.getJob());
