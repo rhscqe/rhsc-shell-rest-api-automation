@@ -42,7 +42,7 @@ public class StartMigrationDuringRebalanceTest extends RebalanceTestBase{
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			for(int i=0; i< 15; i ++){
+			for(int i=0; i< 16; i ++){
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 			}
