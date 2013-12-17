@@ -20,11 +20,6 @@ public class StartMigrateDistRepVolumeTest extends MigrateTestBase{
 		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
 	}
 	
-	@Override
-	protected void populateVolume() {
-//		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
-	}
-	
 	@Test
 	@Tcms({"318702"})
 	public void testRestStartedStatus(){
