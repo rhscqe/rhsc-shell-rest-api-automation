@@ -27,13 +27,12 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 
 	@Override
 	protected void populateVolume() {
-		AbsolutePath file = mountPoint.add(FileNameHelper.randomFileName());
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			for(int i=0; i< 26; i ++){
-				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
-				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
+			for(int i=0; i< 13; i ++){
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(mountPoint.add(FileNameHelper.randomFileName()).toString(),FileSize.megaBytes(500)).toString());
+				sshSession.runCommandAndAssertSuccess(DD.writeZeros(mountPoint.add(FileNameHelper.randomFileName()).toString(),FileSize.megaBytes(500)).toString());
 			}
 		} finally {
 			sshSession.stop();
