@@ -2,6 +2,7 @@ package com.redhat.qe.test.rest.rebalance;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testng.Assert;
 
@@ -16,6 +17,7 @@ import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.test.rest.VolumeTestBase;
 
+@Ignore
 public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 	
 	
@@ -58,9 +60,9 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 		}finally{
 			host1session.stop();
 		}
-		if(getHostRepository().show(getHost1()).getState().contains("operational")){
+		if(getHostRepository().show(getHost1()).getState().contains("non_operational")){
 			getHostRepository().activate(getHost1());
-				WaitUtil.waitForHostStatus(getHostRepository(), getHost1(), "up", 20);
+			WaitUtil.waitForHostStatus(getHostRepository(), getHost1(), "up", 20);
 		}
 	}
 
