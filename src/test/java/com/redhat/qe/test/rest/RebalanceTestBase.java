@@ -31,7 +31,7 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.start();
 		try {
-			for(int i=0; i< 10; i ++){
+			for(int i=0; i< 26; i ++){
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 				sshSession.runCommandAndAssertSuccess(DD.writeZeros(file.toString(),FileSize.megaBytes(500)).toString());
 			}

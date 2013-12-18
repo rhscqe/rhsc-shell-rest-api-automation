@@ -37,10 +37,6 @@ public class MigrateAfterMigrateCompleteTest extends MigrateTestBase {
 				getHost2());
 	}
 	
-	@Override
-	protected void populateVolume() {
-		//dont populate
-	}
 
 	@Test
 	public void test(){
@@ -51,7 +47,7 @@ public class MigrateAfterMigrateCompleteTest extends MigrateTestBase {
 		Job migrateJob = getJob(migrateAction);
 
 		validateJobAndStepsStarted(migrateJob);
-//TODO		Assert.assertTrue(new JobRepoHelper().waitUntilJobFinished(getJobRepository(), migrateJob).isSuccessful());
+		waitForMigrateToFinish(migrateJob);
 		
 		ResponseWrapper secondMigrationResponse = brickRepo._migrate(bricks.get(2));
 		secondMigrationResponse.expectSimilarCode(400);
