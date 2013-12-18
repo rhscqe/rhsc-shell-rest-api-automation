@@ -70,7 +70,12 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 		Job rebalanceJob = new JobRepository(getSession()).show(action.getJob());
 		Assert.assertTrue(rebalanceJob.getDescription().toLowerCase().contains("rebalancing"));
 		Assert.assertTrue(rebalanceJob.getStatus().getState().toLowerCase().contains("started"));
+	}
 
+	/**
+	 * 
+	 */
+	public void ensureRebalanceStartedFromCli() {
 		VolumeStatusOutput status = getGlusterVolumeStatus();
 		Assert.assertTrue(status.getTasks().size() > 0);
 		Task job = status.getTasks().get(0); 

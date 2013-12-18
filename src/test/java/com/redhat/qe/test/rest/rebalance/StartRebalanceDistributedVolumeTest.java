@@ -21,8 +21,19 @@ public class StartRebalanceDistributedVolumeTest extends RebalanceTestBase{
 		}
 	}
 
+	@Test
+	@Tcms({"311347","311410"})
+	public void testCli(){
+		Action action = getVolumeRepository(getHost1().getCluster()).rebalance(volume);
+		try{
+			ensureRebalanceStartedFromCli();
+		}finally{
+			getVolumeRepository()._stopRebalance(volume);
+		}
+	}
+
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("start_rebal_on_dist_volume_test",4,  getHost1(), getHost2());
+		return VolumeFactory.distributed("start_rebal_on_dist_volume_test",6,  getHost1(), getHost2());
 	}
 }

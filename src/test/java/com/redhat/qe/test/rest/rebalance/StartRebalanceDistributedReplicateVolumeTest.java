@@ -33,8 +33,25 @@ public class StartRebalanceDistributedReplicateVolumeTest extends RebalanceTestB
 	@Tcms("311346")
 	public void test(){
 		Action action = getVolumeRepository(getHost1().getCluster()).rebalance(volume);
+		try{
 		ensureRebalanceHasStarted(action);
+		}finally{
+			getVolumeRepository()._stop(volume);
+		}
 	}
+
+	@Test
+	@Tcms("311346")
+	public void testCli(){
+		Action action = getVolumeRepository(getHost1().getCluster()).rebalance(volume);
+		try{
+			ensureRebalanceStartedFromCli();
+		}finally{
+			getVolumeRepository()._stop(volume);
+		}
+	}
+	
+	
 	@Override
 	protected Volume getVolumeToBeCreated() {
 		return VolumeFactory.distributedReplicate("startrebalancetest", getHost1(), getHost2());
