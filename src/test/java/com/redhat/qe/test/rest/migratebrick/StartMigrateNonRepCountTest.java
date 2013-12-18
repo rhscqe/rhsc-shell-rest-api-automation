@@ -47,14 +47,13 @@ public class StartMigrateNonRepCountTest extends MigrateTestBase{
 	
 	@Test
 	@Tcms({"318704"})
-	public void testRestStartedStatus(){
+	public void test(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		
 		ArrayList<Brick> bricks = brickRepo.list();
-		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0),bricks.get(1),bricks.get(2));
-		Job migrateJob = getJob(migrateAction);
-
-		validateJobAndStepsStarted(migrateJob);
+		ResponseWrapper response = brickRepo._migrate(bricks.get(0),bricks.get(1),bricks.get(2));
+		response.expectSimilarCode(400);
+		response.expect("incorrect brick count");
 	}
 
 
