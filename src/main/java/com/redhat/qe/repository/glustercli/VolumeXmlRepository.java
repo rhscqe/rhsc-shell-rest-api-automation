@@ -29,7 +29,7 @@ public class VolumeXmlRepository extends Repository {
 		Response response = null; 
 		for(int i=0; i< RETRY_ATTEMPTS ; i ++){
 			response = getShell().runCommand(command);
-			if(response.getStdout().contains("in progress"))
+			if(response.getStdout().contains("try again"))
 				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
 			else
 				return response;
