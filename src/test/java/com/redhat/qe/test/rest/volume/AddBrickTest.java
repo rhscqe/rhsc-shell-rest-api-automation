@@ -18,6 +18,6 @@ public class AddBrickTest extends VolumeTestBase{
 	@Test
 	public void test(){
 		BrickRepository repo = new BrickRepository(getSession(), volume.getCluster(), volume);
-		repo.create(BrickFactory.brick(getHost2()));
+		repo.create(new  BrickFactory().brick(getHost2()));
 	}
 }

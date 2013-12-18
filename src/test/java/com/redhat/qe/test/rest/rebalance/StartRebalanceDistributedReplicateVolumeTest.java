@@ -42,6 +42,6 @@ public class StartRebalanceDistributedReplicateVolumeTest extends RebalanceTestB
 	
 	@Override
 	public void addEmptyBricks(){
-		getBrickRepo().createWithoutBodyExpected(BrickFactory.brick(getHost2()), BrickFactory.brick(getHost1()));
+		getBrickRepo().createWithoutBodyExpected(new BrickFactory().brick(getHost2()), new BrickFactory().brick(getHost1()));
 	}
 }

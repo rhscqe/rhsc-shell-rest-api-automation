@@ -11,7 +11,7 @@ public class AddBrickTest extends SingleVolumeTestBase{
 	@Test
 	@Tcms("251287")
 	public void test(){
-		Brick brick = BrickFactory.brick(host1);
+		Brick brick = new BrickFactory().brick(host1);
 		getVolumeRepository(cluster).addBrick(volume, brick);
 		
 		Asserts.assertContains("", getVolumeRepository(cluster).listBricks(volume), brick);

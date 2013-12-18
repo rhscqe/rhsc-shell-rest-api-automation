@@ -1,10 +1,12 @@
 package com.redhat.qe.repository.rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.calgb.test.performance.HttpSession;
 
+import com.google.common.base.Joiner;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Cluster;
 import com.redhat.qe.model.Volume;
@@ -24,6 +26,22 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 	@Override
 	public String getCollectionPath() {
 		return String.format("/api/clusters/%s/glustervolumes", cluster.getId());
+	}
+
+	public String getCollectionPathWithParams(HashMap<String,String> params) {
+		return getCollectionPath() + ";" + createMatrixParameters(params);
+	}
+
+	/**
+	 * @param params
+	 * @return 
+	 */
+	private String createMatrixParameters(HashMap<String, String> params) {
+		ArrayList<String> formatedParameters = new ArrayList<String>();
+		for(String key: params.keySet()){
+			formatedParameters.add(key + "=" +  params.get(key));
+		}
+		return Joiner.on(";").join(formatedParameters);
 	}
 
 	@Override
@@ -75,10 +93,19 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		return _customAction(volume, getCollectionPath(), "resetalloptions");
 	}
 
-	
-	
+	public ResponseWrapper _createWithForceCreationOfBrickDirectories(Volume volume){
+		HashMap<String,String> params = new HashMap<String,String>();
+		params.put("force", "true");	
+		return _create(volume, getCollectionPathWithParams(params));
+		
+	}
 
+	public Volume createWithForceCreationOfBrickDirectories(Volume volume){
+		ResponseWrapper response = _createWithForceCreationOfBrickDirectories(volume );
+		response.expectSimilarCode(200);
+		return (Volume) unmarshal(response.getBody());
 
+	}
 
 
 }

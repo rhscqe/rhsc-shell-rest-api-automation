@@ -18,12 +18,12 @@ public class StartRebalanceWhileBrickMigrationTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("rebalwhilemigration", 2,getHost1(), getHost2());
+		return VolumeFactory.distributed("rebalwhilemigration", 4,getHost1(), getHost2());
 	}
 	
 	@Override
 	protected void populateVolume() {
-		new BrickPopulator(FileSize.megaBytes(1000)).createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
+		new BrickPopulator(FileSize.megaBytes(500)).createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
 	}
 	
 	@Test

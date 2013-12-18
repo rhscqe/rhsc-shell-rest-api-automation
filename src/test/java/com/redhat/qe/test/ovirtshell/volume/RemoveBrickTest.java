@@ -14,7 +14,7 @@ public class RemoveBrickTest extends SingleVolumeTestBase{
 	@Tcms("251288")
 	public void test(){
 		//setup
-		Brick brick = BrickFactory.brick(host1);
+		Brick brick = new BrickFactory().brick(host1);
 		getVolumeRepository().addBrick(volume, brick);
 		Asserts.assertContains("", getVolumeRepository().listBricks(volume), brick);
 		

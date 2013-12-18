@@ -28,7 +28,7 @@ public class RemoveLastBrickFromVolumeNegativeTest extends TwoHostClusterTestBas
 		volume.setCluster(host1.getCluster());
 
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		 brick = BrickFactory.brick(host1);
+		 brick = new BrickFactory().brick(host1);
 		bricks.add(brick);
 		volume.setBricks(bricks);
 		volume = getVolumeRepository().create(volume);
