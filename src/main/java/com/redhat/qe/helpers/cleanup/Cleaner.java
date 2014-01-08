@@ -68,7 +68,7 @@ public abstract class Cleaner {
 			for (Host host : hosts) {
 				if (!host.getState().equals("up")) {
 					hostRepo.activate(host);
-					WaitUtil.waitForHostStatus(hostRepo, host, "up", 400);
+					WaitUtil.waitForHostStatus(hostRepo, host, "up", 120);
 				}
 			}
 		}
