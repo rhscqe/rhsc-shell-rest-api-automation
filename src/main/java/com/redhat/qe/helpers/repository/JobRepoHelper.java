@@ -25,6 +25,6 @@ public class JobRepoHelper {
 				return repo.show(job).getStatus().getState()
 						.equalsIgnoreCase(status);
 			}
-		}, 50);
+		}, 150);
 	}
 }
