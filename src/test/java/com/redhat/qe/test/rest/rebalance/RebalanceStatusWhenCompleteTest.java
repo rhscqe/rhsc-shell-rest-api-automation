@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.redhat.qe.factories.VolumeFactory;
+import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Action;
@@ -15,20 +16,14 @@ import com.redhat.qe.model.Step;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.WaitUtil.WaitResult;
 import com.redhat.qe.repository.JobRepository;
+import com.redhat.qe.repository.glustercli.RebalanceStatus;
+import com.redhat.qe.repository.glustercli.VolumeRebalanceRepository;
 import com.redhat.qe.repository.rest.StepRepository;
+import com.redhat.qe.ssh.ExecSshSession;
+import com.redhat.qe.test.rest.RebalanceTestBase;
 import com.redhat.qe.test.rest.VolumeTestBase;
 
-public class RebalanceStatusWhenCompleteTest extends VolumeTestBase{
-	
-	@Before
-	public void startVolume(){
-		getVolumeRepository().start(volume);
-	}
-	
-	@After
-	public void stopVolume(){
-		getVolumeRepository().stop(volume);
-	}
+public class RebalanceStatusWhenCompleteTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
@@ -43,8 +38,17 @@ public class RebalanceStatusWhenCompleteTest extends VolumeTestBase{
 		Assert.assertTrue(waitResult.isSuccessful());
 		
 		//complete
-		Step executingStep = new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), job));
-
+		Step rebalanceStep = new StepsRepositoryHelper().getRebalanceStep(new StepRepository(getSession(), job));
+		Asserts.assertEqualsIgnoreCase("finished", rebalanceStep.getStatus().getState());
+		ExecSshSession host1session = ExecSshSession.fromHost(getHost1ToBeCreated());
+		host1session.start();
+		try{
+			RebalanceStatus expectedRebalanceStats = new VolumeRebalanceRepository(host1session).getRebalanceStatus(volume);
+			Assert.assertTrue(rebalanceStep.getDescription().contains(String.format("scanned: %s, moved: %s, failed: %s", expectedRebalanceStats.getLookups(), expectedRebalanceStats.getFiles(), expectedRebalanceStats.getFailures())));
+			Asserts.assertEqualsIgnoreCase("completed", expectedRebalanceStats.getStatusDecode());
+		}finally{
+			host1session.stop();
+		}
 
 	}
 
