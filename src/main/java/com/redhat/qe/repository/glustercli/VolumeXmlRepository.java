@@ -19,23 +19,12 @@ import com.redhat.qe.ssh.ExecSshSession.Response;
 import dstywho.timeout.Timeout;
 
 public class VolumeXmlRepository extends Repository {
-	private static final int RETRY_ATTEMPTS = 5;
 	private static Logger LOG = Logger.getLogger(VolumeXmlRepository.class);
 	public VolumeXmlRepository(ExecSshSession shell) {
 		super(shell);
 	}
 	
-	public Response runCommandMultipleAttempts(String command){
-		Response response = null; 
-		for(int i=0; i< RETRY_ATTEMPTS ; i ++){
-			response = getShell().runCommand(command);
-			if(response.getStdout().contains("try again"))
-				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
-			else
-				return response;
-		}
-		return response;
-	}
+
 	
 
 	public VolumeStatusOutput status(Volume volume){
@@ -43,6 +32,8 @@ public class VolumeXmlRepository extends Repository {
 		ArrayList<VolumeStatusOutput> result = parseVolumeStatus(response);
 		return result.get(0);
 	}
+	
+	
 
 
 	private ArrayList<VolumeStatusOutput> parseVolumeStatus(Response response) {
