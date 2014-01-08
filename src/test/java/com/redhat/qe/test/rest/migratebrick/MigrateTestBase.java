@@ -106,10 +106,15 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 	 * @param migrateJob
 	 */
 	protected void waitForMigrateToFinish(Job migrateJob) {
-		Step executingStep = new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), migrateJob));
-		Step removeBrickStep = new StepsRepositoryHelper().getChildren(new StepRepository(getSession(), migrateJob), executingStep).get(0);
+		Step removeBrickStep = removeBrickStep(migrateJob);
 		WaitResult waitForMigrationStepFinish = new StepsRepositoryHelper().waitUntilStepStatus(new StepRepository(getSession(), migrateJob), removeBrickStep, "finished");
 		Assert.assertTrue(waitForMigrationStepFinish.isSuccessful());
+	}
+
+	private Step removeBrickStep(Job migrateJob) {
+		Step executingStep = new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), migrateJob));
+		Step removeBrickStep = new StepsRepositoryHelper().getChildren(new StepRepository(getSession(), migrateJob), executingStep).get(0);
+		return removeBrickStep;
 	}
 
 	protected void deleteAllDataFromVolume() {
