@@ -4,6 +4,7 @@ import java.net.URI;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
 import org.calgb.test.performance.HttpSession;
 
 import com.redhat.qe.config.Configuration;
@@ -27,9 +28,11 @@ import com.redhat.qe.ssh.ExecSshSession;
 import dstywho.functional.Closure2;
 
 public class RestCleanupTool {
+	Logger LOG  = Logger.getLogger(RestCleanupTool.class);
 
 
 	public void cleanup(final Configuration config) {
+		LOG.info("Beginning Cleanup");
 		final HttpSession session = new HttpSessionFactory().createHttpSession(config.getRestApi());
 		try{
 			new Cleaner(){
