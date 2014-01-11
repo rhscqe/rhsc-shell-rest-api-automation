@@ -7,23 +7,30 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.base.Function;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
+import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
+import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
+import com.redhat.qe.model.Step;
 import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.model.jaxb.DeletionBrickWrapperList;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.repository.glustercli.VolumeXmlRepository;
 import com.redhat.qe.repository.rest.BrickRepository;
+import com.redhat.qe.repository.rest.StepRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.SshSession;
+import com.redhat.qe.ssh.ExecSshSession.Response;
 import com.redhat.qe.test.rest.self.StepRepositoryTest;
 
 import dstywho.functional.Predicate;
+import dstywho.timeout.Timeout;
 
 public class MigrateEndtoEndTest extends MigrateTestBase{
 	private String md5sum;
@@ -42,6 +49,8 @@ public class MigrateEndtoEndTest extends MigrateTestBase{
 			host1session.stop();
 		}
 	}
+	
+
 
 	@Test
 	@Tcms({"325559","325561"})
@@ -52,16 +61,34 @@ public class MigrateEndtoEndTest extends MigrateTestBase{
 		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0), bricks.get(1));
 		Job migrateJob = getJob(migrateAction);
 
-//		Assert.assertTrue("job finished",new JobRepoHelper().waitUntilJobFinished(getJobRepository(), migrateJob).isSuccessful());
 		waitForMigrateToFinish(migrateJob);
 		
 		brickRepo.collectionDelete(DeletionBrickWrapperList.fromBricks(bricks.get(0),bricks.get(1)));
-		
+
 		Assert.assertEquals(md5sum,getCheckSum());
-		
-		getVolumeRepository().rebalance(volume);
+		Action action = getVolumeRepository().rebalance(volume);
 		getVolumeRepository()._stopRebalance(volume);
+		getJobRepository().show(action.getJob());
+		new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), action.getJob()));
+		Assert.assertTrue("wait for rebalance to stop", WaitUtil.waitUntil(new Predicate() {
+			
+			@Override
+			public Boolean act() {
+				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
+				return Integer.parseInt(ExecSshSession.fromHost(getHost1ToBeCreated()).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
+					
+					public Response apply(ExecSshSession session) {
+						return session.runCommand("ps uax | grep rebalance | grep -v grep | wc | awk '{print $1}'");
+					}
+				}).getStdout().trim()) <= 0;
+			}
+		}, 20).isSuccessful());
 		
+//		getJobRepository().show(action.getJob());
+//		Step rebalanceStep = new StepsRepositoryHelper().getRebalanceStep(new StepRepository(getSession(), action.getJob()));
+//		new StepsRepositoryHelper().waitUntilStepStatus(new StepRepository(getSession(), action.getJob()), rebalanceStep, "finished");
+		
+
 		deleteAllDataFromVolume();
 		
 																										
