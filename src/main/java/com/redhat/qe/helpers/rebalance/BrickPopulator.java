@@ -103,7 +103,7 @@ public class BrickPopulator {
 		for(int i=0; i < bricks.size(); i++){
 			Brick brick = bricks.get(i);
 			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(session, brick.getHost()); 
-			LOG.info(String.format("populating brick(1/%s):%s", i+1, bricks.size(), brick.getName()));
+			LOG.info(String.format("populating brick(%s/%s): %s:%s", i+1, bricks.size(), host.getAddress(), brick.getDir()));
 			
 			while (getListofFilesForBrick(brick, brick.getHost(), session).getStdout().isEmpty() 
 					&& totalMegaBytesWritten < maxDataToWrite.toMegabytes()) {
