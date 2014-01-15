@@ -52,7 +52,21 @@ public class StepsRepositoryHelper {
 				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
 				return repo.show(step).getStatus().getState().equalsIgnoreCase(status);
 			}
-		}, 30);
+		}, 60);
+		
+	}
+	public WaitResult waitUntilStepStatusMatches(final StepRepository repo,  final Step step, final String regex){
+		return WaitUtil.waitUntil(new dstywho.functional.Predicate() {
+			
+			@Override
+			public Boolean act() {
+				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
+				Step steprefreshed = repo.show(step);
+				System.out.println((regex));
+				System.out.println(steprefreshed.getStatus().getState().matches(regex));
+				return steprefreshed.getStatus().getState().matches(regex);
+			}
+		}, 60);
 		
 	}
 

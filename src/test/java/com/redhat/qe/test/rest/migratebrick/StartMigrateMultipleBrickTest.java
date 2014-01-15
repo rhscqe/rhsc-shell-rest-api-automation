@@ -11,6 +11,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.repository.MigrateStepsRepositoryHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
@@ -51,13 +52,12 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 		
 		ArrayList<Brick> bricks = brickRepo.list();
 		MigrateBrickAction migrateAction = brickRepo.migrate(bricks.get(0), bricks.get(1));
-		try{
-			Job migrateJob = getJob(migrateAction);
-	
-			validateJobAndStepsStarted(migrateJob);
-		}finally{
-			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
-		}
+		Job migrateJob = getJob(migrateAction);
+
+		validateJobAndStepsStarted(migrateJob);
+		waitForMigrateToFinish(migrateJob);
+		brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
+		new MigrateStepsRepositoryHelper().waitForMigrateToMatch(getSession(), migrateAction.getJob(), "(?i)finished|failed|aborted");
 	}
 
 	@Tcms("318702")
@@ -80,9 +80,12 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 			}
 		}finally{
 			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
+			Assert.assertTrue(new MigrateStepsRepositoryHelper().waitForMigrateToMatch(getSession(), migrateAction.getJob(), "(?i)finished|failed|aborted").isSuccessful());
 		}
 	}
 
-
+	public static void main(String[] args ){
+		System.out.println("ABORTED".matches(("(?i)aborted|finished")));
+	}
 
 }
