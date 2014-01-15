@@ -15,7 +15,7 @@ public class StartRebalanceNonExistentVolumeTest extends TwoHostClusterTestBase{
 	@Test
 	@Tcms("311350")
 	public void test(){
-		Volume volume = VolumeFactory.distributedUneven("startrebalancetest", getHost1(), getHost2());
+		Volume volume = VolumeFactory.distributedUneven("StartRebOnInvalidVol", getHost1(), getHost2());
 		volume.setId("thisisafakeid");
 		ResponseWrapper resp = getVolumeRepository(getHost1().getCluster())._rebalance(volume);
 		Assert.assertEquals(404, resp.getCode());

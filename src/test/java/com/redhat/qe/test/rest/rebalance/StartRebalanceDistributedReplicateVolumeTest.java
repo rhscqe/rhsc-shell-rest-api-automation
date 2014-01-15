@@ -54,7 +54,7 @@ public class StartRebalanceDistributedReplicateVolumeTest extends RebalanceTestB
 	
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("startrebalancetest", getHost1(), getHost2());
+		return VolumeFactory.distributedReplicate("StartRebDistRep", getHost1(), getHost2());
 	}
 	
 	@Override
