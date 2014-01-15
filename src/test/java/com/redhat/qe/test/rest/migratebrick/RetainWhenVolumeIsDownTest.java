@@ -46,7 +46,7 @@ public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
 	@Tcms("325558")
 	public void test(){
 		ArrayList<Brick> bricks = getBrickRepo().list();
-		startMigrationAndWaitTilFinish(bricks);
+		startMigrationAndWaitTilFinish(bricks.get(0), bricks.get(1));
 		
 		getVolumeRepository().stop(volume);
 		

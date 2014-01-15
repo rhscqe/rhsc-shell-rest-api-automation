@@ -30,6 +30,7 @@ public class StartMigrateDistRepVolumeTest extends MigrateTestBase{
 		Job migrateJob = getJob(migrateAction);
 
 		validateJobAndStepsStarted(migrateJob);
+		waitForMigrateToFinish(migrateJob);
 	}
 
 

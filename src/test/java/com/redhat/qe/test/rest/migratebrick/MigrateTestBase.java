@@ -6,6 +6,7 @@ import org.junit.Assert;
 
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.helpers.Asserts;
+import com.redhat.qe.helpers.repository.MigrateStepsRepositoryHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
@@ -102,20 +103,6 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 		}
 	}
 
-	/**
-	 * @param migrateJob
-	 */
-	protected void waitForMigrateToFinish(Job migrateJob) {
-		Step removeBrickStep = removeBrickStep(migrateJob);
-		WaitResult waitForMigrationStepFinish = new StepsRepositoryHelper().waitUntilStepStatus(new StepRepository(getSession(), migrateJob), removeBrickStep, "finished");
-		Assert.assertTrue(waitForMigrationStepFinish.isSuccessful());
-	}
-
-	private Step removeBrickStep(Job migrateJob) {
-		Step executingStep = new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), migrateJob));
-		Step removeBrickStep = new StepsRepositoryHelper().getChildren(new StepRepository(getSession(), migrateJob), executingStep).get(0);
-		return removeBrickStep;
-	}
 
 	protected void deleteAllDataFromVolume() {
 		ExecSshSession mountedSession = ExecSshSession.fromHost(mounter);
@@ -136,10 +123,14 @@ public abstract class MigrateTestBase extends PopulatedVolumeTestBase {
 		return new BrickRepository(getSession(), volume.getCluster(), volume);
 	}
 	
-	protected void startMigrationAndWaitTilFinish(ArrayList<Brick> bricks) {
-		MigrateBrickAction migrateAction = getBrickRepo().migrate(bricks.get(0), bricks.get(1));
+	protected void startMigrationAndWaitTilFinish(Brick... bricks) {
+		MigrateBrickAction migrateAction = getBrickRepo().migrate(bricks);
 
 		Job migrateJob = getJob(migrateAction);
 		waitForMigrateToFinish(migrateJob);
+	}
+	
+	protected void waitForMigrateToFinish(Job migrateJob) {
+		Assert.assertTrue("migrate finished",new MigrateStepsRepositoryHelper().waitForMigrateToFinish(getSession(), migrateJob).isSuccessful());
 	}
 }

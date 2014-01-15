@@ -36,7 +36,7 @@ public class StopRebalanceWhileMigrationTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbriciikmigrate", 4, getHost1(),
+		return VolumeFactory.distributed("startrebalwhilemig", 4, getHost1(),
 				getHost2());
 	}
 	
@@ -47,7 +47,7 @@ public class StopRebalanceWhileMigrationTest extends MigrateTestBase {
 	@Tcms("318690")
 	public void test(){
 		ArrayList<Brick> bricks = getBrickRepo().list();
-		startMigrationAndWaitTilFinish(bricks);
+		startMigrationAndWaitTilFinish(bricks.get(0), bricks.get(1));
 		
 		ResponseWrapper response = getVolumeRepository()._rebalance(volume);
 		response.expectSimilarCode(400);
