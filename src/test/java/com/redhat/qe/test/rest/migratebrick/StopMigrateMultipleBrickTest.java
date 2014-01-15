@@ -10,6 +10,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
+import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Step;
@@ -56,6 +57,7 @@ public class StopMigrateMultipleBrickTest extends MigrateTestBase{
 		Asserts.assertEqualsIgnoreCase("aborted", getMigrateStep(migrateJob, executingStep).getStatus().getState());
 		
 		ensureNoGlusterVolumeTasks();
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
 	}
 
 

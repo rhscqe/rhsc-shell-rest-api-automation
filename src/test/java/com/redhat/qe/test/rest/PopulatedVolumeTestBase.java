@@ -14,6 +14,7 @@ import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.ssh.MountHelper;
+import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.GeneralAction;
 import com.redhat.qe.model.Brick;
@@ -90,6 +91,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		MountHelper.unmount(mounter, mountPoint);
 		ArrayList<Brick> bricks = getBrickRepo().list();
 		printGlusterVolStatusFromANode();
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
 		if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
 			Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
 		getVolumeRepository().destroy(volume);

@@ -13,6 +13,7 @@ import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
+import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
@@ -70,19 +71,7 @@ public class MigrateEndtoEndTest extends MigrateTestBase{
 		getVolumeRepository()._stopRebalance(volume);
 		getJobRepository().show(action.getJob());
 		new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), action.getJob()));
-		Assert.assertTrue("wait for rebalance to stop", WaitUtil.waitUntil(new Predicate() {
-			
-			@Override
-			public Boolean act() {
-				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
-				return Integer.parseInt(ExecSshSession.fromHost(getHost1ToBeCreated()).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
-					
-					public Response apply(ExecSshSession session) {
-						return session.runCommand("ps uax | grep rebalance | grep -v grep | wc | awk '{print $1}'");
-					}
-				}).getStdout().trim()) <= 0;
-			}
-		}, 20).isSuccessful());
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
 		
 //		getJobRepository().show(action.getJob());
 //		Step rebalanceStep = new StepsRepositoryHelper().getRebalanceStep(new StepRepository(getSession(), action.getJob()));

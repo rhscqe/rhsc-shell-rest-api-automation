@@ -14,6 +14,7 @@ import com.redhat.qe.helpers.Asserts;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
+import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Step;
@@ -52,8 +53,10 @@ public class RetainMigrateTest extends MigrateTestBase {
 		waitForMigrateToFinish(migrateJob);
 		
 		brickRepo.activate(bricks.get(0),bricks.get(1));
+		
 		getVolumeRepository().rebalance(volume);
-		getVolumeRepository()._rebalance(volume);
+		getVolumeRepository()._stopRebalance(volume);
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
 
 		deleteAllDataFromVolume();
 		

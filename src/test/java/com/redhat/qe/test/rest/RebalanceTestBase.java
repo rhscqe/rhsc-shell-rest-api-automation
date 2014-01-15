@@ -6,20 +6,27 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.common.base.Function;
 import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.helpers.utils.FileNameHelper;
 import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.model.Action;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.model.gluster.Task;
 import com.redhat.qe.model.gluster.VolumeStatusOutput;
 import com.redhat.qe.repository.JobRepository;
 import com.redhat.qe.repository.rest.BrickRepository;
 import com.redhat.qe.repository.sh.DD;
 import com.redhat.qe.ssh.ExecSshSession;
+import com.redhat.qe.ssh.ExecSshSession.Response;
+
+import dstywho.functional.Predicate;
+import dstywho.timeout.Timeout;
 
 
 public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
@@ -62,6 +69,7 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	@After
 	public void afterrebalance(){
 		getVolumeRepository()._stopRebalance(volume);
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
 	}
 
 	
