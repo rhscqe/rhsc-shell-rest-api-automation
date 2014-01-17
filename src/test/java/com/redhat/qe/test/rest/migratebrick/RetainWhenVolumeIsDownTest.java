@@ -35,7 +35,7 @@ public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbriciikmigrate", 4, getHost1(),
+		return VolumeFactory.distributed("retainwhenvolisdown", 4, getHost1(),
 				getHost2());
 	}
 	
@@ -52,7 +52,7 @@ public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
 		
 		ResponseWrapper response = getBrickRepo()._activate(bricks.get(0),bricks.get(1));
 		response.expectSimilarCode(400);
-		response.expect("down");
+		response.expect("should be started");
 		
 	}
 
