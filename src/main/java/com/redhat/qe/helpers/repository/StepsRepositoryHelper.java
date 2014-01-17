@@ -52,7 +52,7 @@ public class StepsRepositoryHelper {
 				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
 				return repo.show(step).getStatus().getState().equalsIgnoreCase(status);
 			}
-		}, 60);
+		}, 120);
 		
 	}
 	public WaitResult waitUntilStepStatusMatches(final StepRepository repo,  final Step step, final String regex){
@@ -66,7 +66,7 @@ public class StepsRepositoryHelper {
 				System.out.println(steprefreshed.getStatus().getState().matches(regex));
 				return steprefreshed.getStatus().getState().matches(regex);
 			}
-		}, 60);
+		}, 120);
 		
 	}
 
