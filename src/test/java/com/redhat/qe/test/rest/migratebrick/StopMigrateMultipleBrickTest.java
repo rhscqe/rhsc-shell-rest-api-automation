@@ -3,6 +3,8 @@ package com.redhat.qe.test.rest.migratebrick;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 
 import com.google.common.base.Function;
@@ -52,7 +54,7 @@ public class StopMigrateMultipleBrickTest extends MigrateTestBase{
 		Step executingStep = new StepsRepositoryHelper().getExecutingStep(getStepRepo(migrateJob));
 
 
-		brickRepo.stopMigrate(bricks.get(0));
+		brickRepo.stopMigrate(bricks.get(0), bricks.get(1));
 		Asserts.assertEqualsIgnoreCase("failed", getJob(migrateAction).getStatus().getState());
 		Asserts.assertEqualsIgnoreCase("aborted", getMigrateStep(migrateJob, executingStep).getStatus().getState());
 		
