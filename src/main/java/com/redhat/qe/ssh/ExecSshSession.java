@@ -19,9 +19,8 @@ import com.redhat.qe.model.Host;
 import dstywho.timeout.Timeout;
 
 public class ExecSshSession extends SshSession {
-	private static final int SESSION_TIMEOUT = 19020000;
 	private static final Logger LOG = Logger.getLogger(ExecSshSession.class);
-	private static final int MAX_ATTEMPTS = 300;
+	private static final int MAX_ATTEMPTS = 600;
 
 	public static ExecSshSession fromHost(Host host){
 		return new ExecSshSession(new Credentials("root",
