@@ -2,6 +2,7 @@ package com.redhat.qe.test.rest.migratebrick;
 
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.redhat.qe.annoations.Tcms;
@@ -13,6 +14,8 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.model.jaxb.MigrateBrickAction;
 import com.redhat.qe.repository.rest.BrickRepository;
 
+@Ignore
+//Reducing replica cound disallowed in glusterfs 3.4.0.55rhs
 public class MigrateReduceRepCountByOneTest extends MigrateTestBase{
 
 	@Override
