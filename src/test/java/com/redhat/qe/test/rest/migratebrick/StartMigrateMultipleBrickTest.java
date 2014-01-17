@@ -55,9 +55,12 @@ public class StartMigrateMultipleBrickTest extends MigrateTestBase{
 		Job migrateJob = getJob(migrateAction);
 
 		validateJobAndStepsStarted(migrateJob);
-		waitForMigrateToFinish(migrateJob);
-		brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
-		new MigrateStepsRepositoryHelper().waitForMigrateToMatch(getSession(), migrateAction.getJob(), "(?i)finished|failed|aborted");
+		try{
+			waitForMigrateToFinish(migrateJob);
+		}finally{
+			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
+			Assert.assertTrue(new MigrateStepsRepositoryHelper().waitForMigrateToMatch(getSession(), migrateAction.getJob(), "(?i)finished|failed|aborted").isSuccessful());
+		}
 	}
 
 	@Tcms("318702")
