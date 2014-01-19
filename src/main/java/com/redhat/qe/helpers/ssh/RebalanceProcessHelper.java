@@ -26,7 +26,7 @@ public class RebalanceProcessHelper {
 					}
 				}).getStdout().trim()) <= 0;
 			}
-		}, 20).isSuccessful());
+		}, 120).isSuccessful());
 	}
 
 }
