@@ -40,6 +40,9 @@ public class StopMigrateWhenMigrationNotOccuringTest extends MigrateTestBase{
 //	}
 //	
 	
+	protected void populateVolume() {
+	}
+	
 	@Test
 	@Tcms({"321103"})
 	public void test(){
