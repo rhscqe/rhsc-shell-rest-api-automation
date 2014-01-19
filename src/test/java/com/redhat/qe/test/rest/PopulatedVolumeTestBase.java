@@ -43,11 +43,24 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	protected Host mounter;
 
 	
-	@Before public void mountAndPopulate(){
+	@Before public void mountCleanAndPopulate(){
 		if(getVolumeRepository().show(volume).getStatus().equals("down"))
 			getVolumeRepository().start(volume);
 		mountVolume();
+		cleanVolumeUp();
 		populateVolume();
+	}
+	
+	protected void cleanVolumeUp(){
+		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
+		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
+			
+			public Response apply(ExecSshSession session) {
+				return session.runCommandAndAssertSuccess("rm -rf " + mountPoint.add("*").toString() );
+			}
+			
+		});
+			
 	}
 
 	protected void populateVolume() {
