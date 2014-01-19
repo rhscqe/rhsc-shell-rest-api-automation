@@ -22,22 +22,17 @@ public class StartRebalanceWhileBrickMigrationTest extends MigrateTestBase {
 		return VolumeFactory.distributed("rebalwhilemigration", 4,getHost1(), getHost2());
 	}
 	
-	@Override
-	protected void populateVolume() {
-		new BrickPopulator(FileSize.megaBytes(500)).createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
-	}
-	
 	@Test
 	@Tcms("318690")
 	public void teststart(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		ArrayList<Brick> bricks = brickRepo.list();
-		brickRepo.migrate(bricks.get(0));
+		brickRepo.migrate(bricks.get(0), bricks.get(1));
 		try{
 			ResponseWrapper rebalanceResponse = getVolumeRepository()._rebalance(volume);
 			rebalanceResponse.expect("task is in progress");
 		}finally{
-			brickRepo.stopMigrate(bricks.get(0));
+			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
 		}
 	}
 	
@@ -45,12 +40,12 @@ public class StartRebalanceWhileBrickMigrationTest extends MigrateTestBase {
 	public void teststop(){
 		BrickRepository brickRepo = new BrickRepository(getSession(), volume.getCluster(), volume);
 		ArrayList<Brick> bricks = brickRepo.list();
-		brickRepo.migrate(bricks.get(0));
+		brickRepo.migrate(bricks.get(0), bricks.get(1));
 		try{
 			ResponseWrapper rebalanceResponse = getVolumeRepository()._stopRebalance(volume);
 			rebalanceResponse.expect("(task is in progress)|(Rebalance is not running)");
 		}finally{
-			brickRepo.stopMigrate(bricks.get(0));
+			brickRepo._stopMigrate(bricks.get(0), bricks.get(1));
 		}
 	}
 }
