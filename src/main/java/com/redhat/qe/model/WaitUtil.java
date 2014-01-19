@@ -131,6 +131,7 @@ public class WaitUtil {
 	public static boolean waitForHostStatus(IHostRepository repo, Host host, String status, int numAttempts){
 		int attempt = 0;
 		while(attempt < numAttempts){
+			attempt++;	
 			try{Thread.sleep(1000);}catch(Exception e){throw new RuntimeException(e);}
 			Host hostRefreshed = repo.show(host);
 			LOG.debug("host " + host.getName() +" status: "  + host.getState());
