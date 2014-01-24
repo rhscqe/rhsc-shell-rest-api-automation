@@ -67,4 +67,10 @@ public class VolumeRepositoryBroker implements IVolumeRepositoryExtended{
 		return repo._list();
 	}
 
+	public Volume createWithForceCreationOfBrickDirectories(Volume volume) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

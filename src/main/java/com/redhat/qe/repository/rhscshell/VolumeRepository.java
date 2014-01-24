@@ -189,6 +189,10 @@ public class VolumeRepository extends Repository<Volume> implements IVolumeRepos
 	public IResponse _listAll() {
 		return _list(cluster, "--show-all");
 	}
+	public Volume createWithForceCreationOfBrickDirectories(Volume volume) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
