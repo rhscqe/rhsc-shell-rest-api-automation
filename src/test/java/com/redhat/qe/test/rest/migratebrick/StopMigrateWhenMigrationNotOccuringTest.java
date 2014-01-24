@@ -26,7 +26,7 @@ public class StopMigrateWhenMigrationNotOccuringTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("stopbrickmigrate",4, getHost1(), getHost2());
+		return VolumeFactory.distributed("StopMigNotMigrating",4, getHost1(), getHost2());
 	}
 //	
 //	@Override
