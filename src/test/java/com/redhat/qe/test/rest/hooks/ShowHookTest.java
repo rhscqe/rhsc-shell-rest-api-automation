@@ -55,7 +55,7 @@ public class ShowHookTest extends NoConflictHooksTestBase{
         Hook hook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
         hook = getHooksRepo().show(hook);
         Assert.assertEquals("content", getHookContent().trim(),hook.getContent().trim());
-        Assert.assertEquals("checksum", expectedMD5Sum,hook.getChecksum());
+        Assert.assertEquals("checksum", expectedMD5Sum.trim(),hook.getChecksum());
          
     }
 }
