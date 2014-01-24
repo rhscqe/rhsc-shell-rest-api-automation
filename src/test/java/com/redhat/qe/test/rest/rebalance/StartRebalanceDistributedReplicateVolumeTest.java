@@ -36,7 +36,7 @@ public class StartRebalanceDistributedReplicateVolumeTest extends RebalanceTestB
 		try{
 		ensureRebalanceHasStarted(action);
 		}finally{
-			getVolumeRepository()._stop(volume);
+			getVolumeRepository()._stopRebalance(volume);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class StartRebalanceDistributedReplicateVolumeTest extends RebalanceTestB
 		try{
 			ensureRebalanceStartedFromCli();
 		}finally{
-			getVolumeRepository()._stop(volume);
+			getVolumeRepository()._stopRebalance(volume);
 		}
 	}
 	
