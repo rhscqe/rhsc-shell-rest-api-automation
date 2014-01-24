@@ -77,7 +77,7 @@ public class StopRebalanceTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedUneven("stoprebalancetest", getHost1(), getHost2());
+		return VolumeFactory.distributedUneven("StopRebalanceTest", getHost1(), getHost2());
 	}
 
 }
