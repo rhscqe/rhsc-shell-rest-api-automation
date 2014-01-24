@@ -22,6 +22,7 @@ public class RebalanceProcessHelper {
 				return Integer.parseInt(ExecSshSession.fromHost(host).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 					
 					public Response apply(ExecSshSession session) {
+						session.runCommand("ps uax | grep rebalance | grep -v grep");
 						return session.runCommand("ps uax | grep rebalance | grep -v grep | wc | awk '{print $1}'");
 					}
 				}).getStdout().trim()) <= 0;
