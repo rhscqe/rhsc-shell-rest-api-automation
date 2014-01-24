@@ -16,11 +16,10 @@ public class DisableAlreadyDisabledTest extends NoConflictHooksTestBase{
 	public void test(){
 		Hook hookUnderTest = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
 		Assert.assertTrue(hookUnderTest.getStatus().getState().toLowerCase().equals("disabled"));
-		getHooksRepo().enable(hookUnderTest);
-		
-		
+
+		getHooksRepo().disable(hookUnderTest);
 		Hook enabledHook = new HookRepoHelper().getHookFromHooksList(getHooksRepo(), script);
-		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("enabled"));
+		Assert.assertTrue(enabledHook.getStatus().getState().toLowerCase().equals("disabled"));
 		
 		assertScriptFilenameIsDisabled(getHost1(),script);
 		assertScriptFilenameIsDisabled(getHost2(),script);
