@@ -92,5 +92,32 @@ public class VolumeRepository extends Repository {
 		String command = String.format("gluster --mode=script volume rebalance %s start", volume.getName());
 		return getShell().runCommand(command);
 	}
+	
+	
+	public ArrayList<VolumeOption> getVolumeSetOptionHelp(){
+		String[] optionsData = _getVolumeSetOptionHelp().getStdout().split("\\n\\n");
+		optionsData = (String[]) ArrayUtils.remove(optionsData, optionsData.length -1 );
+		ArrayList<VolumeOption> result = new ArrayList<VolumeOption>();
+		for(String optionData : optionsData ){
+			result.add(VolumeOption.parse(optionData));
+		}
+		return result;
+
+	}
+	
+	public Response _getVolumeSetOptionHelp(){
+		String command = String.format("gluster volume set help");
+		return getShell().runCommand(command);
+	}
+	
+	public Response _start(Volume vol){
+		String command = String.format("gluster vol start %s", vol.getName());
+		return getShell().runCommand(command);
+	}
+
+	public Response _turnQuotaOn(Volume vol){
+		String command = String.format("gluster vol quota %s enable", vol.getName());
+		return getShell().runCommand(command);
+	}
 
 }
