@@ -43,7 +43,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	protected Host mounter;
 
 	
-	@Before public void mountCleanAndPopulate(){
+	@Before public void mountAndPopulate(){
 		if(getVolumeRepository().show(volume).getStatus().equals("down"))
 			getVolumeRepository().start(volume);
 		mountVolume();
