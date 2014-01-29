@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>10.70.37.98</hostname>
+		<hostname>10.70.37.94</hostname>
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>10.70.37.98</hostname>
+		<hostname>10.70.37.94</hostname>
     <credentials>
       <username>root</username>
       <password>redhat</password>
@@ -33,14 +33,14 @@
   <hosts>
     <com.redhat.qe.model.Host>
       <name>node1</name>
-      <address>10.70.37.84</address>
+      <address>10.70.37.205</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
-      <address>10.70.37.132</address>
+      <address>10.70.37.175</address>
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
