@@ -47,10 +47,9 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		if(getVolumeRepository().show(volume).getStatus().equals("down"))
 			getVolumeRepository().start(volume);
 		mountVolume();
-		cleanVolumeUp();
 		populateVolume();
 	}
-	
+
 	protected void cleanVolumeUp(){
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
@@ -101,14 +100,21 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	@Override
 	@After
 	public void destroyVolume(){
-		MountHelper.unmount(mounter, mountPoint);
-		ArrayList<Brick> bricks = getBrickRepo().list();
-		printGlusterVolStatusFromANode();
-		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
-		if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
-			Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
-		getVolumeRepository().destroy(volume);
-		cleanUpBrickData(bricks);
+		try{
+			cleanVolumeUp();
+			MountHelper.unmount(mounter, mountPoint);
+			ArrayList<Brick> bricks = getBrickRepo().list();
+			printGlusterVolStatusFromANode();
+			
+			new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+			if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
+				Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
+	
+			getVolumeRepository().destroy(volume);
+			cleanUpBrickData(bricks);
+		}finally{
+			cleanUpAllBrickData();
+		}
 	}
 
 	private void printGlusterVolStatusFromANode() {
@@ -120,9 +126,17 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		 sshsession.stop();	
 		}
 	}
-	/**
-	 * @param bricks
-	 */
+
+	private void cleanUpAllBrickData() {
+		for(final Host host : RhscConfiguration.getConfiguration().getHosts()){
+			ExecSshSession.fromHost(host).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
+				public Response apply(ExecSshSession arg0) {
+					return arg0.runCommandAndAssertSuccess("rm -rf " + new BrickFactory().getBaseDir().add("*"));
+				}
+			});
+		}
+	}
+
 	private void cleanUpBrickData(ArrayList<Brick> bricks) {
 		for(final Brick brick: bricks){
 			Host host= RhscConfiguration.getConfiguredHostFromBrickHost(getSession(), brick.getHost()); 

@@ -39,6 +39,13 @@ public class BrickFactory {
 		return baseDir.add(TimestampHelper.timestamp()  + RandomIntGenerator.positive()).toString();
 	}
 
+	/**
+	 * @return the baseDir
+	 */
+	public AbsolutePath getBaseDir() {
+		return baseDir;
+	}
+
 
 
 }
