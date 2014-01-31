@@ -70,6 +70,7 @@ public abstract class RebalanceTestBase extends PopulatedVolumeTestBase {
 	public void afterrebalance(){
 		getVolumeRepository()._stopRebalance(volume);
 		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 	}
 
 	

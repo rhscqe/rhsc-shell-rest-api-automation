@@ -60,6 +60,7 @@ public class StopMigrateMultipleBrickTest extends MigrateTestBase{
 		
 		ensureNoGlusterVolumeTasks();
 		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 	}
 
 

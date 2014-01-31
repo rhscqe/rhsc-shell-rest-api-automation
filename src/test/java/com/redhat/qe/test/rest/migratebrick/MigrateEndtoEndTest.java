@@ -72,6 +72,7 @@ public class MigrateEndtoEndTest extends MigrateTestBase{
 		getJobRepository().show(action.getJob());
 		new StepsRepositoryHelper().getExecutingStep(new StepRepository(getSession(), action.getJob()));
 		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 		
 //		getJobRepository().show(action.getJob());
 //		Step rebalanceStep = new StepsRepositoryHelper().getRebalanceStep(new StepRepository(getSession(), action.getJob()));

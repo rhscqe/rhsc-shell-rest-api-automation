@@ -57,6 +57,7 @@ public class RetainMigrateTest extends MigrateTestBase {
 		getVolumeRepository().rebalance(volume);
 		getVolumeRepository()._stopRebalance(volume);
 		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+		new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 
 		deleteAllDataFromVolume();
 		

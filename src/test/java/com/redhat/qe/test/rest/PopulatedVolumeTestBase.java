@@ -107,6 +107,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 			printGlusterVolStatusFromANode();
 			
 			new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+			new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 			if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
 				Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
 	
