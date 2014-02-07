@@ -101,7 +101,8 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	@After
 	public void destroyVolume(){
 		try{
-			cleanVolumeUp();
+			if(getVolumeRepository().show(volume).getStatus().equals("up"))
+				cleanVolumeUp();
 			MountHelper.unmount(mounter, mountPoint);
 			ArrayList<Brick> bricks = getBrickRepo().list();
 			printGlusterVolStatusFromANode();
