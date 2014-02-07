@@ -29,7 +29,7 @@ public class RemoveHostNegativeTest extends TwoHostClusterTestBase{
 	
 	@After
 	public void afterThis(){
-		if( volume != null)
+		if( volume.getId() != null)
 			getVolumeRepository(cluster).destroy(volume);
 		
 	}
