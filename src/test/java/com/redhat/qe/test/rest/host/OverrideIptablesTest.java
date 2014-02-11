@@ -57,7 +57,7 @@ public class OverrideIptablesTest extends ClusterTestBase {
 			new Socket(24007, "tcp"), new Socket(22, "tcp"),
 			new Socket(111, "tcp"), new Socket(22, "tcp"),
 			new Socket(8080, "tcp"),  new Socket(111, "tcp"),
-			new Socket(111, "udp"), new Socket(123, "udp"), };
+			new Socket(111, "udp") };
 
 	@Test
 	@Tcms("326708")
