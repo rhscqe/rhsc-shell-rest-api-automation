@@ -36,8 +36,10 @@ public class StopRebalanceWhenNoRebalenceInProgressTest extends TwoHostClusterTe
 	 */
 	@After
 	public void afterme(){
-		getVolumeRepository().stop(volume);
-		getVolumeRepository().destroy(volume);
+		if(volume.getId() !=null){
+			getVolumeRepository().stop(volume);
+			getVolumeRepository().destroy(volume);
+		}
 	}
 
 	@Test

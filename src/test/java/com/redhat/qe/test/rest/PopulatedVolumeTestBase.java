@@ -86,7 +86,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 		return new BrickRepository(getSession(), getHost1().getCluster(), volume);
 	}
 	
-	private WaitResult stopVolume(){
+	private WaitResult stopVolumeWithMultipleAttempts(){
 		return WaitUtil.waitUntil(new Predicate() {
 
 			@Override
@@ -101,22 +101,32 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	@After
 	public void destroyVolume(){
 		try{
-			if(getVolumeRepository().show(volume).getStatus().equals("up"))
-				cleanVolumeUp();
-			MountHelper.unmount(mounter, mountPoint);
-			ArrayList<Brick> bricks = getBrickRepo().list();
-			printGlusterVolStatusFromANode();
+			if(volume != null && volume.getId() != null){
+				deleteAllFilesInMountedVolume();
+				MountHelper.unmount(mounter, mountPoint);
+				printGlusterVolStatusFromANode();
 			
-			new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
-			new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
-			if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
-				Assert.assertTrue("volume could not be stopped" ,stopVolume().isSuccessful());
+				new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost1ToBeCreated());
+				new RebalanceProcessHelper().waitForRebalanceProcessesToFinish(getHost2ToBeCreated());
 	
-			getVolumeRepository().destroy(volume);
-			cleanUpBrickData(bricks);
+				stopVolume();
+				ArrayList<Brick> bricks = getBrickRepo().list();
+				getVolumeRepository().destroy(volume);
+				cleanUpBrickData(bricks);
+			}
 		}finally{
 			cleanUpAllBrickData();
 		}
+	}
+
+	private void deleteAllFilesInMountedVolume() {
+		if(getVolumeRepository().show(volume).getStatus().equals("up"))
+			cleanVolumeUp();
+	}
+
+	private void stopVolume() {
+		if(getVolumeRepository().show(volume).getStatus().equalsIgnoreCase("up"))
+			Assert.assertTrue("volume could not be stopped" ,stopVolumeWithMultipleAttempts().isSuccessful());
 	}
 
 	private void printGlusterVolStatusFromANode() {

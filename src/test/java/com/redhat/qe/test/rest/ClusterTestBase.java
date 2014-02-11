@@ -25,8 +25,9 @@ public abstract class ClusterTestBase extends RestTestBase {
 	}
 
 	@After
-	public void cleanupCluster() {
-		getClusterRepository().destroy(cluster);
+	public void cleanup() {
+		if(cluster != null && cluster.getId() != null)
+			getClusterRepository().destroy(cluster);
 	}
 
 }

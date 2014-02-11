@@ -90,7 +90,7 @@ public class OverrideIptablesTest extends ClusterTestBase {
 	}
 
 	@After
-	public void cleanupRhsc() {
+	public void cleanup() {
 		new RestCleanupTool().cleanup(RhscConfiguration.getConfiguration());
 	}
 
