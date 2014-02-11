@@ -26,6 +26,7 @@ public class CleanupTool {
 			cleanupWithGlusterCli(config);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 	}
