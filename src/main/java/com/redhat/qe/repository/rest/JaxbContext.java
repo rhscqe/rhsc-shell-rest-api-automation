@@ -15,6 +15,8 @@ import com.redhat.qe.model.Host;
 import com.redhat.qe.model.HostList;
 import com.redhat.qe.model.Job;
 import com.redhat.qe.model.JobList;
+import com.redhat.qe.model.Nic;
+import com.redhat.qe.model.NicList;
 import com.redhat.qe.model.Step;
 import com.redhat.qe.model.StepList;
 import com.redhat.qe.model.Volume;
@@ -35,7 +37,7 @@ public class JaxbContext {
 					Brick.class, 
 					VolumeList.class, GlusterHookList.class, 
 					Hook.class, Job.class, JobList.class,
-					Step.class, StepList.class, GeneralAction.class);
+					Step.class, StepList.class, GeneralAction.class, Nic.class, NicList.class);
 		}
 		return context;
 
