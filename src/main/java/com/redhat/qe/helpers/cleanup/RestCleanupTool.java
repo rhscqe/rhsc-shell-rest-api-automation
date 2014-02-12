@@ -19,6 +19,7 @@ import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.rest.JaxbContext;
 import com.redhat.qe.repository.rest.VolumeRepository;
+import com.redhat.qe.repository.rest.clibrokers.ClusterRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.HostRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.VolumeRepositoryBroker;
 import com.redhat.qe.ssh.ChannelSshSession;
@@ -42,7 +43,7 @@ public class RestCleanupTool {
 					return new VolumeRepositoryBroker(session, cluster);
 				}
 	
-			}.destroyAll(new com.redhat.qe.repository.rest.ClusterRepository(session), new HostRepositoryBroker(new com.redhat.qe.repository.rest.HostRepository(session)));
+			}.destroyAll(new ClusterRepositoryBroker(session), new HostRepositoryBroker(new com.redhat.qe.repository.rest.HostRepository(session)));
 			cleanupWithGlusterCli(config);
 		}finally{
 			session.stop();

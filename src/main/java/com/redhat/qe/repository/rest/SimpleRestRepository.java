@@ -1,10 +1,15 @@
 package com.redhat.qe.repository.rest;
 
+import java.net.URI;
 import java.util.ArrayList;
+
+import javax.ws.rs.core.UriBuilder;
 
 import org.calgb.test.performance.HttpSession;
 
+import com.redhat.qe.helpers.Times;
 import com.redhat.qe.model.Model;
+import com.sun.jersey.api.uri.UriBuilderImpl;
 
 public abstract class SimpleRestRepository<T extends Model> extends Repository<T> {
 
@@ -44,6 +49,17 @@ public abstract class SimpleRestRepository<T extends Model> extends Repository<T
 
 	public ArrayList<T> list() {
 		return list(getCollectionPath());
+	}
+	
+	public ArrayList<T> listAll() {
+		ArrayList<T> results = new ArrayList<T>();
+		for(int i : new Times(10)){
+			String url = UriBuilderImpl.fromPath(getCollectionPath()).queryParam("search", "page {arg1}").build(i + 1 + "").toString();
+			ArrayList<T> result = list(url);
+			if(result != null)
+				results.addAll(result);
+		}
+		return results;
 	}
 
 	public ResponseWrapper _list() {
