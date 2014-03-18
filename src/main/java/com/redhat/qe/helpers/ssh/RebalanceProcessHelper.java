@@ -1,5 +1,7 @@
 package com.redhat.qe.helpers.ssh;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
 import com.google.common.base.Function;
@@ -30,4 +32,9 @@ public class RebalanceProcessHelper {
 		}, 120).isSuccessful());
 	}
 
+	public void waitForRebalanceProcessToTerminate(List<Host> hosts) {
+		for(Host host: hosts){
+		  waitForRebalanceProcessesToFinish(host);
+		}
+	}
 }

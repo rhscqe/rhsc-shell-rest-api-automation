@@ -3,6 +3,7 @@ package com.redhat.qe.helpers.ssh;
 import junit.framework.Assert;
 
 import com.google.common.base.Function;
+import com.redhat.qe.helpers.MountedVolume;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
@@ -22,8 +23,9 @@ public class MountHelper {
 	 * @param volume
 	 * @param sshSession
 	 * @param mountPoint
+	 * @return 
 	 */
-	public static void mountVolume(final Host mounter, final AbsolutePath mountPoint, final Volume volume) {
+	public static MountedVolume mountVolume(final Host mounter, final AbsolutePath mountPoint, final Volume volume) {
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
@@ -46,9 +48,12 @@ public class MountHelper {
 				new DirectoryHelper().createDirectory(session, mountPoint);
 			}
 		});
+		return new MountedVolume(mountPoint, mounter, volume);
 	}
 	
-	
+	public static void unmount(MountedVolume mountedVolume){
+		unmount(mountedVolume.getMounter(),mountedVolume.getMountPoint());
+	}
 	public static void unmount(final Host mounter, final AbsolutePath mountPoint){
 		ExecSshSession sshSession = ExecSshSession.fromHost(mounter);
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {

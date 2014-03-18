@@ -45,7 +45,7 @@ public class RhscShellSession {
 	
 	public IResponse start(){
 		String args = String.format("--url '%s' --username '%s' -I", url, credentials.getUsername() );
-		IResponse passwordPrompt = shell.send(String.format("ovirt-shell %s || rhsc-shell %s", args,args)).collect(Pattern.compile("Password"), true,  Duration.SECONDS_60);
+		IResponse passwordPrompt = shell.send(String.format("ovirt-shell %s || rhsc-shell %s", args,args)).collect(Pattern.compile("Password"), true,  Duration.MINUTES_THREE);
 		passwordPrompt.expect("Password");
 		return send(credentials.getPassword()).read().expect("Welcome");
 	}

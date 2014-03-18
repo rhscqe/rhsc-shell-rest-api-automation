@@ -48,7 +48,6 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 
 	@Test
 	@Tcms("311413")
-	@Ignore
 	public void test() throws InterruptedException{
 		Action rebalAction = getVolumeRepository(volume.getCluster()).rebalance(volume);
 		Job job = showJob(rebalAction.getJob());

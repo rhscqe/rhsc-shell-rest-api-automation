@@ -104,7 +104,10 @@ public class VolumeRepository extends SimpleRestRepository<Volume> implements IV
 		ResponseWrapper response = _createWithForceCreationOfBrickDirectories(volume );
 		response.expectSimilarCode(200);
 		return (Volume) unmarshal(response.getBody());
+	}
 
+	public Cluster getCluster() {
+		return cluster;
 	}
 
 

@@ -35,7 +35,7 @@ public class RestTestBase extends TestBase {
 	/* (non-Javadoc)
 	 * @see com.redhat.qe.rest.ITestBase#getClusterRepository()
 	 */
-	public IClusterRepository getClusterRepository() {
+	public ClusterRepository getClusterRepository() {
 		return new ClusterRepository(getSession());
 	}
 	
