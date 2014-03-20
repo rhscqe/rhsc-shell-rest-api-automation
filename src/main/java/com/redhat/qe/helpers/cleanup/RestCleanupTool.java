@@ -1,7 +1,5 @@
 package com.redhat.qe.helpers.cleanup;
 
-import java.net.URI;
-
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
@@ -18,7 +16,6 @@ import com.redhat.qe.model.Volume;
 import com.redhat.qe.ovirt.shell.RhscShellSession;
 import com.redhat.qe.repository.IVolumeRepositoryExtended;
 import com.redhat.qe.repository.rest.JaxbContext;
-import com.redhat.qe.repository.rest.VolumeRepository;
 import com.redhat.qe.repository.rest.clibrokers.ClusterRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.HostRepositoryBroker;
 import com.redhat.qe.repository.rest.clibrokers.VolumeRepositoryBroker;

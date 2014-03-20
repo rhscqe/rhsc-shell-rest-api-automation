@@ -20,6 +20,10 @@ public class FileHelper {
 	}
 
 	
+	public Response listFiles(ExecSshSession session, AbsolutePath path){
+		return session.runCommandAndAssertSuccess("ls "+ path.toString());
+	}
+
 	public Response removeFile(ExecSshSession session, AbsolutePath path){
 		return session.runCommandAndAssertSuccess("rm -f "+ path.toString());
 	}

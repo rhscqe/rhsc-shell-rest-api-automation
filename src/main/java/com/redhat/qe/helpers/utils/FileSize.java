@@ -6,19 +6,19 @@ public class FileSize {
 	public long kilobytes;
 	
 	
-	private FileSize(int kilobytes){
+	private FileSize(long kilobytes){
 		this.kilobytes = kilobytes;
 	}
 	
-	public static FileSize Gigabytes(int gbs){
+	public static FileSize Gigabytes(long gbs){
 		return megaBytes(gbs * CONVERSION_FACTOR);
 	}
 	
-	public static FileSize kiloBytes(int kbytes){
+	public static FileSize kiloBytes(long kbytes){
 		return new FileSize(kbytes);
 	}
 	
-	public static FileSize megaBytes( int mbs){
+	public static FileSize megaBytes( long mbs){
 		return kiloBytes(mbs* CONVERSION_FACTOR);
 	}
 	

@@ -1,22 +1,30 @@
 package com.redhat.qe.test.rest;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 
 import com.google.common.base.Function;
+import com.redhat.qe.config.ConfiguredHosts;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.BrickFactory;
 import com.redhat.qe.helpers.MountedVolume;
-import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.rebalance.BrickFiles;
+import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
+import com.redhat.qe.helpers.rebalance.VolumePopulator;
 import com.redhat.qe.helpers.repository.RecentlyMigratedRebalancedVolumeHelper;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.ssh.MountedVolumeHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
+import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.repository.rest.BrickRepository;
 import com.redhat.qe.ssh.ExecSshSession;
 import com.redhat.qe.ssh.ExecSshSession.Response;
+import com.redhat.qe.test.rest.self.BrickPopulatorTest;
 
 
 public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
@@ -47,7 +55,8 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 
 	protected void populateVolume() {
 		LOG.info("populating volume");
-		new BrickPopulator().createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
+		ArrayList<Brick> bricks = new BrickRepository(getSession(), getHost1().getCluster(), volume).list();
+		new VolumePopulator(new PopulateEachBrickStrategy(bricks, new ConfiguredHosts(RhscConfiguration.getConfiguration().getHosts()), mountedVolume)).populate();
 		LOG.info("populated volume");
 	}
 

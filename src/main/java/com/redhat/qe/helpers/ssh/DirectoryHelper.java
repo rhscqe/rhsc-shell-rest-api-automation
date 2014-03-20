@@ -12,7 +12,7 @@ public class DirectoryHelper {
 	}
 	
 	public Response removeDirectory(ExecSshSession session, AbsolutePath dir){
-		return session.runCommandAndAssertSuccess("mkdir -rf " + dir.toString());
+		return session.runCommandAndAssertSuccess("rm -rf " + dir.toString());
 	}
 
 }

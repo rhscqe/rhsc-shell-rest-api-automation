@@ -8,7 +8,7 @@ import org.junit.Before;
 
 import com.google.common.base.Function;
 import com.redhat.qe.factories.BrickFactory;
-import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
 import com.redhat.qe.helpers.ssh.RebalanceProcessHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.helpers.utils.FileNameHelper;

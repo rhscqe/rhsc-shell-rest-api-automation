@@ -11,7 +11,7 @@ import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.factories.VolumeFactory;
 import com.redhat.qe.helpers.Asserts;
-import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
 import com.redhat.qe.helpers.repository.JobRepoHelper;
 import com.redhat.qe.helpers.repository.StepsRepositoryHelper;
 import com.redhat.qe.model.Brick;

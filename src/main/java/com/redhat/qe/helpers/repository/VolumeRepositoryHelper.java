@@ -8,6 +8,7 @@ import com.redhat.qe.helpers.utils.CollectionUtils;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
 import com.redhat.qe.model.Volume;
+import com.redhat.qe.model.WaitUtil;
 import com.redhat.qe.model.WaitUtil.WaitResult;
 import com.redhat.qe.repository.glustercli.HostRepository;
 import com.redhat.qe.repository.rest.BrickRepository;
@@ -20,6 +21,7 @@ import dstywho.timeout.Timeout;
 public class VolumeRepositoryHelper {
 
 	private static final int NUM_ATTEMPTS = 3;
+
 	
 	static class StopVolumeResult{
 		private WaitResult result;

@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.google.common.base.Function;
 import com.redhat.qe.annoations.Tcms;
 import com.redhat.qe.factories.VolumeFactory;
-import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
 import com.redhat.qe.helpers.utils.FileSize;
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Volume;
@@ -26,10 +26,6 @@ public class RemoveBrickDuringMigrationTest extends MigrateTestBase{
 		return VolumeFactory.distributed("RemoveBrickDuringMigrationTest",4, getHost1(), getHost2());
 	}
 	
-	@Override
-	protected void populateVolume() {
-		new BrickPopulator(FileSize.megaBytes(500)).createDataForEachBrick(getSession(), getHost1().getCluster(), volume, mounter, mountPoint);
-	}	
 
 	@Test
 	@Tcms({"318700"})

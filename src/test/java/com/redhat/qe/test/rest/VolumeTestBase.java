@@ -12,7 +12,7 @@ import com.google.common.base.Function;
 import com.redhat.qe.config.RhscConfiguration;
 import com.redhat.qe.exceptions.UnexpectedReponseWrapperException;
 import com.redhat.qe.factories.BrickFactory;
-import com.redhat.qe.helpers.rebalance.BrickPopulator;
+import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.utils.AbsolutePath;
 import com.redhat.qe.model.GeneralAction;

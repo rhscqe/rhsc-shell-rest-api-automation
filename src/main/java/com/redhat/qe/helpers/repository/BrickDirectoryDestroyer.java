@@ -27,8 +27,8 @@ public class BrickDirectoryDestroyer {
 
 	public void destroyBrickDirectories(VolumeRepository repo, List<Host> hosts, ArrayList<Brick> bricks) {
 		for(final Brick brick: bricks){
-			new com.redhat.qe.repository.rest.HostRepository(repo.getSession()).show(brick.getHost());
-			Host host = getHostWithCredentials(hosts, brick);
+			Host hostWithName = new com.redhat.qe.repository.rest.HostRepository(repo.getSession()).show(brick.getHost());
+			Host host = getHostByName(hosts, hostWithName);
 			ExecSshSession.fromHost(host).withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 					public Response apply(ExecSshSession session) {
 						return new DirectoryHelper().removeDirectory(session, new AbsolutePath(Path.from(brick.getDir())));
@@ -37,12 +37,12 @@ public class BrickDirectoryDestroyer {
 		}
 	}
 
-	private Host getHostWithCredentials(List<Host> hosts, final Brick brick) {
+	private Host getHostByName(List<Host> hosts, final Host host) {
 		return  CollectionUtils.findFirst(hosts,
 				new Predicate<Host>() {
 
 					public boolean apply(Host configHost) {
-						return configHost.getName().equals( brick.getHost().getName());
+						return configHost.getName().equals( host.getName());
 					}
 				});
 	}
