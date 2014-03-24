@@ -28,7 +28,7 @@ public class MountedVolumeHelper {
 		sshSession.withSession(new Function<ExecSshSession, ExecSshSession.Response>() {
 			
 			public Response apply(ExecSshSession session) {
-				return session.runCommandAndAssertSuccess("rm -rf " + mountedVolume.getMountPoint().add("*").toString() );
+				return new DirectoryHelper().removeDirectory(session, mountedVolume.getMountPoint().add("*"));
 			}
 			
 		});

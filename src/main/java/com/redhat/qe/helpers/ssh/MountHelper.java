@@ -60,7 +60,7 @@ public class MountHelper {
 			
 			public Response apply(ExecSshSession session) {
 				Assert.assertTrue(umountVolume(mountPoint, session).isSuccessful());
-				return session.runCommandAndAssertSuccess("rm -rf " + mountPoint);
+				return new DirectoryHelper().removeDirectory(session, mountPoint);
 			}
 
 			private Response umountVolume(final AbsolutePath mountPoint,
