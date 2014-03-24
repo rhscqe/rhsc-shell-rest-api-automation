@@ -3,6 +3,7 @@ package com.redhat.qe.factories;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import com.redhat.qe.model.Brick;
 import com.redhat.qe.model.Host;
@@ -71,6 +72,10 @@ public class VolumeFactory {
 		return volume;
 	}
 	
+	public static Volume distributed(String name, List<Host> hosts ){
+		return distributed(name, hosts.toArray(new Host[0]));
+	}
+
 	public static Volume distributed(String name, Host...hosts ){
 		Volume volume = new Volume();
 		volume.setName(name);
