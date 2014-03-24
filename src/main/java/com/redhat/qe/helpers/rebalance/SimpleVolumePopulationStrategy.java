@@ -10,7 +10,9 @@ import com.redhat.qe.ssh.ExecSshSession;
 
 public class SimpleVolumePopulationStrategy extends VolumePopulationStrategy{
 	private static final Logger LOG = Logger.getLogger(SimpleVolumePopulationStrategy.class);
+	public static final FileSize MAX_TOTAL_DATA_WRITTEN = FileSize.Gigabytes(10);
 	private MountedVolume mountedVolume;
+
 
 	public SimpleVolumePopulationStrategy(MountedVolume mountedVolume){
 		this.mountedVolume = mountedVolume;
@@ -23,7 +25,7 @@ public class SimpleVolumePopulationStrategy extends VolumePopulationStrategy{
 		while(amountOfDataWritten.toMegabytes() < maxDataToWrite.toMegabytes()){
 			writeFile(getFileCreationStrategy(), mountedVolume, fileSizeToPopulateWith);
 			amountOfDataWritten = FileSize.megaBytes(amountOfDataWritten.toMegabytes() + fileSizeToPopulateWith.toMegabytes());
-			LOG.info(String.format("%sMB/%sMB written to volume", fileSizeToPopulateWith.toMegabytes(), maxDataToWrite.toMegabytes()));
+			LOG.info(String.format("%sMB/%sMB written to volume", amountOfDataWritten.toMegabytes(), maxDataToWrite.toMegabytes()));
 		}
 		LOG.info("finished populating volume");
 	}
