@@ -43,32 +43,31 @@ public class VolumeFactory {
 	}
 
 	public Volume distributed(String name,int numbricks, Host... hosts){
+		return create(name, "distribute", numbricks, hosts);
+	}
+	
+	
+	public Volume create(String name, String type, int numbricks, Host... hosts){
+		return create(name, type, null, null,numbricks, hosts);
+	}
+	
+	public Volume create(String name, String type,Integer repCount, Integer stripeCount, Integer numbricks, Host... hosts){
 		Volume volume = new Volume();
 		volume.setName(name);
-		volume.setType("distribute");
+		volume.setType(type);
+		if(repCount != null)
+			volume.setReplicaCount(repCount);
+		if(stripeCount != null)
+			volume.setStripe_count(stripeCount);
 		volume.setCluster(hosts[0].getCluster());
 		
 		ArrayList<Brick> bricks = createBricksUsingHosts(numbricks, hosts);
 		volume.setBricks(bricks);
 		return volume;
 	}
-	
-	
-	public Volume distributed(String name,Host host1, Host host2){
-			Volume volume = new Volume();
-			volume.setName(name);
-			volume.setType("distribute");
-			volume.setCluster(host1.getCluster());
 
-			ArrayList<Brick> bricks = new ArrayList<Brick>();
-			bricks.add(new BrickFactory().brick(host1));
-			bricks.add(new BrickFactory().brick(host1));
-			bricks.add(new BrickFactory().brick(host1));
-			bricks.add(new BrickFactory().brick(host2));
-			bricks.add(new BrickFactory().brick(host2));
-			bricks.add(new BrickFactory().brick(host2));
-			volume.setBricks(bricks);
-			return volume;
+	public Volume distributed(String name, Host... hosts){
+		return distributed(name, 6, hosts);
 	}
 	
 	public Volume distributedUneven(String name,Host host1, Host host2){
@@ -89,34 +88,8 @@ public class VolumeFactory {
 		return distributed(name, hosts.toArray(new Host[0]));
 	}
 
-	public Volume distributed(String name, Host...hosts ){
-		Volume volume = new Volume();
-		volume.setName(name);
-		volume.setType("distribute");
-		volume.setCluster(hosts[0].getCluster());
-		
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		for(Host host: hosts){
-			bricks.add(new BrickFactory().brick(host));
-			bricks.add(new BrickFactory().brick(host));
-			bricks.add(new BrickFactory().brick(host));
-		}
-		volume.setBricks(bricks);
-		return volume;
-	}
-
-	public Volume replicate(String name, Host host1, Host host2) {
-		Volume volume = new Volume();
-		volume.setName(name);
-		volume.setType("replicate");
-		volume.setReplicaCount(8);
-		volume.setCluster(host1.getCluster());
-		for (int _ : new int[4])
-			volume.getBricks().add(new BrickFactory().brick(host1));
-		for (int _ : new int[4])
-			volume.getBricks().add(new BrickFactory().brick(host2));
-		return volume;
-		
+	public Volume replicate(String name, Host... hosts) {
+		return create(name, "replicate", 2, null, 8, hosts);
 	}
 	
 	public VolumeFactory(){
@@ -128,30 +101,12 @@ public class VolumeFactory {
 	}
 
 	public Volume distributedReplicate(String name, int repCount, int numBricks, Host... hosts) {
-		Volume volume = new Volume();
-		volume.setName(name);
-		volume.setType("DISTRIBUTED_REPLICATE");
-		volume.setReplicaCount(repCount);
-		
-		volume.setCluster(hosts[0].getCluster());
-		
-		ArrayList<Brick> bricks = createBricksUsingHosts(numBricks, hosts);
-		volume.setBricks(bricks);
-		return volume;
+		return create(name, "DISTRIBUTED_REPLICATE", repCount, null, numBricks, hosts);
 		
 	}
 
 	public Volume distributedStripe(String name, int stripeCount, int numBricks, Host... hosts) {
-		Volume volume = new Volume();
-		volume.setName(name);
-		volume.setType("DISTRIBUTED_STRIPE");
-		volume.setStripe_count(stripeCount);
-		
-		volume.setCluster(hosts[0].getCluster());
-		ArrayList<Brick> bricks = createBricksUsingHosts(numBricks, hosts);
-		volume.setBricks(bricks);
-		return volume;
-		
+		return create(name, "DISTRIBUTED_STRIPE", null, stripeCount, numBricks, hosts);
 	}
 
 
