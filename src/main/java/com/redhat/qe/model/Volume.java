@@ -3,7 +3,6 @@ package com.redhat.qe.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,7 +25,7 @@ import com.redhat.qe.ssh.IResponse;
 
 @XmlAccessorType( XmlAccessType.FIELD )
 @XmlRootElement(name="gluster_volume")
-public class Volume extends Model{
+public class Volume extends Model implements IVolume{
 	@XmlAttribute
 	private String id;
 	
