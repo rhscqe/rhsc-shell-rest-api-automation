@@ -45,6 +45,10 @@ public class VolumeFactory {
 	public Volume distributed(String name,int numbricks, Host... hosts){
 		return create(name, "distribute", numbricks, hosts);
 	}
+
+	public Volume distributed(String name,int numbricks, List<Host> hosts){
+		return create(name, "distribute", numbricks, hosts.toArray(new Host[0]));
+	}
 	
 	
 	public Volume create(String name, String type, int numbricks, Host... hosts){

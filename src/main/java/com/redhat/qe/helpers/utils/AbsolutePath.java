@@ -17,7 +17,11 @@ public class AbsolutePath extends Path {
 	}
 
 	public String toString(){
-		return "/" + Joiner.on(this.separator).join(directories);
+		return this.separator + Joiner.on(this.separator).join(directories);
+	}
+	
+	public static AbsolutePath from(String unparsed){
+		return new AbsolutePath(Path.from(unparsed));
 	}
 	
 	
