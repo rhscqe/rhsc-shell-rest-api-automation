@@ -265,7 +265,7 @@ public class Volume extends Model implements IVolume{
 		Host host2 = hosts.next();
 		host1.setId("1");
 		host2.setId("2");
-		Volume vol = VolumeFactory.distributed("hi", host1, host2);
+		Volume vol = new VolumeFactory().distributed("hi", host1, host2);
 		String out = new MyMarshaller().marshall(JaxbContext.getContext(), vol);
 		System.out.println(out);
 	}

@@ -24,7 +24,7 @@ public class CollectionBrickDeleteNonMultipleSpecialCountTest extends VolumeTest
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("removeBrickCollection", getHost1(), getHost2());
+		return new VolumeFactory().distributedReplicate("removeBrickCollection", getHost1(), getHost2());
 	}
 	
 	

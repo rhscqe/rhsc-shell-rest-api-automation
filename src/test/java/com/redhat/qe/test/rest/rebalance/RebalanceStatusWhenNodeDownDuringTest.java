@@ -129,7 +129,7 @@ public class RebalanceStatusWhenNodeDownDuringTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("RebStatusWhenNodeGoesDownDuring", getHosts().toArray(new Host[0]));
+		return new VolumeFactory().distributed("RebStatusWhenNodeGoesDownDuring", getHosts().toArray(new Host[0]));
 	}
 
 	

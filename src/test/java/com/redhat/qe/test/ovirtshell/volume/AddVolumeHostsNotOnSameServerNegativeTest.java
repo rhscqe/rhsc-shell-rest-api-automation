@@ -63,7 +63,7 @@ public class AddVolumeHostsNotOnSameServerNegativeTest extends RhscShellSessionT
 	@Test
 	@Tcms("261777")
 	public void test(){
-		getVolumeRepository(cluster1)._create(VolumeFactory.distributed("notgonnawork", host1, host2)).expect("[iI]nvalid server id in brick");
+		getVolumeRepository(cluster1)._create(new VolumeFactory().distributed("notgonnawork", host1, host2)).expect("[iI]nvalid server id in brick");
 	}
 	
 }

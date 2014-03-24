@@ -68,7 +68,7 @@ public class StartReblalanceWhenHostIsDownTest extends VolumeTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("ReblalanceHostDown", getHosts().toArray(new Host[0]));
+		return new VolumeFactory().distributed("ReblalanceHostDown", getHosts().toArray(new Host[0]));
 	}
 
 

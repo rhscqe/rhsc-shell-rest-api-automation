@@ -30,6 +30,6 @@ public class StartRebalanceWhenAlreadyStartedTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedUneven("startrebwhenrebinprog", getHost1(), getHost2());
+		return new VolumeFactory().distributedUneven("startrebwhenrebinprog", getHost1(), getHost2());
 	}
 }

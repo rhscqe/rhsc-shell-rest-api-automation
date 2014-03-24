@@ -39,7 +39,7 @@ public class ListBricksTest extends TwoHostClusterTestBase{
 	
 	@Before
 	public void _before(){
-		this.volume = VolumeFactory.distributed("blah", host1, host2);
+		this.volume = new VolumeFactory().distributed("blah", host1, host2);
 		this.volume.setCluster(cluster);
 		existingBricks = volume.getBricks();
 		this.volume = getVolumeRepository().showOrCreate(volume);

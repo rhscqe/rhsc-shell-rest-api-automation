@@ -33,7 +33,7 @@ public class BrickPopulatorTest extends TwoHostClusterTestBase{
 	@Before
 	public void beforeme(){
 		VolumeRepository volumeRepo = getVolumeRepository();
-		volume = volumeRepo.createOrShow(VolumeFactory.distributed("red", getHost1(), getHost2()));
+		volume = volumeRepo.createOrShow(new VolumeFactory().distributed("red", getHost1(), getHost2()));
 		volumeRepo._start(volume);
 
 		mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());

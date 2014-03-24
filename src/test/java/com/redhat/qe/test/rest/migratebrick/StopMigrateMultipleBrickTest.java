@@ -29,7 +29,7 @@ public class StopMigrateMultipleBrickTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("stopbrickmigrate",4, getHost1(), getHost2());
+		return new VolumeFactory().distributed("stopbrickmigrate",4, getHost1(), getHost2());
 	}
 //	
 //	@Override

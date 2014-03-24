@@ -19,7 +19,7 @@ public class MigrateReduceRepCountByTwoTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("MigrateReduceRepCountByTwoTest",3, 9, host1, host2);
+		return new VolumeFactory().distributedReplicate("MigrateReduceRepCountByTwoTest",3, 9, host1, host2);
 	}
 	
 	@Override

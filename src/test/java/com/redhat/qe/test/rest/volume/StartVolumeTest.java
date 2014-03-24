@@ -10,7 +10,7 @@ public class StartVolumeTest extends VolumeTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("volumeToBeStarted", getHost1(), getHost2());
+		return new VolumeFactory().distributed("volumeToBeStarted", getHost1(), getHost2());
 	}
 	
 	@Test

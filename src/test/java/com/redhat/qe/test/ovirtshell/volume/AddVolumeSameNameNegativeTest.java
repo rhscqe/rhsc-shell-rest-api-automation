@@ -19,7 +19,7 @@ public class AddVolumeSameNameNegativeTest extends SingleVolumeTestBase{
 	public void test(){
 		expectedEx.expect(UnexpectedReponseException.class);
 		expectedEx.expect(new ResponseMessageMatcher("already exists"));
-		getVolumeRepository(volume.getCluster()).create(VolumeFactory.distributed(volume.getName(), host1, host2));
+		getVolumeRepository(volume.getCluster()).create(new VolumeFactory().distributed(volume.getName(), host1, host2));
 	}
 
 }

@@ -80,7 +80,7 @@ public class RemoveBrickWhileRebalanceIsOccuringTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("RemoveBrickWhileRebalanceIsOccuringTest", getHosts().toArray(new Host[0]));
+		return new VolumeFactory().distributed("RemoveBrickWhileRebalanceIsOccuringTest", getHosts().toArray(new Host[0]));
 	}
 
 	

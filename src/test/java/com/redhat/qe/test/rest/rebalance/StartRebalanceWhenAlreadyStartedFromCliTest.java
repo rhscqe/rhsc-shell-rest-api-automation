@@ -60,7 +60,7 @@ public class StartRebalanceWhenAlreadyStartedFromCliTest extends RebalanceTestBa
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedUneven("startrebalwhenclistart", getHost1(), getHost2());
+		return new VolumeFactory().distributedUneven("startrebalwhenclistart", getHost1(), getHost2());
 	}
 	
 	

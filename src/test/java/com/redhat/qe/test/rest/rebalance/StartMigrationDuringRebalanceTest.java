@@ -77,7 +77,7 @@ public class StartMigrationDuringRebalanceTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("StartMigDuringRebalTest", getHosts().toArray(new Host[0]));
+		return new VolumeFactory().distributed("StartMigDuringRebalTest", getHosts().toArray(new Host[0]));
 	}
 
 	private void getGlusterVolumeStatus2() {

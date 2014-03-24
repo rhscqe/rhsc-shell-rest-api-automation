@@ -23,7 +23,7 @@ public class RemoveBrickDuringMigrationTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("RemoveBrickDuringMigrationTest",4, getHost1(), getHost2());
+		return new VolumeFactory().distributed("RemoveBrickDuringMigrationTest",4, getHost1(), getHost2());
 	}
 	
 

@@ -26,7 +26,7 @@ public class StartStopMigrateSingleBrickTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbrickmigrate",4, getHost1(), getHost2());
+		return new VolumeFactory().distributed("startbrickmigrate",4, getHost1(), getHost2());
 	}
 	
 //	@Override

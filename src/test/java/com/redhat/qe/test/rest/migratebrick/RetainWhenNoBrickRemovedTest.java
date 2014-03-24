@@ -32,7 +32,7 @@ public class RetainWhenNoBrickRemovedTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbriciikmigrate", 4, getHost1(),
+		return new VolumeFactory().distributed("startbriciikmigrate", 4, getHost1(),
 				getHost2());
 	}
 

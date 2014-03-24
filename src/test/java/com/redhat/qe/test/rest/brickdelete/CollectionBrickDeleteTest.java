@@ -22,7 +22,7 @@ public class CollectionBrickDeleteTest extends VolumeTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("removeBrickCollection", getHost1(), getHost2());
+		return new VolumeFactory().distributed("removeBrickCollection", getHost1(), getHost2());
 	}
 	
 	

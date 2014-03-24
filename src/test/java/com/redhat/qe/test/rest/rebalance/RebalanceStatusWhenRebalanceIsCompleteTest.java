@@ -80,7 +80,7 @@ public class RebalanceStatusWhenRebalanceIsCompleteTest extends VolumeTestBase{
 	@Override
 	protected List<Volume> getVolumesToBeCreated() {
 		ArrayList<Volume> volumes = new ArrayList<Volume>();
-		volumes.add(VolumeFactory.distributed("rebal", getHosts().toArray(new Host[0])));
+		volumes.add(new VolumeFactory().distributed("rebal", getHosts().toArray(new Host[0])));
 		return volumes;
 	}
 

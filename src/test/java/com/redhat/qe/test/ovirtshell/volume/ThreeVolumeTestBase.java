@@ -19,13 +19,13 @@ public class ThreeVolumeTestBase extends TwoHostClusterTestBase {
 
 	@Before
 	public void setupthis() {
-		volume1 = VolumeFactory.distributed("mydistvolume1", host1, host2);
+		volume1 = new VolumeFactory().distributed("mydistvolume1", host1, host2);
 		volume1 = getVolumeRepository().create(volume1);
 		
-		volume2 = VolumeFactory.distributed("mydistvolume2", host1, host2);
+		volume2 = new VolumeFactory().distributed("mydistvolume2", host1, host2);
 		volume2 = getVolumeRepository().create(volume2);
 		
-		volume3 = VolumeFactory.distributed("mydistvolume3", host1, host2);
+		volume3 = new VolumeFactory().distributed("mydistvolume3", host1, host2);
 		volume3 = getVolumeRepository().create(volume3);
 	}
 

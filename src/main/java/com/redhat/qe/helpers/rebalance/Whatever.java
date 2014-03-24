@@ -18,7 +18,7 @@ public class Whatever {
 			HttpSession session = new HttpSessionFactory().createHttpSession(RhscConfiguration.getConfiguration().getRestApi());
 			ArrayList<Host> hosts = new HostRepository(session).list();
 			Host[] _hosts = hosts.toArray(new Host[hosts.size()]);
-			Volume volume = VolumeFactory.distributed("blah", _hosts);
+			Volume volume = new VolumeFactory().distributed("blah", _hosts);
 			new VolumeRepository(session, new ClusterRepository(session).show(hosts.get(0).getCluster())).create(volume);
 	}
 

@@ -21,7 +21,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 
 	@Test
 	public void testDistributedVol() {
-		Volume expected = VolumeFactory.distributed("mydistvolume", host1,
+		Volume expected = new VolumeFactory().distributed("mydistvolume", host1,
 				host2);
 		actual = getVolumeRepository().createOrShow(expected);
 
@@ -35,7 +35,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 
 	@Test
 	public void testDistributedStripeInvalidNumBricks() {
-		Volume expected = VolumeFactory.distributedStripe("mydistvolume", 4, 4, host1,
+		Volume expected = new VolumeFactory().distributedStripe("mydistvolume", 4, 4, host1,
 				host2);
 		ResponseWrapper response = getVolumeRepository()._create(expected);
 		response.expectSimilarCode(400);

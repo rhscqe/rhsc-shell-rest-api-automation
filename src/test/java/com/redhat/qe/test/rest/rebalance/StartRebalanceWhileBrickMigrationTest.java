@@ -19,7 +19,7 @@ public class StartRebalanceWhileBrickMigrationTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("rebalwhilemigration", 4,getHost1(), getHost2());
+		return new VolumeFactory().distributed("rebalwhilemigration", 4,getHost1(), getHost2());
 	}
 	
 	@Test

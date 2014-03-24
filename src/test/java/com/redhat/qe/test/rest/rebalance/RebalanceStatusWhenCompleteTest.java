@@ -27,7 +27,7 @@ public class RebalanceStatusWhenCompleteTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("rebalstatuswhencompletetest", getHost1(), getHost2());
+		return new VolumeFactory().distributed("rebalstatuswhencompletetest", getHost1(), getHost2());
 	}
 	
 	@Test

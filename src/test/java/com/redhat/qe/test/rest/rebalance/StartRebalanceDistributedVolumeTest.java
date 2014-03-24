@@ -34,6 +34,6 @@ public class StartRebalanceDistributedVolumeTest extends RebalanceTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("start_rebal_on_dist_volume_test",6,  getHost1(), getHost2());
+		return new VolumeFactory().distributed("start_rebal_on_dist_volume_test",6,  getHost1(), getHost2());
 	}
 }

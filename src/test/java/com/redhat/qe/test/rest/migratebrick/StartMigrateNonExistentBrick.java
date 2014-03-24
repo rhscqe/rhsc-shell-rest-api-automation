@@ -31,7 +31,7 @@ public class StartMigrateNonExistentBrick extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startbriciikmigrate",4, getHost1(), getHost2());
+		return new VolumeFactory().distributed("startbriciikmigrate",4, getHost1(), getHost2());
 	}
 //	
 //	@Override

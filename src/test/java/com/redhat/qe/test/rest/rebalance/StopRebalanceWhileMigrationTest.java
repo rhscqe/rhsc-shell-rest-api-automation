@@ -36,7 +36,7 @@ public class StopRebalanceWhileMigrationTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("startrebalwhilemig", 4, getHost1(),
+		return new VolumeFactory().distributed("startrebalwhilemig", 4, getHost1(),
 				getHost2());
 	}
 	

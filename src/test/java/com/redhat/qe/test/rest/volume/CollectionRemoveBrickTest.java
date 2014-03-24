@@ -17,7 +17,7 @@ public class CollectionRemoveBrickTest extends VolumeTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("collectionRemoveBrickTest", getHost1(), getHost2());
+		return new VolumeFactory().distributed("collectionRemoveBrickTest", getHost1(), getHost2());
 	}
 	
 	@Test

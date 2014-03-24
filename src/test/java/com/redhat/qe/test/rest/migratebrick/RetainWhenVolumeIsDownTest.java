@@ -35,7 +35,7 @@ public class RetainWhenVolumeIsDownTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("retainwhenvolisdown", 4, getHost1(),
+		return new VolumeFactory().distributed("retainwhenvolisdown", 4, getHost1(),
 				getHost2());
 	}
 	

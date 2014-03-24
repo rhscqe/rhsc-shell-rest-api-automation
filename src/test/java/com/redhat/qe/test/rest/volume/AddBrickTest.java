@@ -12,7 +12,7 @@ public class AddBrickTest extends VolumeTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("addBrickTest", host1, host2);
+		return new VolumeFactory().distributed("addBrickTest", host1, host2);
 	}
 
 	@Test

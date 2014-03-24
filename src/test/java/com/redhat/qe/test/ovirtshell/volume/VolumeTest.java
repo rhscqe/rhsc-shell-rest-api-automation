@@ -27,7 +27,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 	@Test
 	@Tcms("250994")
 	public void distributedVolumeTest() {
-		Volume expected = VolumeFactory.distributed("mydistvolume", host1, host2);
+		Volume expected = new VolumeFactory().distributed("mydistvolume", host1, host2);
 		actual = getVolumeRepository().create(expected);
 
 		assertEquals("replica count",expected.getReplica_count(),actual.getReplica_count());
@@ -40,7 +40,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 	@Test
 	@Tcms("250994")
 	public void replicateVolumeTest() {
-		Volume expected = VolumeFactory.replicate("myreplicateVol", host1,host2);
+		Volume expected = new VolumeFactory().replicate("myreplicateVol", host1,host2);
 		actual = getVolumeRepository().create(expected );
 		
 		assertEquals("replica count",expected.getReplica_count(),actual.getReplica_count());
@@ -52,7 +52,7 @@ public class VolumeTest extends TwoHostClusterTestBase {
 	@Test
 	@Tcms("250994")
 	public void distributedReplicateVolume() {
-		Volume expected = VolumeFactory.distributedReplicate("mydistreplicateVol", host1,host2);
+		Volume expected = new VolumeFactory().distributedReplicate("mydistreplicateVol", host1,host2);
 		actual = getVolumeRepository().create(expected);
 		
 		assertEquals("replica count",expected.getReplica_count(),actual.getReplica_count());

@@ -23,7 +23,7 @@ public class RemoveHostNegativeTest extends TwoHostClusterTestBase{
 	
 	@Before
 	public void setupThis(){
-		volume = VolumeFactory.distributed("mydistvolume", host1, host2);
+		volume = new VolumeFactory().distributed("mydistvolume", host1, host2);
 		volume = getVolumeRepository(cluster).create(volume);
 	}
 	

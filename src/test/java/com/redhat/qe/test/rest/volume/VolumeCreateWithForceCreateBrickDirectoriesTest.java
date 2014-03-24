@@ -34,7 +34,7 @@ public class VolumeCreateWithForceCreateBrickDirectoriesTest extends TwoHostClus
 	 * @return
 	 */
 	private Volume createVolume() {
-		Volume volume = VolumeFactory.distributed("VolumeCreateForceCreateBrickDir", getHost1(),getHost2());
+		Volume volume = new VolumeFactory().distributed("VolumeCreateForceCreateBrickDir", getHost1(),getHost2());
 		 ArrayList<Brick> bricks = new ArrayList<Brick>();
 		 bricks.add( new BrickFactory(AbsolutePath.fromDirs("tmp")).brick(getHost1()));
 		 volume.setBricks(bricks);

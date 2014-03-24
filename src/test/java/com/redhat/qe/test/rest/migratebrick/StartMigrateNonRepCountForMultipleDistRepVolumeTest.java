@@ -31,7 +31,7 @@ public class StartMigrateNonRepCountForMultipleDistRepVolumeTest extends Migrate
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
+		return new VolumeFactory().distributedReplicate("startnegativerepcount", host1, host2);
 	}
 	@Test
 	@Tcms({"318704"})

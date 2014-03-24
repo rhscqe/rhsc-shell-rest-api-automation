@@ -27,7 +27,7 @@ public class PopulateEachBrickStrategy extends VolumePopulationStrategy{
 //		Host h1 = new HostHelper().createAndWaitForUp(new HostRepository(session),RhscConfiguration.getConfiguration().getHosts().get(0));
 //		Host h2 = new HostHelper().createAndWaitForUp(new HostRepository(session),RhscConfiguration.getConfiguration().getHosts().get(1));
 //		VolumeRepository volumeRepository = new VolumeRepository(session, cluster);
-//		Volume volume = volumeRepository.createOrShow(VolumeFactory.distributed("red", h1, h2));
+//		Volume volume = volumeRepository.createOrShow(new VolumeFactory().distributed("red", h1, h2));
 //		volumeRepository._start(volume);
 //		AbsolutePath mountPoint = AbsolutePath.fromDirs("mnt", volume.getName());
 //		Host mounter = RhscConfiguration.getConfiguration().getHosts().get(0);

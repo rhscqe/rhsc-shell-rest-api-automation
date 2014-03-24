@@ -18,7 +18,7 @@ public class SingleVolumeTestBase extends TwoHostClusterTestBase {
 
 	@Before
 	public void setupthis() {
-		volume = VolumeFactory.distributed("mydistvolume", host1, host2);
+		volume = new VolumeFactory().distributed("mydistvolume", host1, host2);
 		volume= getVolumeRepository().create(volume);
 		
 	}

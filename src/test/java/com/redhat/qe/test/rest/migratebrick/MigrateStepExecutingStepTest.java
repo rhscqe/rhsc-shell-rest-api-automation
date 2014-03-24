@@ -26,7 +26,7 @@ public class MigrateStepExecutingStepTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("MigrateStepExecutingStepTest", 4, getHost1(),
+		return new VolumeFactory().distributed("MigrateStepExecutingStepTest", 4, getHost1(),
 				getHost2());
 	}
 

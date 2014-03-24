@@ -40,7 +40,7 @@ public class LoopCreateVolume extends TwoHostClusterTestBase{
 		for(int i = 0 ; i< 100; i ++){
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx" + i);
 			super.setup();
-			volume = VolumeFactory.distributed("mydistvolume", host1, host2);
+			volume = new VolumeFactory().distributed("mydistvolume", host1, host2);
 			volume = getVolumeRepository(cluster).create(volume);
 			getVolumeRepository(cluster).destroy(volume);
 			super.teardown();

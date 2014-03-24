@@ -86,6 +86,6 @@ public class MigrateEndtoEndTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("migrateendtoend", 4, getHost1(), getHost2());
+		return new VolumeFactory().distributed("migrateendtoend", 4, getHost1(), getHost2());
 	}
 }

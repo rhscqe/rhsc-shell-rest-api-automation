@@ -17,7 +17,7 @@ public class StartMigrateDistRepVolumeTest extends MigrateTestBase{
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributedReplicate("startnegativerepcount", host1, host2);
+		return new VolumeFactory().distributedReplicate("startnegativerepcount", host1, host2);
 	}
 	
 	@Test

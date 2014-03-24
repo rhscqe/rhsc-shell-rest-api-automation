@@ -33,7 +33,7 @@ public class MigrateAfterMigrateCompleteTest extends MigrateTestBase {
 
 	@Override
 	protected Volume getVolumeToBeCreated() {
-		return VolumeFactory.distributed("migrateAfterMigration", 4, getHost1(),
+		return new VolumeFactory().distributed("migrateAfterMigration", 4, getHost1(),
 				getHost2());
 	}
 	

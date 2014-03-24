@@ -28,7 +28,7 @@ public class LoopCreateVolumeRestTest extends com.redhat.qe.test.rest.TwoHostClu
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx" + i);
 			super.setupHosts();
 			super.setupTwoHosts();
-			volume = VolumeFactory.distributed("mydistvolume", host1, host2);
+			volume = new VolumeFactory().distributed("mydistvolume", host1, host2);
 			volume = getVolumeRepository(getHost1().getCluster()).create(volume);
 			getVolumeRepository(getHost1().getCluster()).destroy(volume);
 			super.cleanupRhsc();

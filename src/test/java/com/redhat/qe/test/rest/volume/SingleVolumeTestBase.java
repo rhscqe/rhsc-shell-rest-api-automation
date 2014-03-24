@@ -14,7 +14,7 @@ public class SingleVolumeTestBase extends VolumesTestBase {
 	@Override
 	protected List<Volume> getVolumesToBeCreated() {
 		ArrayList<Volume> vols = new ArrayList<Volume>();
-		vols.add( VolumeFactory.distributed("singlevoluemtestbase", getHosts().toArray(new Host[0])));
+		vols.add( new VolumeFactory().distributed("singlevoluemtestbase", getHosts().toArray(new Host[0])));
 		return vols;
 	}
 

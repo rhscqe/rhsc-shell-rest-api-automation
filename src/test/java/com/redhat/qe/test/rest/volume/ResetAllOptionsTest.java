@@ -17,7 +17,7 @@ public class ResetAllOptionsTest extends VolumesTestBase {
 	@Override
 	protected List<Volume> getVolumesToBeCreated() {
 		ArrayList<Volume> volumes = new ArrayList<Volume>();
-		volumes.add(VolumeFactory.distributed("resetallmeoptions", getHosts().toArray(new Host[0])));
+		volumes.add(new VolumeFactory().distributed("resetallmeoptions", getHosts().toArray(new Host[0])));
 		return volumes;
 	}
 

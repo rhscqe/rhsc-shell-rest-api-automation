@@ -27,7 +27,7 @@ public class StopRebalanceWhenNoRebalenceInProgressTest extends TwoHostClusterTe
 	@Before
 	public void setupVolume(){
 		VolumeRepository volumeRepo = getVolumeRepository();
-		volume = volumeRepo.createOrShow(VolumeFactory.distributed("red", getHost1(), getHost2()));
+		volume = volumeRepo.createOrShow(new VolumeFactory().distributed("red", getHost1(), getHost2()));
 		volumeRepo._start(volume);
 	}
 
