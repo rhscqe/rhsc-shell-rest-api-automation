@@ -37,7 +37,7 @@ public class RecentlyMigratedRebalancedVolumeHelper {
 	}
 	
 	public void destroyVolume(VolumeRepository repo, Volume volume, List<Host> hosts ){
-		ArrayList<Brick> bricks = new BrickRepository(repo.getSession(), repo.getCluster(), volume).listAll();
+		ArrayList<Brick> bricks = new BrickRepository(repo.getSession(), repo.getCluster(), volume).list();
 		repo.destroy(volume);
 		new BrickDirectoryDestroyer().destroyBrickDirectories(repo, hosts, bricks);
 	}
