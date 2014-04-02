@@ -14,9 +14,11 @@ public class RebalanceStatus {
 		result.setFailures( Integer.parseInt(element.select("failures").text()));
 		result.setSkipped( Integer.parseInt(element.select("skipped").text()));
 		result.setRuntime( element.select("runtime").text());
+		result.setNodeName( element.select("nodeName").text());
 		return result;
 	}
 	
+
 	String statusDecode;
 	int status;
 	int files;
@@ -25,6 +27,7 @@ public class RebalanceStatus {
 	int failures;
 	int skipped;
 	String runtime;
+	String nodeName;
 	public String getStatusDecode() {
 		return statusDecode;
 	}
@@ -72,6 +75,12 @@ public class RebalanceStatus {
 	}
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
+	}
+	public String getNodeName() {
+		return nodeName;
+	}
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
 	}
 	
 
