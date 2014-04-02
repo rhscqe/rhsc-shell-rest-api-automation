@@ -15,6 +15,8 @@ import dstywho.timeout.Timeout;
 public class StepsRepositoryHelper {
 
 	
+	private static final int NUM_ATTEMPTS = 240;
+	
 	public Step getRebalanceStep(StepRepository repository) {
 		return CollectionUtils.findFirst(repository.list(), new Predicate<Step>() {
 
@@ -52,7 +54,7 @@ public class StepsRepositoryHelper {
 				Timeout.TIMEOUT_FIVE_SECONDS.sleep();
 				return repo.show(step).getStatus().getState().equalsIgnoreCase(status);
 			}
-		}, 120);
+		}, NUM_ATTEMPTS);
 		
 	}
 	public WaitResult waitUntilStepStatusMatches(final StepRepository repo,  final Step step, final String regex){
@@ -66,7 +68,7 @@ public class StepsRepositoryHelper {
 				System.out.println(steprefreshed.getStatus().getState().matches(regex));
 				return steprefreshed.getStatus().getState().matches(regex);
 			}
-		}, 120);
+		}, NUM_ATTEMPTS);
 		
 	}
 
