@@ -43,7 +43,7 @@ public class RebalanceStatusWhenCompleteTest extends RebalanceTestBase{
 		ExecSshSession host1session = ExecSshSession.fromHost(getHost1ToBeCreated());
 		host1session.start();
 		try{
-			RebalanceStatus expectedRebalanceStats = new VolumeRebalanceRepository(host1session).getRebalanceStatus(volume);
+			RebalanceStatus expectedRebalanceStats = new VolumeRebalanceRepository(host1session).getRebalanceAggregateStatus(volume);
 			Assert.assertTrue(rebalanceStep.getDescription().contains(String.format("scanned: %s, moved: %s, failed: %s", expectedRebalanceStats.getLookups(), expectedRebalanceStats.getFiles(), expectedRebalanceStats.getFailures())));
 			Asserts.assertEqualsIgnoreCase("completed", expectedRebalanceStats.getStatusDecode());
 		}finally{
