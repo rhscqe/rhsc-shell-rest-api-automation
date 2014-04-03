@@ -21,6 +21,10 @@ public class FileSize {
 	public static FileSize megaBytes( long mbs){
 		return kiloBytes(mbs* CONVERSION_FACTOR);
 	}
+
+	public static FileSize bytes( long bytes){
+		return kiloBytes(bytes/ CONVERSION_FACTOR);
+	}
 	
 	public long toKilobytes(){
 		return kilobytes;
