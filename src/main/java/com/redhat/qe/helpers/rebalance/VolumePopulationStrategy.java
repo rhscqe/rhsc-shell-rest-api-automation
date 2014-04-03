@@ -14,7 +14,10 @@ public abstract class VolumePopulationStrategy {
 
 	public void populate(){
 		populate(_fileSizeToPopulateWith,_maxDataToWrite);
-		
+	}
+	
+	public void setMaxSizeToWrite(FileSize size){
+		_maxDataToWrite = size;
 	}
 	
 

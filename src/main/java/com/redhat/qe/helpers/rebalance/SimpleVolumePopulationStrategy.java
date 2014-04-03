@@ -10,7 +10,6 @@ import com.redhat.qe.ssh.ExecSshSession;
 
 public class SimpleVolumePopulationStrategy extends VolumePopulationStrategy{
 	private static final Logger LOG = Logger.getLogger(SimpleVolumePopulationStrategy.class);
-	public static final FileSize MAX_TOTAL_DATA_WRITTEN = FileSize.Gigabytes(10);
 	private MountedVolume mountedVolume;
 
 
