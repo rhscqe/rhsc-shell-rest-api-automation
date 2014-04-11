@@ -1,13 +1,13 @@
 <com.redhat.qe.config.Configuration>
   <restApi>
-		<hostname>10.70.37.118</hostname>
+    <hostname>rhsc-rest-api-host</hostname> <!-- TODO replace -->
     <credentials>
       <username>admin@internal</username>
       <password>redhat</password>
     </credentials>
   </restApi>
   <shellHost>
-		<hostname>10.70.37.118</hostname>
+    <hostname>rhsc-shell-host</hostname> <!-- TODO replace -->
     <credentials>
       <username>root</username>
       <password>redhat</password>
@@ -33,14 +33,14 @@
   <hosts>
     <com.redhat.qe.model.Host>
       <name>node1</name>
-      <address>10.70.37.84</address>
+      <address>rhs-node-a</address> <!-- TODO replace -->
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
-      <address>10.70.37.177</address>
+      <address>rhs-node-b</address> <!-- TODO replace -->
       <rootPassword>redhat</rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
