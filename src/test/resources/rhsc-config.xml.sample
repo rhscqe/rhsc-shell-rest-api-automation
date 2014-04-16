@@ -1,19 +1,27 @@
 <com.redhat.qe.config.Configuration>
-  <restApi>
-    <hostname>rhsc-rest-api-host</hostname> <!-- TODO replace -->
+  <restApi> 
+    <!-- this defines how to access RHS-C's rest api -->
+
+    <hostname><!-- TODO replace with the domain of RHS-C's rest-api --></hostname> 
+    <!-- if RHS-C's rest api urls is https://www.foo.bar/api/ of hostname is should be www.foo.bar -->
+
     <credentials>
-      <username>admin@internal</username>
-      <password>redhat</password>
+      <username>admin@internal</username> <!-- default admin username is admin@internal -->
+      <password><!-- TODO replace me with rhsc admin@internal password --></password>
     </credentials>
   </restApi>
+
   <shellHost>
+    <!-- this defines ssh credentials and details to a machien hosting the rhsc-cli -->
+    <!-- this is commonly the same machines where rhsc is installed -->
     <hostname>rhsc-shell-host</hostname> <!-- TODO replace -->
     <credentials>
       <username>root</username>
-      <password>redhat</password>
+      <password><!-- TODO replace with root password of machine hosting rhsc  --></password>
     </credentials>
     <port>22</port>
   </shellHost>
+
   <cluster>
     <name>myCluster</name>
     <version>
@@ -34,14 +42,14 @@
     <com.redhat.qe.model.Host>
       <name>node1</name>
       <address>rhs-node-a</address> <!-- TODO replace -->
-      <rootPassword>redhat</rootPassword>
+      <rootPassword><!-- TODO replace --></rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
     <com.redhat.qe.model.Host>
       <name>node2</name>
       <address>rhs-node-b</address> <!-- TODO replace -->
-      <rootPassword>redhat</rootPassword>
+      <rootPassword><!-- TODO replace --></rootPassword>
       <cluster reference="../../../cluster"/>
       <reboot>false</reboot>
     </com.redhat.qe.model.Host>
