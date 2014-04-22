@@ -14,6 +14,7 @@ import com.redhat.qe.helpers.MountedVolume;
 import com.redhat.qe.helpers.rebalance.BrickFiles;
 import com.redhat.qe.helpers.rebalance.PopulateEachBrickStrategy;
 import com.redhat.qe.helpers.rebalance.VolumePopulator;
+import com.redhat.qe.helpers.repository.BrickHostRefresher;
 import com.redhat.qe.helpers.repository.RecentlyMigratedRebalancedVolumeHelper;
 import com.redhat.qe.helpers.ssh.MountHelper;
 import com.redhat.qe.helpers.ssh.MountedVolumeHelper;
@@ -56,7 +57,7 @@ public abstract class PopulatedVolumeTestBase extends VolumeTestBase {
 	protected void populateVolume() {
 		LOG.info("populating volume");
 		ArrayList<Brick> bricks = new BrickRepository(getSession(), getHost1().getCluster(), volume).list();
-		new VolumePopulator(new PopulateEachBrickStrategy(bricks, new ConfiguredHosts(RhscConfiguration.getConfiguration().getHosts()), mountedVolume)).populate();
+		new VolumePopulator(new PopulateEachBrickStrategy(new BrickHostRefresher(getHostRepository()).refresh(bricks), new ConfiguredHosts(RhscConfiguration.getConfiguration().getHosts()), mountedVolume)).populate();
 		LOG.info("populated volume");
 	}
 
