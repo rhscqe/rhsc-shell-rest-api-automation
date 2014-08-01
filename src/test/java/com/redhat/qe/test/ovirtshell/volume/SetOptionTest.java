@@ -40,7 +40,7 @@ public class SetOptionTest extends SingleVolumeTestBase {
 		getVolumeRepository().resetOption(volume,option);
 		
 		
-		assertEquals(null, getVolumeRepository().show(volume).getVolumeOptions());
+		assertEquals(4, getVolumeRepository().show(volume).getVolumeOptions());
 		
 	}
 	
@@ -54,7 +54,7 @@ public class SetOptionTest extends SingleVolumeTestBase {
 		
 		getVolumeRepository().resetAllOptions(volume);
 		
-		assertEquals(null, getVolumeRepository().show(volume).getVolumeOptions());
+		assertEquals(4, getVolumeRepository().show(volume).getVolumeOptions());
 		
 	}
 
