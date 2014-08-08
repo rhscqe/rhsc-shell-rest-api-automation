@@ -174,8 +174,8 @@
           			<forkMode>never</forkMode> <!-- this fixes issue with surefire and report listener hopefully --> 
 					<properties>
 						<property>
-							<!-- <name>listener</name> -->
-							<!-- <value>com.redhat.reportengine.client.ReportEngineClientJunitListener</value> -->
+							<name>listener</name> 
+							<value>com.redhat.reportengine.client.ReportEngineClientJunitListener</value> 
 						</property>
 					</properties>
 				</configuration>
